@@ -7,7 +7,7 @@ DATABASES = {
         'NAME': 'lipotes-b',
         'USER': 'root',
         'PASSWORD': '20200077',
-        'HOST': '10.211.55.3',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }

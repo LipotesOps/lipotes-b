@@ -6,9 +6,11 @@ django-admin==2.0.1
 django-excel-base==1.0.4
 django-excel-response2==3.0.2
 django-six==1.0.4
+djangorestframework==3.11.0
 itsdangerous==1.1.0
 Jinja2==2.11.1
 MarkupSafe==1.1.1
+mysqlclient==1.4.6
 pytz==2016.10
 screen==1.0.1
 six==1.14.0
