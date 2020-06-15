@@ -5,6 +5,7 @@ Django==2.2
 django-admin==2.0.1
 django-excel-base==1.0.4
 django-excel-response2==3.0.2
+django-filter==2.3.0
 django-six==1.0.4
 djangorestframework==3.11.0
 itsdangerous==1.1.0
