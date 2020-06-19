@@ -9,7 +9,7 @@ from .models import ProcessDefinition
 class ProcessDefinitionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ProcessDefinition
-        fields = ['pkey', 'pname', 'version', 'bpmn2']
+        fields = ['pkey', 'pname', 'version', 'bpmn2', 'status']
 
 
 # ViewSets define the view behavior.
