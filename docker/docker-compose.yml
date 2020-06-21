@@ -1,0 +1,68 @@
+version: "2.2"
+services:
+    mysql-db:
+        container_name: mysql
+        image: mysql:5.7.29
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: 20200077
+        volumes:
+            - ${BASE_DIR}/mysql/conf.d:/etc/mysql/conf.d
+            - ${BASE_DIR}/mysql/data:/var/lib/mysql
+        ports:
+            - 3306:3306
+    adminer:
+        container_name: adminer
+        image: adminer:4.6.2
+        restart: always
+        ports:
+            - 8181:8080
+
+    redis-db:
+        container_name: redis
+        image: "redis:6.0.3"
+
+        command: redis-server --requirepass sOmE_sEcUrE_pAsS
+
+        ports:
+            - "6379:6379"
+
+        volumes:
+            - $BASE_DIR/redis/redis-data:/var/lib/redis
+            - $BASE_DIR/redis/redis.conf:/usr/local/etc/redis/redis.conf
+
+        environment:
+            - REDIS_REPLICATION_MODE=master
+
+    flowable-rest-db:
+        image: postgres:9.6-alpine
+        container_name: flowable-rest-postgres
+        environment:
+            - POSTGRES_PASSWORD=flowable
+            - POSTGRES_USER=flowable
+            - POSTGRES_DB=flowable
+            - PGDATA=/var/lib/postgresql/data/pgdata
+        ports:
+            - 5433:5432
+        volumes:
+            - $BASE_DIR/postgresql/data:/var/lib/postgresql/data
+        command: postgres
+
+    flowable-rest:
+        container_name: flowable-rest
+        image: flowable/flowable-rest
+        ports:
+            - "8081:8080"
+        depends_on:
+            - mysql-db
+        environment:
+            - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://flowable-rest-db:5432/flowable
+            - SPRING_DATASOURCE_USERNAME=flowable
+            - SPRING_DATASOURCE_PASSWORD=flowable
+            - FLOWABLE_REST_APP_ADMIN_USER-ID=rest-admin
+            - FLOWABLE_REST_APP_ADMIN_PASSWORD=test
+            - FLOWABLE_REST_APP_ADMIN_FIRST-NAME=Rest
+            - FLOWABLE_REST_APP_ADMIN_LAST-NAME=Admin
+        entrypoint: ["./wait-for-something.sh",  "flowable-rest-db", "5432", "PostgreSQL", "java", "-jar", "app.war"]
