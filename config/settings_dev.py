@@ -5,9 +5,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'lipotes-b',
-        'USER': 'root',
-        'PASSWORD': '20200077',
-        'HOST': '10.0.3.71',
+        'USER': 'lipotes',
+        'PASSWORD': '20200077Deep',
+        'HOST': '101.132.191.123',
         'PORT': '3306',
     }
 }
