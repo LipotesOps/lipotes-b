@@ -3,8 +3,9 @@
 from django.shortcuts import render
 from rest_framework import serializers, viewsets, pagination
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 
-from .models import ProcessDefinition
+from .models import FlowDefinition
 
 
 class LargeResultsSetPagination(PageNumberPagination):
@@ -19,15 +20,31 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 # Serializers define the API representation.
-class ProcessDefinitionSerializer(serializers.HyperlinkedModelSerializer):
+class FlowDefinitionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = ProcessDefinition
-        fields = ['pkey', 'pname', 'version', 'bpmn2', 'status']
+        model = FlowDefinition
+        fields = ['uniq_key', 'uniq_name', 'category', 'online_bpmn_key', 'status']
 
 
 # ViewSets define the view behavior.
-class ProcessDefinitionViewSet(viewsets.ModelViewSet):
-    queryset = ProcessDefinition.objects.all()
-    serializer_class = ProcessDefinitionSerializer
+class FlowDefinitionViewSet(viewsets.ModelViewSet):
+    queryset = FlowDefinition.objects.all()
+    serializer_class = FlowDefinitionSerializer
     pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        pkey = self.request.query_params.get('uniq_key', None)
+        if pkey is not None:
+            queryset = self.queryset.filter(uniq_key=pkey)
+            return queryset
+        return super().get_queryset()
+
+    def post(self, request, *args, **kwargs):
+        """
+        增加一条信息
+        """
+        print(request.data)
+        result =  FlowDefinition.objects.create(**request.data)
+        return Response(data=result)
+
 
