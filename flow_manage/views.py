@@ -5,7 +5,7 @@ from rest_framework import serializers, viewsets, pagination
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-from .models import FlowDefinition
+from .models import *
 
 
 class LargeResultsSetPagination(PageNumberPagination):
@@ -24,6 +24,13 @@ class FlowDefinitionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowDefinition
         fields = ['uniq_key', 'uniq_name', 'category', 'online_bpmn_key', 'status']
+
+
+# Serializers define the API representation.
+class BPMN20XMLSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = BPMN20XML
+        fields = ['uniq_key', 'flow_uniq_key', 'bpmn_content', 'version']
 
 
 # ViewSets define the view behavior.
@@ -47,4 +54,17 @@ class FlowDefinitionViewSet(viewsets.ModelViewSet):
         result =  FlowDefinition.objects.create(**request.data)
         return Response(data=result)
 
+
+# ViewSets define the view behavior.
+class BPMN20XMLViewSet(viewsets.ModelViewSet):
+    queryset = BPMN20XML.objects.all()
+    serializer_class = BPMN20XMLSerializer
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        pkey = self.request.query_params.get('uniq_key', None)
+        if pkey is not None:
+            queryset = self.queryset.filter(uniq_key=pkey)
+            return queryset
+        return super().get_queryset()
 
