@@ -30,7 +30,7 @@ class FlowDefinitionSerializer(serializers.HyperlinkedModelSerializer):
 class BPMN20XMLSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = BPMN20XML
-        fields = ['uniq_key', 'flow_uniq_key', 'bpmn_content', 'version']
+        fields = ['id', 'uniq_key', 'flow_uniq_key', 'bpmn_content', 'version']
 
 
 # ViewSets define the view behavior.
