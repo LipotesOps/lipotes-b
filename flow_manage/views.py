@@ -23,7 +23,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 class FlowDefinitionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowDefinition
-        fields = ['uniq_key', 'uniq_name', 'category', 'online_bpmn_key', 'status']
+        fields = ['id', 'uniq_key', 'uniq_name', 'category', 'online_bpmn_key', 'status']
 
 
 # Serializers define the API representation.

@@ -3,6 +3,7 @@ asgiref==3.2.7
 Click==7.0
 Django==2.2
 django-admin==2.0.1
+django-cors-headers==3.4.0
 django-excel-base==1.0.4
 django-excel-response2==3.0.2
 django-filter==2.3.0
