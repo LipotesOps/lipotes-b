@@ -13,6 +13,7 @@ class LargeResultsSetPagination(PageNumberPagination):
     page_size_query_param = 'limit'
     max_page_size = 10000
 
+
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 100
     page_size_query_param = 'limit'
@@ -24,6 +25,13 @@ class FlowDefinitionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowDefinition
         fields = ['id', 'uniq_key', 'uniq_name', 'category', 'online_bpmn_key', 'status']
+
+
+# Serializers define the API representation.
+class FlowCategorySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = FlowCategory
+        fields = ['id', 'uniq_key', 'annotation']
 
 
 # Serializers define the API representation.
@@ -53,6 +61,13 @@ class FlowDefinitionViewSet(viewsets.ModelViewSet):
         print(request.data)
         result =  FlowDefinition.objects.create(**request.data)
         return Response(data=result)
+
+
+# ViewSets define the view behavior.
+class FlowCategpryViewSet(viewsets.ModelViewSet):
+    queryset = FlowCategory.objects.all()
+    serializer_class = FlowCategorySerializer
+    pagination_class = None
 
 
 # ViewSets define the view behavior.

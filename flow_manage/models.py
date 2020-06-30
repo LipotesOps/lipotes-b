@@ -7,7 +7,7 @@ from django.utils import timezone
 
 class FlowDefinition(models.Model):
     status_choices = {
-        'draf': '草稿',
+        'draft': '草稿',
         'online': '生效',
         'offline': '下线',
         'del': '删除'
@@ -33,7 +33,7 @@ class FlowDefinition(models.Model):
 
 class FlowCategory(models.Model):
     uniq_key = models.CharField(max_length=32, unique=True)
-    annotation = models.CharField(max_length=16)
+    annotation = models.CharField(max_length=16, unique=True)
 
     # 定义model的元数据
     class Meta:
