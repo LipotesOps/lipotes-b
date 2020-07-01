@@ -77,9 +77,10 @@ class BPMN20XMLViewSet(viewsets.ModelViewSet):
     pagination_class = None
 
     def get_queryset(self):
-        pkey = self.request.query_params.get('uniq_key', None)
-        if pkey is not None:
-            queryset = self.queryset.filter(uniq_key=pkey)
+        uniq_key = self.request.query_params.get('uniq_key', None)
+        flow_uniq_key = self.request.query_params.get('flow_uniq_key', None)
+        if uniq_key and flow_uniq_key:
+            queryset = self.queryset.filter(uniq_key=uniq_key, flow_uniq_key=flow_uniq_key)
             return queryset
         return super().get_queryset()
 
