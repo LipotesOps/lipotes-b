@@ -74,7 +74,7 @@ class FlowCategpryViewSet(viewsets.ModelViewSet):
 class BPMN20XMLViewSet(viewsets.ModelViewSet):
     queryset = BPMN20XML.objects.all()
     serializer_class = BPMN20XMLSerializer
-    pagination_class = StandardResultsSetPagination
+    pagination_class = None
 
     def get_queryset(self):
         pkey = self.request.query_params.get('uniq_key', None)
