@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'flow_manage',
     'corsheaders',
+    'users',
 ]
 
 REST_FRAMEWORK = {
@@ -159,6 +160,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
+
+AUTH_USER_MODEL = 'users.User'
 
 LANGUAGE_CODE = 'en-us'
 
