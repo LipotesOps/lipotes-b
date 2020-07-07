@@ -1,16 +1,36 @@
 import uuid
 
 from django.shortcuts import render
+from django.contrib.auth import get_user_model
 
-from rest_framework import status, views
+from rest_framework import status, views, permissions, decorators
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
 from rest_framework_jwt.views import JSONWebTokenAPIView
 from rest_framework_jwt.settings import api_settings
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from .serializers import UserCreateSerializer
 
 # Create your views here.
+
+User = get_user_model()
+
+@decorators.api_view(['post'])
+@decorators.permission_classes([permissions.AllowAny])
+def registration(request):
+    serializer = UserCreateSerializer(data=request.data)
+    if not serializer.is_valid():
+        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+    user = serializer.save()
+    refresh = RefreshToken.for_user(user)
+    res = {
+        "refresh": str(refresh),
+        "access": str(refresh.access_token),
+    }
+    return Response(res, status.HTTP_201_CREATED)
 
 # user auth
 class UserLoginAPIView(JSONWebTokenAPIView):
@@ -29,3 +49,4 @@ class UserLogoutAPIView(views.APIView):
 
 def get_user_secret(user):
     return user.user_secret
+
