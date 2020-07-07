@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'flow_manage',
+    'rest_framework_swagger',
     'corsheaders',
+    'flow_manage',
     'users',
 ]
 
@@ -60,6 +61,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
     ],
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema", # 新添加
     'PAGE_SIZE': 10
 }
 
