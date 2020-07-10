@@ -1,6 +1,7 @@
 # Create your views here.
 
 from django.shortcuts import render
+from rest_framework.decorators import action
 from rest_framework import serializers, viewsets, pagination
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -61,6 +62,37 @@ class FlowDefinitionViewSet(viewsets.ModelViewSet):
         print(request.data)
         result =  FlowDefinition.objects.create(**request.data)
         return Response(data=result)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['get'], detail=True, url_path='list')
+    def service(self, request, *args, **kwargs):
+        """
+        list service
+        """
+        queryset = self.queryset.filter(status='online')
+        queryset = self.filter_queryset(queryset)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 
 # ViewSets define the view behavior.
