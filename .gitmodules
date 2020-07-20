@@ -1,0 +1,3 @@
+[submodule "SpiffWorkflow"]
+	path = SpiffWorkflow
+	url = git@github.com:LipotesOps/SpiffWorkflow.git
