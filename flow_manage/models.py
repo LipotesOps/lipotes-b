@@ -4,6 +4,22 @@ from datetime import datetime
 from django.db import models
 from django.utils import timezone
 
+'''
+flowable model:
+deployment -> processDefinition -> processInstance -> taskInstance
+
+lipotes model:
+flow_definition -> bpmn_version -> 
+'''
+
+
+# 抽象model
+class Human(models.Model):
+    name=models.CharField(max_length=100)
+    GENDER_CHOICE=((u'M',u'Male'),(u'F',u'Female'),)
+    gender=models.CharField(max_length=2,choices=GENDER_CHOICE,null=True)
+    class Meta:
+        abstract=True
 
 class FlowDefinition(models.Model):
     status_choices = {
@@ -24,10 +40,12 @@ class FlowDefinition(models.Model):
 
     #   定义model的元数据,在admin中显示
     class Meta:
-        # 数据库表名
-        verbose_name = 't_flow_definition'
-        # human readable
-        verbose_name_plural = '流程基本信息定义'
+        # 数据库中的表名称
+        db_table = "flow_definition"
+        # 单数名
+        verbose_name = 'flow_definition'
+        # 复数名
+        verbose_name_plural = '流程定义'
         ordering = ['-id']
 
 
@@ -37,23 +55,27 @@ class FlowCategory(models.Model):
 
     # 定义model的元数据
     class Meta:
-        # 数据库表名
-        verbose_name = 't_flow_category'
-        # human readable
+        # 数据库中的表名称
+        db_table = "flow_category"
+        # 单数名
+        verbose_name = 'flow_category'
+        # 复数名
         verbose_name_plural = '流程分类定义，便于维护'
         ordering = ['-id']
 
 
-class BPMN20XML(models.Model):
+class BPMN(models.Model):
     uniq_key = models.CharField(max_length=32, unique=True)
     flow_uniq_key = models.CharField(max_length=32)
-    bpmn_content = models.TextField()
     version = models.CharField(max_length=16)
+    bpmn_content = models.TextField()
 
     # 定义model的元数据
     class Meta:
+        # 数据库中的表名称
+        db_table = "flow_bpmn"
         # 数据库表名
-        verbose_name = 't_flow_bpmn20xml'
+        verbose_name = 'flow_bpmn'
         # human readable
-        verbose_name_plural = 'bpmn20xml内容'
+        verbose_name_plural = 'flow_bpmns'
         ordering = ['-id']

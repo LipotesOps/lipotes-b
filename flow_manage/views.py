@@ -36,9 +36,9 @@ class FlowCategorySerializer(serializers.HyperlinkedModelSerializer):
 
 
 # Serializers define the API representation.
-class BPMN20XMLSerializer(serializers.HyperlinkedModelSerializer):
+class BPMNSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = BPMN20XML
+        model = BPMN
         fields = ['id', 'uniq_key', 'flow_uniq_key', 'bpmn_content', 'version']
 
 
@@ -103,9 +103,9 @@ class FlowCategpryViewSet(viewsets.ModelViewSet):
 
 
 # ViewSets define the view behavior.
-class BPMN20XMLViewSet(viewsets.ModelViewSet):
-    queryset = BPMN20XML.objects.all()
-    serializer_class = BPMN20XMLSerializer
+class BPMNViewSet(viewsets.ModelViewSet):
+    queryset = BPMN.objects.all()
+    serializer_class = BPMNSerializer
     pagination_class = None
 
     def get_queryset(self):

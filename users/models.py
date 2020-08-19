@@ -11,5 +11,5 @@ class User(AbstractUser):
     user_secret = models.UUIDField(default=uuid4())
  
     class Meta(AbstractUser.Meta):
-        db_table = 'lipotes_user'
+        db_table = 'flow_user'
         ordering = ('-id',)
