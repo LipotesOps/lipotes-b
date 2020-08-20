@@ -34,7 +34,8 @@ class FlowDefinition(models.Model):
     category = models.CharField(max_length=32)
     online_bpmn_key = models.CharField(max_length=32)
     status = models.CharField(max_length=32, default='draft', choices=status_choices.items())
-
+    # 自定义字段
+    extend_fields = models.TextField(default={})
     ctime = models.DateTimeField(auto_now_add=True, help_text='创建时间')
     mtime = models.DateTimeField(auto_now_add=True, help_text=u'修改时间')
 
@@ -69,6 +70,8 @@ class BPMN(models.Model):
     flow_uniq_key = models.CharField(max_length=32)
     version = models.CharField(max_length=16)
     bpmn_content = models.TextField()
+    # flowable_process_definition_id
+    flowable_id = models.CharField(max_length=64, null=True)
 
     # 定义model的元数据
     class Meta:

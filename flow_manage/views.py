@@ -8,6 +8,9 @@ from rest_framework.response import Response
 
 from .models import *
 
+from flowable_rest.flowable_rest import FlowableRest
+
+FR = FlowableRest()
 
 class LargeResultsSetPagination(PageNumberPagination):
     page_size = 10
@@ -25,7 +28,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 class FlowDefinitionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowDefinition
-        fields = ['id', 'uniq_key', 'uniq_name', 'category', 'online_bpmn_key', 'status']
+        fields = ['id', 'uniq_key', 'uniq_name', 'category', 'online_bpmn_key', 'status', 'extend_fields']
 
 
 # Serializers define the API representation.
@@ -39,7 +42,7 @@ class FlowCategorySerializer(serializers.HyperlinkedModelSerializer):
 class BPMNSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = BPMN
-        fields = ['id', 'uniq_key', 'flow_uniq_key', 'bpmn_content', 'version']
+        fields = ['id', 'uniq_key', 'flow_uniq_key', 'bpmn_content', 'version', 'flowable_id']
 
 
 # ViewSets define the view behavior.
@@ -115,4 +118,13 @@ class BPMNViewSet(viewsets.ModelViewSet):
             queryset = self.queryset.filter(uniq_key=bpmn_uniq_key)
             return queryset
         return super().get_queryset()
+
+    @action(methods=['POST'], detail=True)
+    def launch(self, request, *args, **kwargs):
+        """
+        launch a process instance.
+        """
+        pk = kwargs['pk']
+        status_code, text = FR.launchProcessInstance(pk=pk)
+        return Response(data=text, status=status_code)
 
