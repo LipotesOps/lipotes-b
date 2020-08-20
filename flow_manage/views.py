@@ -120,9 +120,9 @@ class BPMNViewSet(viewsets.ModelViewSet):
         return super().get_queryset()
 
     @action(methods=['POST'], detail=True)
-    def launch(self, request, *args, **kwargs):
+    def start(self, request, *args, **kwargs):
         """
-        launch a process instance.
+        start a process instance.
         """
         pk = kwargs['pk']
         status_code, text = FR.launchProcessInstance(pk=pk)

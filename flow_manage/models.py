@@ -82,3 +82,22 @@ class BPMN(models.Model):
         # human readable
         verbose_name_plural = 'flow_bpmns'
         ordering = ['-id']
+
+
+class FlowInstance(models.Model):
+    flowable_id = models.CharField(max_length=32, unique=True)
+    start_user_id = models.CharField(max_length=16)
+    # 保持和flowable时间一致
+    start_time = models.DateTimeField(auto_now_add=False, help_text='创建时间')
+    bpmn_uniq_key = models.CharField(max_length=32)
+    
+
+    # 定义model的元数据
+    class Meta:
+        # 数据库中的表名称
+        db_table = "flow_instance"
+        # 数据库表名
+        verbose_name = 'flow_instance'
+        # human readable
+        verbose_name_plural = 'flow_instances'
+        ordering = ['-id']
