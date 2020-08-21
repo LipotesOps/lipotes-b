@@ -29,10 +29,10 @@ class FlowDefinition(models.Model):
         'del': '删除'
     }
 
-    uniq_key = models.CharField(max_length=32, unique=True,)
-    uniq_name = models.CharField(max_length=32, unique=True)
+    uid = models.CharField(max_length=32, unique=True,)
+    uname = models.CharField(max_length=32, unique=True)
     category = models.CharField(max_length=32)
-    online_bpmn_key = models.CharField(max_length=32)
+    bpmn_uid = models.CharField(max_length=32)
     status = models.CharField(max_length=32, default='draft', choices=status_choices.items())
     # 自定义字段
     extend_fields = models.TextField(default={})
@@ -51,8 +51,8 @@ class FlowDefinition(models.Model):
 
 
 class FlowCategory(models.Model):
-    uniq_key = models.CharField(max_length=32, unique=True)
-    annotation = models.CharField(max_length=16, unique=True)
+    uid = models.CharField(max_length=32, unique=True)
+    uname = models.CharField(max_length=16, unique=True)
 
     # 定义model的元数据
     class Meta:
@@ -66,10 +66,10 @@ class FlowCategory(models.Model):
 
 
 class BPMN(models.Model):
-    uniq_key = models.CharField(max_length=32, unique=True)
-    flow_uniq_key = models.CharField(max_length=32)
+    uid = models.CharField(max_length=32, unique=True)
+    flow_uid = models.CharField(max_length=32)
     version = models.CharField(max_length=16)
-    bpmn_content = models.TextField()
+    content = models.TextField()
     # flowable_process_definition_id
     flowable_id = models.CharField(max_length=64, null=True)
 
@@ -89,7 +89,7 @@ class FlowInstance(models.Model):
     start_user_id = models.CharField(max_length=16)
     # 保持和flowable时间一致
     start_time = models.DateTimeField(auto_now_add=False, help_text='创建时间')
-    bpmn_uniq_key = models.CharField(max_length=32)
+    bpmn_uid = models.CharField(max_length=32)
     
 
     # 定义model的元数据

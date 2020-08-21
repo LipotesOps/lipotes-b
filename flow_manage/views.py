@@ -28,21 +28,21 @@ class StandardResultsSetPagination(PageNumberPagination):
 class FlowDefinitionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowDefinition
-        fields = ['id', 'uniq_key', 'uniq_name', 'category', 'online_bpmn_key', 'status', 'extend_fields']
+        fields = ['id', 'uid', 'uname', 'category', 'bpmn_uid', 'status', 'extend_fields']
 
 
 # Serializers define the API representation.
 class FlowCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowCategory
-        fields = ['id', 'uniq_key', 'annotation']
+        fields = ['id', 'uid', 'uname']
 
 
 # Serializers define the API representation.
 class BPMNSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = BPMN
-        fields = ['id', 'uniq_key', 'flow_uniq_key', 'bpmn_content', 'version', 'flowable_id']
+        fields = ['id', 'uid', 'flow_uid', 'content', 'version', 'flowable_id']
 
 
 # ViewSets define the view behavior.
@@ -52,9 +52,9 @@ class FlowDefinitionViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        pkey = self.request.query_params.get('uniq_key', None)
-        if pkey is not None:
-            queryset = self.queryset.filter(uniq_key=pkey)
+        uid = self.request.query_params.get('uid', None)
+        if uid is not None:
+            queryset = self.queryset.filter(uid=uid)
             return queryset
         return super().get_queryset()
 
@@ -112,10 +112,10 @@ class BPMNViewSet(viewsets.ModelViewSet):
     pagination_class = None
 
     def get_queryset(self):
-        bpmn_uniq_key = self.request.query_params.get('bpmn_uniq_key', None)
-        flow_uniq_key = self.request.query_params.get('flow_uniq_key', None)
-        if bpmn_uniq_key is not None and flow_uniq_key is not None:
-            queryset = self.queryset.filter(uniq_key=bpmn_uniq_key)
+        bpmn_uid = self.request.query_params.get('bpmn_uid', None)
+        flow_uid = self.request.query_params.get('flow_uid', None)
+        if bpmn_uid is not None and flow_uid is not None:
+            queryset = self.queryset.filter(uid=bpmn_uid)
             return queryset
         return super().get_queryset()
 
