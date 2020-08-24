@@ -45,6 +45,13 @@ class BPMNSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'uid', 'flow_uid', 'content', 'version', 'flowable_id']
 
 
+# Serializers define the API representation.
+class FlowInstanceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = FlowInstance
+        fields = ['id', 'uid', 'flowable_id', 'start_user_id', 'start_time', 'bpmn_uid']
+
+
 # ViewSets define the view behavior.
 class FlowDefinitionViewSet(viewsets.ModelViewSet):
     queryset = FlowDefinition.objects.all()
@@ -115,6 +122,9 @@ class BPMNViewSet(viewsets.ModelViewSet):
         bpmn_uid = self.request.query_params.get('bpmn_uid', None)
         flow_uid = self.request.query_params.get('flow_uid', None)
         if bpmn_uid is not None and flow_uid is not None:
+            queryset = self.queryset.filter(uid=bpmn_uid, flow_uid=flow_uid)
+            return queryset
+        if bpmn_uid is not None:
             queryset = self.queryset.filter(uid=bpmn_uid)
             return queryset
         return super().get_queryset()
@@ -128,3 +138,8 @@ class BPMNViewSet(viewsets.ModelViewSet):
         status_code, text = FR.launchProcessInstance(pk=pk)
         return Response(data=text, status=status_code)
 
+# ViewSets define the view behavior.
+class FlowInstanceViewSet(viewsets.ModelViewSet):
+    queryset = FlowInstance.objects.all()
+    serializer_class = FlowInstanceSerializer
+    pagination_class = StandardResultsSetPagination

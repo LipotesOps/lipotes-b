@@ -29,10 +29,10 @@ class FlowDefinition(models.Model):
         'del': '删除'
     }
 
-    uid = models.CharField(max_length=32, unique=True,)
+    uid = models.CharField(max_length=64, unique=True,)
     uname = models.CharField(max_length=32, unique=True)
     category = models.CharField(max_length=32)
-    bpmn_uid = models.CharField(max_length=32)
+    bpmn_uid = models.CharField(max_length=64)
     status = models.CharField(max_length=32, default='draft', choices=status_choices.items())
     # 自定义字段
     extend_fields = models.TextField(default={})
@@ -51,8 +51,8 @@ class FlowDefinition(models.Model):
 
 
 class FlowCategory(models.Model):
-    uid = models.CharField(max_length=32, unique=True)
-    uname = models.CharField(max_length=16, unique=True)
+    uid = models.CharField(max_length=64, unique=True)
+    uname = models.CharField(max_length=32, unique=True)
 
     # 定义model的元数据
     class Meta:
@@ -66,12 +66,12 @@ class FlowCategory(models.Model):
 
 
 class BPMN(models.Model):
-    uid = models.CharField(max_length=32, unique=True)
-    flow_uid = models.CharField(max_length=32)
-    version = models.CharField(max_length=16)
+    uid = models.CharField(max_length=64, unique=True)
+    flow_uid = models.CharField(max_length=64)
+    version = models.CharField(max_length=32)
     content = models.TextField()
     # flowable_process_definition_id
-    flowable_id = models.CharField(max_length=64, null=True)
+    flowable_id = models.CharField(max_length=64, null=True, unique=True)
 
     # 定义model的元数据
     class Meta:
@@ -85,11 +85,14 @@ class BPMN(models.Model):
 
 
 class FlowInstance(models.Model):
-    flowable_id = models.CharField(max_length=32, unique=True)
-    start_user_id = models.CharField(max_length=16)
+    uid = models.CharField(max_length=64, unique=True)
+    # flowable_instance_id
+    flowable_id = models.CharField(max_length=64, unique=True)
+    start_user_id = models.CharField(max_length=32)
     # 保持和flowable时间一致
     start_time = models.DateTimeField(auto_now_add=False, help_text='创建时间')
-    bpmn_uid = models.CharField(max_length=32)
+    # 可以对应到flowable_process_definition_id
+    bpmn_uid = models.CharField(max_length=64)
     
 
     # 定义model的元数据
