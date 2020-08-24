@@ -49,7 +49,7 @@ class BPMNSerializer(serializers.HyperlinkedModelSerializer):
 class FlowInstanceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowInstance
-        fields = ['id', 'uid', 'flowable_id', 'start_user_id', 'start_time', 'bpmn_uid']
+        fields = ['id', 'uid', 'start_user_id', 'start_time', 'bpmn_uid']
 
 
 # ViewSets define the view behavior.

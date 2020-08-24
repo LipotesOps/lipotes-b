@@ -85,9 +85,10 @@ class BPMN(models.Model):
 
 
 class FlowInstance(models.Model):
+    # flowable_instance_id
     uid = models.CharField(max_length=64, unique=True)
     # flowable_instance_id
-    flowable_id = models.CharField(max_length=64, unique=True)
+    # flowable_id = models.CharField(max_length=64, unique=True)
     start_user_id = models.CharField(max_length=32)
     # 保持和flowable时间一致
     start_time = models.DateTimeField(auto_now_add=False, help_text='创建时间')
