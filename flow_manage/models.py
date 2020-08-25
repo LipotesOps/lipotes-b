@@ -99,9 +99,28 @@ class FlowInstance(models.Model):
     # 定义model的元数据
     class Meta:
         # 数据库中的表名称
-        db_table = "flow_instance"
+        db_table = "flow_inst"
         # 数据库表名
         verbose_name = 'flow_instance'
         # human readable
         verbose_name_plural = 'flow_instances'
+        ordering = ['-id']
+
+
+class TaskInstance(models.Model):
+    # ru
+    # flowable_task_instance_id
+    uid = models.CharField(max_length=64, unique=True)
+    taskDefinitionKey = models.CharField(max_length=32)
+    # 节点名称
+    name = models.CharField(max_length=32)
+    # 同步flowable的创建时间
+    create_time = models.DateTimeField()
+
+    # 定义model的元数据
+    class Meta:
+        db_table = "task_inst"
+        verbose_name = "task_instance"
+        # human readable
+        verbose_name_plural = 'task_instances'
         ordering = ['-id']

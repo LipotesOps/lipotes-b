@@ -52,6 +52,13 @@ class FlowInstanceSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'uid', 'start_user_id', 'start_time', 'bpmn_uid']
 
 
+# Serializers define the API representation.
+class TaskInstanceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = TaskInstance
+        fields = "__all__"
+
+
 # ViewSets define the view behavior.
 class FlowDefinitionViewSet(viewsets.ModelViewSet):
     queryset = FlowDefinition.objects.all()
@@ -142,4 +149,10 @@ class BPMNViewSet(viewsets.ModelViewSet):
 class FlowInstanceViewSet(viewsets.ModelViewSet):
     queryset = FlowInstance.objects.all()
     serializer_class = FlowInstanceSerializer
+    pagination_class = StandardResultsSetPagination
+
+
+class TaskInstanceViewSet(viewsets.ModelViewSet):
+    queryset = TaskInstance.objects.all()
+    serializer_class = TaskInstanceSerializer
     pagination_class = StandardResultsSetPagination
