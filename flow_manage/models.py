@@ -1,4 +1,5 @@
 
+import uuid
 from datetime import datetime
 
 from django.db import models
@@ -12,6 +13,18 @@ lipotes model:
 flow_definition -> bpmn_version -> 
 '''
 
+def generateVersionNum():
+    now = datetime.now()
+    year = now.year-2000
+    month = now.month
+    day = now.day
+    hour = now.hour
+    min = now.minute
+    sec = now.second
+
+    str_time = ''.join([year,month.day,hour,min,sec])
+    return str_time
+    
 
 # 抽象model
 class Human(models.Model):
@@ -29,10 +42,10 @@ class FlowDefinition(models.Model):
         'del': '删除'
     }
 
-    uid = models.CharField(max_length=64, unique=True,)
+    id = models.CharField(verbose_name="流程定义ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
     uname = models.CharField(max_length=32, unique=True)
     category = models.CharField(max_length=32)
-    bpmn_uid = models.CharField(max_length=64)
+    version_id = models.CharField(verbose_name="流程定义版本ID", max_length=64)
     status = models.CharField(max_length=32, default='draft', choices=status_choices.items())
     # 自定义字段
     extend_fields = models.TextField(default={})
@@ -44,56 +57,53 @@ class FlowDefinition(models.Model):
         # 数据库中的表名称
         db_table = "flow_definition"
         # 单数名
-        verbose_name = 'flow_definition'
+        verbose_name = 'flow_definitions'
         # 复数名
         verbose_name_plural = '流程定义'
         ordering = ['-id']
 
 
 class FlowCategory(models.Model):
-    uid = models.CharField(max_length=64, unique=True)
+    id = models.CharField(verbose_name="流程分类ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
     uname = models.CharField(max_length=32, unique=True)
 
     # 定义model的元数据
     class Meta:
         # 数据库中的表名称
-        db_table = "flow_category"
+        db_table = "flow_definition_category"
         # 单数名
-        verbose_name = 'flow_category'
+        verbose_name = 'flow_definition_category'
         # 复数名
-        verbose_name_plural = '流程分类定义，便于维护'
+        verbose_name_plural = 'flow_definition_categories'
         ordering = ['-id']
 
 
+# definiton with version
 class BPMN(models.Model):
-    uid = models.CharField(max_length=64, unique=True)
-    flow_uid = models.CharField(max_length=64)
-    version = models.CharField(max_length=32)
+    id = models.CharField(verbose_name="流程定义bpmn版本ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
+    version = models.CharField(max_length=32, default=generateVersionNum, editable=False)
     content = models.TextField()
-    # flowable_process_definition_id
-    flowable_id = models.CharField(max_length=64, null=True, unique=True)
+    flowable_process_definition_id = models.CharField(max_length=64, null=True, unique=True)
 
     # 定义model的元数据
     class Meta:
         # 数据库中的表名称
-        db_table = "flow_bpmn"
+        db_table = "flow_definition_version"
         # 数据库表名
-        verbose_name = 'flow_bpmn'
+        verbose_name = 'flow_definition_version'
         # human readable
-        verbose_name_plural = 'flow_bpmns'
-        ordering = ['-id']
+        verbose_name_plural = 'flow_definition_versions'
+        ordering = ['-version']
 
 
 class FlowInstance(models.Model):
-    # flowable_instance_id
-    uid = models.CharField(max_length=64, unique=True)
-    # flowable_instance_id
-    # flowable_id = models.CharField(max_length=64, unique=True)
+    id = models.CharField(verbose_name="流程实例ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
+    flowable_process_instance_id = models.CharField(max_length=64, unique=True)
     start_user_id = models.CharField(max_length=32)
     # 保持和flowable时间一致
     start_time = models.DateTimeField(auto_now_add=False, help_text='创建时间')
     # 可以对应到flowable_process_definition_id
-    bpmn_uid = models.CharField(max_length=64)
+    definition_id = models.CharField(max_length=64)
     
 
     # 定义model的元数据
@@ -108,9 +118,9 @@ class FlowInstance(models.Model):
 
 
 class TaskInstance(models.Model):
-    # ru
+    id = models.CharField(verbose_name="任务实例ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
     # flowable_task_instance_id
-    uid = models.CharField(max_length=64, unique=True)
+    flowable_task_instance_id = models.CharField(max_length=64, unique=True)
     taskDefinitionKey = models.CharField(max_length=32)
     # 节点名称
     name = models.CharField(max_length=32)
