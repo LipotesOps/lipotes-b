@@ -77,7 +77,6 @@ class FlowCategory(models.Model):
         verbose_name_plural = 'flow_definition_categories'
         ordering = ['-id']
 
-
 # definiton with version
 class BPMN(models.Model):
     id = models.CharField(verbose_name="流程定义bpmn版本ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
