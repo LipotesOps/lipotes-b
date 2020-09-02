@@ -44,8 +44,8 @@ class FlowDefinition(models.Model):
 
     id = models.CharField(verbose_name="流程定义ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
     uname = models.CharField(max_length=32, unique=True)
-    category = models.CharField(max_length=32)
-    version_id = models.CharField(verbose_name="流程定义版本ID", max_length=64)
+    category_id = models.CharField(max_length=32)
+    version_id = models.CharField(verbose_name="流程定义版本ID", max_length=64, null=True, blank=True)
     status = models.CharField(max_length=32, default='draft', choices=status_choices.items())
     # 自定义字段
     extend_fields = models.TextField(default={})
@@ -64,7 +64,7 @@ class FlowDefinition(models.Model):
 
 
 class FlowCategory(models.Model):
-    id = models.CharField(verbose_name="流程分类ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
+    id = models.CharField(verbose_name="流程分类ID", max_length=32, primary_key=True, editable=False, unique=True)
     uname = models.CharField(max_length=32, unique=True)
 
     # 定义model的元数据

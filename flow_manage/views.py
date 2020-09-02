@@ -28,14 +28,14 @@ class StandardResultsSetPagination(PageNumberPagination):
 class FlowDefinitionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowDefinition
-        fields = "__all__"
+        fields = ['id', 'uname', 'category_id', 'version_id', 'status', 'extend_fields', 'ctime', 'mtime']
 
 
 # Serializers define the API representation.
 class FlowCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowCategory
-        fields = "__all__"
+        fields = ['id', 'uname']
 
 
 # Serializers define the API representation.
