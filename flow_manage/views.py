@@ -126,13 +126,13 @@ class BPMNViewSet(viewsets.ModelViewSet):
     pagination_class = None
 
     def get_queryset(self):
-        bpmn_uid = self.request.query_params.get('bpmn_uid', None)
+        id = self.request.query_params.get('id', None)
         flow_uid = self.request.query_params.get('flow_uid', None)
-        if bpmn_uid is not None and flow_uid is not None:
-            queryset = self.queryset.filter(uid=bpmn_uid, flow_uid=flow_uid)
+        if id is not None and flow_uid is not None:
+            queryset = self.queryset.filter(id=id, flow_uid=flow_uid)
             return queryset
-        if bpmn_uid is not None:
-            queryset = self.queryset.filter(uid=bpmn_uid)
+        if id is not None:
+            queryset = self.queryset.filter(id=id)
             return queryset
         return super().get_queryset()
 
