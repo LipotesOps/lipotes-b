@@ -15,14 +15,14 @@ flow_definition -> bpmn_version ->
 
 def generateVersionNum():
     now = datetime.now()
-    year = now.year-2000
-    month = now.month
-    day = now.day
-    hour = now.hour
-    min = now.minute
-    sec = now.second
+    year = str(now.year-2000)
+    month = str(now.month)
+    day = str(now.day)
+    hour = str(now.hour)
+    min = str(now.minute)
+    sec = str(now.second)
 
-    str_time = ''.join([year,month.day,hour,min,sec])
+    str_time = ''.join([year,month,day,hour,min,sec])
     return str_time
     
 
