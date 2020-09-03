@@ -42,7 +42,7 @@ class FlowDefinition(models.Model):
         'del': '删除'
     }
 
-    id = models.CharField(verbose_name="流程定义ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
+    uuid = models.CharField(verbose_name="流程定义ID", max_length=64, default=uuid.uuid1, null=True, editable=False, unique=True)
     uname = models.CharField(max_length=32, unique=True)
     category_id = models.CharField(max_length=32)
     version_id = models.CharField(verbose_name="流程定义版本ID", max_length=64, null=True, blank=True)
@@ -64,7 +64,7 @@ class FlowDefinition(models.Model):
 
 
 class FlowCategory(models.Model):
-    id = models.CharField(verbose_name="流程分类ID", max_length=32, primary_key=True, editable=False, unique=True)
+    uuid = models.CharField(verbose_name="流程分类ID", max_length=32, default=uuid.uuid1, null=True, editable=False, unique=True)
     uname = models.CharField(max_length=32, unique=True)
 
     # 定义model的元数据
@@ -79,9 +79,10 @@ class FlowCategory(models.Model):
 
 # definiton with version
 class BPMN(models.Model):
-    id = models.CharField(verbose_name="流程定义bpmn版本ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
+    uuid = models.CharField(verbose_name="流程定义bpmn版本ID", max_length=64, default=uuid.uuid1, null=True, editable=False, unique=True)
     version = models.CharField(max_length=32, default=generateVersionNum, editable=False)
     content = models.TextField()
+    flow_definition_id = models.CharField(max_length=64, null=True)
     flowable_process_definition_id = models.CharField(max_length=64, null=True, unique=True)
 
     # 定义model的元数据
@@ -96,7 +97,7 @@ class BPMN(models.Model):
 
 
 class FlowInstance(models.Model):
-    id = models.CharField(verbose_name="流程实例ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
+    uuid = models.CharField(verbose_name="流程实例ID", max_length=64, default=uuid.uuid1, null=True, editable=False, unique=True)
     flowable_process_instance_id = models.CharField(max_length=64, unique=True)
     start_user_id = models.CharField(max_length=32)
     # 保持和flowable时间一致
@@ -117,7 +118,7 @@ class FlowInstance(models.Model):
 
 
 class TaskInstance(models.Model):
-    id = models.CharField(verbose_name="任务实例ID", max_length=64, primary_key=True, default=uuid.uuid1, editable=False, unique=True)
+    uuid = models.CharField(verbose_name="任务实例ID", max_length=64, default=uuid.uuid1, null=True, editable=False, unique=True)
     # flowable_task_instance_id
     flowable_task_instance_id = models.CharField(max_length=64, unique=True)
     taskDefinitionKey = models.CharField(max_length=32)

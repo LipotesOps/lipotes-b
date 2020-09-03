@@ -28,21 +28,21 @@ class StandardResultsSetPagination(PageNumberPagination):
 class FlowDefinitionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowDefinition
-        fields = ['id', 'uname', 'category_id', 'version_id', 'status', 'extend_fields', 'ctime', 'mtime']
+        fields = ['id', 'uuid', 'uname', 'category_id', 'version_id', 'status', 'extend_fields', 'ctime', 'mtime']
 
 
 # Serializers define the API representation.
 class FlowCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlowCategory
-        fields = ['id', 'uname']
+        fields = ['id', 'uuid', 'uname']
 
 
 # Serializers define the API representation.
 class BPMNSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = BPMN
-        fields = "__all__"
+        fields = ['id', 'uuid', 'version', 'content', 'flow_definition_id', 'flowable_process_definition_id']
 
 
 # Serializers define the API representation.
@@ -66,9 +66,9 @@ class FlowDefinitionViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        uid = self.request.query_params.get('uid', None)
-        if uid is not None:
-            queryset = self.queryset.filter(uid=uid)
+        uuid = self.request.query_params.get('uuid', None)
+        if uuid is not None:
+            queryset = self.queryset.filter(uuid=uuid)
             return queryset
         return super().get_queryset()
 
