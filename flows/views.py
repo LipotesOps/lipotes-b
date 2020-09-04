@@ -81,14 +81,14 @@ class FlowViewSet(viewsets.ModelViewSet):
 class FlowCategpryViewSet(viewsets.ModelViewSet):
     queryset = FlowCategory.objects.all()
     serializer_class = FlowCategorySerializer
-    pagination_class = None
+    pagination_class = StandardResultsSetPagination
 
 
 # ViewSets define the view behavior.
 class FlowBpmnViewSet(viewsets.ModelViewSet):
     queryset = FlowBpmn.objects.all()
     serializer_class = FlowBpmnSerializer
-    pagination_class = None
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         id = self.request.query_params.get('id', None)
