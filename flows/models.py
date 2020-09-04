@@ -10,7 +10,8 @@ flowable model:
 deployment -> processDefinition -> processInstance -> taskInstance
 
 lipotes model:
-flow_definition -> bpmn_version -> 
+flow -> flow_bpmn -> flow_instance -> task_instance
+     -> flow_category
 '''
 
 def generateTagNum():
