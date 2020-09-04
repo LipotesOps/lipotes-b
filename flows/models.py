@@ -55,6 +55,7 @@ class Flow(Base):
 
 
 class FlowBpmn(Base):
+    uuid = models.CharField(verbose_name="UUID", max_length=64, default=uuid.uuid1, editable=False, unique=True)
     # FlowVersion
     status_choices = (
         ('draft', '草稿',),
@@ -64,7 +65,7 @@ class FlowBpmn(Base):
     )
     tag = models.CharField(max_length=32, default=generateTagNum, editable=False)
     content = models.TextField()
-    flow = models.ForeignKey('Flow', to_field='uuid', null=True, blank=True, on_delete=models.CASCADE, related_name='related_flow')
+    # flow = models.ForeignKey('Flow', to_field='uuid', null=True, blank=True, on_delete=models.CASCADE, related_name='related_flow')
     flowable_process_definition_id = models.CharField(max_length=64, null=True, unique=True, blank=True)
     status = models.CharField(max_length=32, default='draft', choices=status_choices)
 
@@ -80,6 +81,7 @@ class FlowBpmn(Base):
 
 
 class FlowCategory(Base):
+    uuid = models.CharField(verbose_name="UUID", max_length=64, default=uuid.uuid1, editable=False, unique=True)
 
     name = models.CharField(max_length=32, unique=True)
     # 定义model的元数据
