@@ -4,24 +4,24 @@ from rest_framework import serializers
 from .models import *
 
 # Serializers define the API representation.
-class FlowDefinitionSerializer(serializers.ModelSerializer):
+class FlowSerializer(serializers.ModelSerializer):
     class Meta:
-        model = FlowDefinition
-        fields = ['id', 'uuid', 'uname', 'category_id', 'version_id', 'status', 'extend_fields', 'ctime', 'mtime']
+        model = Flow
+        fields = '__all__'
 
 
 # Serializers define the API representation.
 class FlowCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = FlowCategory
-        fields = ['id', 'uuid', 'uname']
+        fields = '__all__'
 
 
 # Serializers define the API representation.
-class BPMNSerializer(serializers.ModelSerializer):
+class FlowBpmnSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BPMN
-        fields = ['id', 'uuid', 'version', 'content', 'flow_definition_id', 'flowable_process_definition_id']
+        model = FlowBpmn
+        fields = '__all__'
 
 
 # Serializers define the API representation.

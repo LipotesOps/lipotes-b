@@ -26,9 +26,9 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 # ViewSets define the view behavior.
-class FlowDefinitionViewSet(viewsets.ModelViewSet):
-    queryset = FlowDefinition.objects.all()
-    serializer_class = FlowDefinitionSerializer
+class FlowViewSet(viewsets.ModelViewSet):
+    queryset = Flow.objects.all()
+    serializer_class = FlowSerializer
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
@@ -42,7 +42,7 @@ class FlowDefinitionViewSet(viewsets.ModelViewSet):
         """
         增加一条信息
         """
-        result =  FlowDefinition.objects.create(**request.data)
+        result =  Flow.objects.create(**request.data)
         return Response(data=result)
 
     def get(self, request, *args, **kwargs):
@@ -85,9 +85,9 @@ class FlowCategpryViewSet(viewsets.ModelViewSet):
 
 
 # ViewSets define the view behavior.
-class BPMNViewSet(viewsets.ModelViewSet):
-    queryset = BPMN.objects.all()
-    serializer_class = BPMNSerializer
+class FlowBpmnViewSet(viewsets.ModelViewSet):
+    queryset = FlowBpmn.objects.all()
+    serializer_class = FlowBpmnSerializer
     pagination_class = None
 
     def get_queryset(self):

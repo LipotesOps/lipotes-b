@@ -8,8 +8,8 @@ from django.contrib.auth.models import AbstractUser
  
 class User(AbstractUser):
     nickname = models.CharField(max_length=50, blank=True)
-    user_secret = models.UUIDField(default=uuid4())
+    user_secret = models.UUIDField(default=uuid4)
  
     class Meta(AbstractUser.Meta):
-        db_table = 'flow_user'
+        db_table = 'user'
         ordering = ('-id',)

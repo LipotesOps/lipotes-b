@@ -2,12 +2,11 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from .views import FlowDefinitionViewSet, FlowCategpryViewSet, BPMNViewSet, FlowInstanceViewSet, TaskInstanceViewSet
-
+from .views import *
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'flow', FlowDefinitionViewSet)
-router.register(r'bpmn', BPMNViewSet)
+router.register(r'flow', FlowViewSet)
+router.register(r'bpmn', FlowBpmnViewSet)
 router.register(r'category', FlowCategpryViewSet)
 router.register(r'flow-instance', FlowInstanceViewSet)
 router.register(r'task-instance', TaskInstanceViewSet)
