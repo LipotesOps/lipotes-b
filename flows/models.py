@@ -13,7 +13,7 @@ lipotes model:
 flow_definition -> bpmn_version -> 
 '''
 
-def generateVersionNum():
+def generateTagNum():
     now = datetime.now()
     year = str(now.year-2000)
     month = str(now.month)
@@ -80,7 +80,7 @@ class FlowCategory(models.Model):
 # definiton with version
 class BPMN(models.Model):
     uuid = models.CharField(verbose_name="流程定义bpmn版本ID", max_length=64, default=uuid.uuid1, null=True, editable=False, unique=True)
-    version = models.CharField(max_length=32, default=generateVersionNum, editable=False)
+    version = models.CharField(max_length=32, default=generateTagNum, editable=False)
     content = models.TextField()
     flow_definition_id = models.CharField(max_length=64, null=True)
     flowable_process_definition_id = models.CharField(max_length=64, null=True, unique=True)

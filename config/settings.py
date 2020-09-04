@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'corsheaders',
-    'flow_manage',
+    'flows',
     'users',
 ]
 

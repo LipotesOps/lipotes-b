@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'flow_manage',
+    'flows',
 ]
 
 REST_FRAMEWORK = {

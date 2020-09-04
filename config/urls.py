@@ -22,7 +22,7 @@ schema_view = get_swagger_view(title="Lipotes API")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api/', include('flow_manage.urls')),
+    path('api/', include('flows.urls')),
     path('users/', include('users.urls')),
     path('api/docs/', schema_view),
 ]
