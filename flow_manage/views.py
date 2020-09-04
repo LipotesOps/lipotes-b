@@ -2,11 +2,12 @@
 
 from django.shortcuts import render
 from rest_framework.decorators import action
-from rest_framework import serializers, viewsets, pagination
+from rest_framework import viewsets, pagination
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from .models import *
+from .serializers import *
 
 from flowable_rest.flowable_rest import FlowableRest
 
@@ -19,44 +20,9 @@ class LargeResultsSetPagination(PageNumberPagination):
 
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 100
+    page_size = 10
     page_size_query_param = 'limit'
     max_page_size = 1000
-
-
-# Serializers define the API representation.
-class FlowDefinitionSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = FlowDefinition
-        fields = ['id', 'uuid', 'uname', 'category_id', 'version_id', 'status', 'extend_fields', 'ctime', 'mtime']
-
-
-# Serializers define the API representation.
-class FlowCategorySerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = FlowCategory
-        fields = ['id', 'uuid', 'uname']
-
-
-# Serializers define the API representation.
-class BPMNSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = BPMN
-        fields = ['id', 'uuid', 'version', 'content', 'flow_definition_id', 'flowable_process_definition_id']
-
-
-# Serializers define the API representation.
-class FlowInstanceSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = FlowInstance
-        fields = "__all__"
-
-
-# Serializers define the API representation.
-class TaskInstanceSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = TaskInstance
-        fields = "__all__"
 
 
 # ViewSets define the view behavior.
@@ -76,7 +42,6 @@ class FlowDefinitionViewSet(viewsets.ModelViewSet):
         """
         增加一条信息
         """
-        print(request.data)
         result =  FlowDefinition.objects.create(**request.data)
         return Response(data=result)
 
