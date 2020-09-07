@@ -15,17 +15,8 @@ flow -> flow_bpmn -> flow_instance -> task_instance
 '''
 
 def generateTagNum():
-    now = datetime.now()
-    year = str(now.year-2000)
-    month = str(now.month)
-    day = str(now.day)
-    hour = str(now.hour)
-    min = str(now.minute)
-    sec = str(now.second)
-
-    str_time = ''.join([year,month,day,hour,min,sec])
-    return str_time
-    
+    fmt = '%y%m%d%H%M%S'
+    return datetime.now().strftime(fmt)
 
 class Base(models.Model):
     uuid = models.CharField(verbose_name="UUID", max_length=64, default=uuid.uuid1, editable=False, unique=True)
