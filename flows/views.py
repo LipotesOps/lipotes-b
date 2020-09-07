@@ -28,7 +28,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 # ViewSets define the view behavior.
 class FlowViewSet(viewsets.ModelViewSet):
     queryset = Flow.objects.all()
-    serializer_class = FlowSerializer
+    serializer_class = FlowSerializerReadOnly
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
@@ -47,6 +47,15 @@ class FlowViewSet(viewsets.ModelViewSet):
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+
+    # 此处区分请求的HTTP1.1方法
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.request.method in ('PUT', 'PATCH', 'POST'):
+            serializer_class = FlowSerializerWritable
+        if self.request.method == 'GET':
+            serializer_class = FlowSerializerReadOnly
+        return serializer_class
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -87,17 +96,23 @@ class FlowCategpryViewSet(viewsets.ModelViewSet):
 # ViewSets define the view behavior.
 class FlowBpmnViewSet(viewsets.ModelViewSet):
     queryset = FlowBpmn.objects.all()
-    serializer_class = FlowBpmnSerializer
+    serializer_class = FlowBpmnSerializerReadOnly
     pagination_class = StandardResultsSetPagination
 
+    # 此处区分请求的HTTP1.1方法
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.request.method in ('PUT', 'PATCH', 'POST'):
+            serializer_class = FlowBpmnSerializerWritable
+        if self.request.method == 'GET':
+            serializer_class = FlowBpmnSerializerReadOnly
+        return serializer_class
+
     def get_queryset(self):
-        id = self.request.query_params.get('id', None)
-        flow_uid = self.request.query_params.get('flow_uid', None)
-        if id is not None and flow_uid is not None:
-            queryset = self.queryset.filter(id=id, flow_uid=flow_uid)
-            return queryset
-        if id is not None:
-            queryset = self.queryset.filter(id=id)
+        # flow_uuid
+        flow = self.request.query_params.get('flow', None)
+        if flow is not None:
+            queryset = self.queryset.filter(flow=flow)
             return queryset
         return super().get_queryset()
 

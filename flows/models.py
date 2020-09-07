@@ -29,8 +29,8 @@ def generateTagNum():
 
 class Base(models.Model):
     uuid = models.CharField(verbose_name="UUID", max_length=64, default=uuid.uuid1, editable=False, unique=True)
-    ctime = models.DateTimeField(auto_now_add=True, help_text='创建时间')
-    mtime = models.DateTimeField(auto_now=True, help_text='修改时间')
+    ctime = models.DateTimeField(auto_now_add=True, help_text='创建时间', blank=True, null=True)
+    mtime = models.DateTimeField(auto_now=True, help_text='修改时间', blank=True, null=True)
     
     class Meta:
         abstract=True
@@ -39,8 +39,8 @@ class Base(models.Model):
 class Flow(Base):
     # FlowBaseInfo
     name = models.CharField(max_length=32, unique=True)
-    category = models.ForeignKey('FlowCategory', to_field='uuid', null=True, blank=True, on_delete=models.CASCADE, related_name='related_category') # 主表的字段删除时，和它有关的子表字段也删除
-    bpmn = models.ForeignKey('FlowBpmn', to_field='uuid', null=True, blank=True, on_delete=models.CASCADE, related_name='related_bpmn')
+    category = models.ForeignKey('FlowCategory', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='flows') # CASCADE 主表的字段删除时，和它有关的子表字段也删除
+    bpmn = models.ForeignKey('FlowBpmn', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='flows')
     # 自定义字段
     extend_fields = models.TextField(default={})
 
@@ -56,7 +56,6 @@ class Flow(Base):
 
 
 class FlowBpmn(Base):
-    uuid = models.CharField(verbose_name="UUID", max_length=64, default=uuid.uuid1, editable=False, unique=True)
     # FlowVersion
     status_choices = (
         ('draft', '草稿',),
@@ -66,7 +65,7 @@ class FlowBpmn(Base):
     )
     tag = models.CharField(max_length=32, default=generateTagNum, editable=False)
     content = models.TextField()
-    # flow = models.ForeignKey('Flow', to_field='uuid', null=True, blank=True, on_delete=models.CASCADE, related_name='related_flow')
+    flow = models.ForeignKey('Flow', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='related_flow')
     flowable_process_definition_id = models.CharField(max_length=64, null=True, unique=True, blank=True)
     status = models.CharField(max_length=32, default='draft', choices=status_choices)
 
@@ -82,7 +81,6 @@ class FlowBpmn(Base):
 
 
 class FlowCategory(Base):
-    uuid = models.CharField(verbose_name="UUID", max_length=64, default=uuid.uuid1, editable=False, unique=True)
 
     name = models.CharField(max_length=32, unique=True)
     # 定义model的元数据
@@ -113,7 +111,7 @@ class FlowInstance(Base):
         ordering = ['-id']
 
 
-class TaskInstance(models.Model):
+class TaskInstance(Base):
     # flowable_task_instance_id
     flowable_task_instance_id = models.CharField(max_length=64, unique=True)
     task_definition_key = models.CharField(max_length=32)
