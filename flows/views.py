@@ -34,7 +34,7 @@ class FlowViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         uuid = self.request.query_params.get('uuid', None)
         if uuid is not None:
-            queryset = self.queryset.filter(uuid=uuid)
+            queryset = self.queryset.filter(uuid=uuid) # objects 的 get 唯一匹配
             return queryset
         return super().get_queryset()
 
@@ -73,7 +73,8 @@ class FlowViewSet(viewsets.ModelViewSet):
         """
         list service
         """
-        queryset = self.queryset.filter(status='online')
+        # queryset = self.queryset.filter(bpmn__flowable_process_definition_id__isnull=False)
+        queryset = self.queryset.filter(bpmn__status__exact='deployed')
         queryset = self.filter_queryset(queryset)
 
         page = self.paginate_queryset(queryset)
