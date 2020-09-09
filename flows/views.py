@@ -59,7 +59,6 @@ class FlowViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
-
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -136,9 +135,9 @@ class FlowInstanceViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         serializer_class = self.serializer_class
         if self.request.method in ('PUT', 'PATCH', 'POST'):
-            serializer_class = FlowBpmnSerializerWritable
+            serializer_class = FlowInstanceSerializerWritable
         if self.request.method == 'GET':
-            serializer_class = FlowBpmnSerializerReadOnly
+            serializer_class = FlowInstanceSerializerReadOnly
         return serializer_class
 
 class TaskInstanceViewSet(viewsets.ModelViewSet):

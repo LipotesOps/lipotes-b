@@ -30,7 +30,6 @@ ALLOWED_HOSTS = [
     '*'
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -67,6 +66,24 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+# REST_FRAMEWORK_EXTENSIONS = {
+#     'DEFAULT_OBJECT_CACHE_KEY_FUNC':
+#       'rest_framework_extensions.utils.default_object_cache_key_func',
+#     'DEFAULT_LIST_CACHE_KEY_FUNC':
+#       'rest_framework_extensions.utils.default_list_cache_key_func',
+#     'DEFAULT_CACHE_ERRORS':False,
+# }
+
+# CACHES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#caches
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=10),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),
@@ -80,6 +97,7 @@ JWT_AUTH = {
 }
 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',
     'corsheaders.middleware.CorsMiddleware',# 默认
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -90,6 +108,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # cache middleware
+    # No, that’s not a typo: the “update” middleware must be first in the list, and the “fetch” middleware must be last. 
+    
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 # 跨域增加忽略
@@ -156,6 +179,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #     }
 # }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'lipotes-b',
+        'USER': 'lipotes',
+        'PASSWORD': '20200077Deep',
+        'HOST': '101.132.191.123',
+        'PORT': '3306',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -196,5 +229,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-from .settings_dev import *
