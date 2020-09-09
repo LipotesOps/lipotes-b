@@ -90,6 +90,7 @@ class FlowInstance(Base):
     start_user_id = models.CharField(max_length=32)
     # 保持和flowable时间一致
     start_time = models.DateTimeField(auto_now_add=False, help_text='创建时间')
+    flow_bpmn = models.ForeignKey('FlowBpmn', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='related_bpmn')
     
     # 定义model的元数据
     class Meta:
@@ -109,7 +110,8 @@ class TaskInstance(Base):
     # 节点名称
     name = models.CharField(max_length=32)
     # 同步flowable的创建时间
-    create_time = models.DateTimeField()
+    flowable_created_time = models.DateTimeField()
+    flow_instance = models.ForeignKey('FlowInstance', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='related_flow_instance')
 
     # 定义model的元数据
     class Meta:
