@@ -129,9 +129,17 @@ class FlowBpmnViewSet(viewsets.ModelViewSet):
 # ViewSets define the view behavior.
 class FlowInstanceViewSet(viewsets.ModelViewSet):
     queryset = FlowInstance.objects.all()
-    serializer_class = FlowInstanceSerializer
+    serializer_class = FlowInstanceSerializerReadOnly
     pagination_class = StandardResultsSetPagination
-
+    
+    # 此处区分请求的HTTP1.1方法
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.request.method in ('PUT', 'PATCH', 'POST'):
+            serializer_class = FlowBpmnSerializerWritable
+        if self.request.method == 'GET':
+            serializer_class = FlowBpmnSerializerReadOnly
+        return serializer_class
 
 class TaskInstanceViewSet(viewsets.ModelViewSet):
     queryset = TaskInstance.objects.all()
