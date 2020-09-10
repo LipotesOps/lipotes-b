@@ -6,6 +6,8 @@ from rest_framework import viewsets, pagination
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
+
 from .models import *
 from .serializers import *
 
@@ -26,7 +28,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 # ViewSets define the view behavior.
-class FlowViewSet(viewsets.ModelViewSet):
+class FlowViewSet(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Flow.objects.all()
     serializer_class = FlowSerializerReadOnly
     pagination_class = StandardResultsSetPagination

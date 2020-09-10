@@ -66,22 +66,35 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-# REST_FRAMEWORK_EXTENSIONS = {
-#     'DEFAULT_OBJECT_CACHE_KEY_FUNC':
-#       'rest_framework_extensions.utils.default_object_cache_key_func',
-#     'DEFAULT_LIST_CACHE_KEY_FUNC':
-#       'rest_framework_extensions.utils.default_list_cache_key_func',
-#     'DEFAULT_CACHE_ERRORS':False,
-# }
+REST_FRAMEWORK_EXTENSIONS = {
+    'DEFAULT_OBJECT_CACHE_KEY_FUNC':
+      'rest_framework_extensions.utils.default_object_cache_key_func',
+    'DEFAULT_LIST_CACHE_KEY_FUNC':
+      'rest_framework_extensions.utils.default_list_cache_key_func',
+    'DEFAULT_CACHE_ERRORS':False,
+}
 
 # CACHES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#     }
+# }
+
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
-    }
+    "default": {
+        "BACKEND": "redis_cache.RedisCache",
+        "LOCATION": "redis://:sOmE_sEcUrE_pAsS@101.132.191.123:6379/0",
+        "OPTIONS": {
+            "CONNECTION_POOL_CLASS": "redis.BlockingConnectionPool",
+            "CONNECTION_POOL_CLASS_KWARGS": {"max_connections": 50, "timeout": 20},
+            "MAX_CONNECTIONS": 1000,
+            "PICKLE_VERSION": -1,
+        },
+    },
 }
 
 SIMPLE_JWT = {

@@ -1,10 +1,12 @@
-from django.db.models.signals import pre_save
+from django.db.models.signals import post_save
 # from django.core.cache import caches
-from django.core.cache import cache # caches['default]
+from django.core.cache import cache, close_caches # caches['default']
 
-def callback(sender, **kwargs):
+
+def cache_clear(sender, **kwargs):
     cache.clear()
+    close_caches(**kwargs)
     print("xxoo_callback")
     print(sender, kwargs)
     print('_____________________________clear___________________________________')
-pre_save.connect(callback)
+post_save.connect(cache_clear)
