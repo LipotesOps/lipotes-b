@@ -142,5 +142,23 @@ class FlowInstanceViewSet(viewsets.ModelViewSet):
 
 class TaskInstanceViewSet(viewsets.ModelViewSet):
     queryset = TaskInstance.objects.all()
-    serializer_class = TaskInstanceSerializer
+    serializer_class = TaskInstanceSerializerReadOnly
     pagination_class = StandardResultsSetPagination
+    serializer_class_writable = TaskInstanceSerializerWritable
+
+    def get_queryset(self):
+        # task_uuid
+        uuid = self.request.query_params.get('uuid', None)
+        if uuid is not None:
+            queryset = self.queryset.filter(uuid=uuid)
+            return queryset
+        return super().get_queryset()
+    
+    # 此处区分请求的HTTP1.1方法
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.request.method in ('PUT', 'PATCH', 'POST'):
+            serializer_class = self.serializer_class_writable
+        if self.request.method == 'GET':
+            serializer_class = self.serializer_class
+        return serializer_class

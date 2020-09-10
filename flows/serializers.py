@@ -62,7 +62,14 @@ class FlowInstanceSerializerWritable(serializers.ModelSerializer):
         fields = "__all__"
 
 # Serializers define the API representation.
-class TaskInstanceSerializer(serializers.ModelSerializer):
+class TaskInstanceSerializerReadOnly(serializers.ModelSerializer):
+    class Meta:
+        model = TaskInstance
+        fields = "__all__"
+        depth =3
+
+# Serializers define the API representation.
+class TaskInstanceSerializerWritable(serializers.ModelSerializer):
     class Meta:
         model = TaskInstance
         fields = "__all__"
