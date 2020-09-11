@@ -28,7 +28,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 # ViewSets define the view behavior.
-class FlowViewSet(CacheResponseMixin, viewsets.ModelViewSet):
+class FlowViewSet(viewsets.ModelViewSet):
     queryset = Flow.objects.all()
     serializer_class = FlowSerializerReadOnly
     pagination_class = StandardResultsSetPagination
