@@ -16,6 +16,7 @@ import datetime
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+FLOWABLE_URL_PREFIX = 'http://101.132.191.123:8081/flowable-rest/service'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -42,8 +43,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'corsheaders',
-    'flows',
     'users',
+    'flows.apps.FlowsConfig',
+    # 'flows',
 ]
 
 REST_FRAMEWORK = {
@@ -159,6 +161,7 @@ CORS_ALLOW_HEADERS = (
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
+    'Cache-Control',
 )
 
 ROOT_URLCONF = 'config.urls'

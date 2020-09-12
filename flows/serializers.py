@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
 
-from .models import *
+from flows.models import *
 
 
 # Serializers define the API representation.

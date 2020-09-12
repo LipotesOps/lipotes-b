@@ -8,8 +8,8 @@ from rest_framework.response import Response
 
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
-from .models import *
-from .serializers import *
+from flows.models import *
+from flows.serializers import *
 
 from flowable_rest.flowable_rest import FlowableRest
 
