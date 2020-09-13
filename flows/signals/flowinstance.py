@@ -44,6 +44,7 @@ def post_start_event(instance, raw, **kwargs):
     resp = FR.request(uri='/runtime/tasks/{}'.format(instance.flowable_task_instance_id), method='post',data=action_data)
     if resp.status_code != 200:
         raise 'flowable err'
+    # move completed task to another done task model
     post_flowable_task_action.send(sender='flows.TaskInstance', instance=instance, raw=raw, created=True)
     pass
 
