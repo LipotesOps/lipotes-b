@@ -104,6 +104,8 @@ class FlowInstance(Base):
 
 
 class TaskInstance(Base):
+    # flowable process instance id
+    flowable_process_instance_id = models.CharField(max_length=64, null=True)
     # flowable_task_instance_id
     flowable_task_instance_id = models.CharField(max_length=64, unique=True)
     task_definition_key = models.CharField(max_length=32)
