@@ -86,6 +86,8 @@ class FlowCategory(Base):
 
 
 class FlowInstance(Base):
+    # 工单名称，发起时填写
+    name = models.CharField(max_length=64, null=True)
     flowable_process_instance_id = models.CharField(max_length=64, unique=True)
     start_user_id = models.CharField(max_length=32)
     # 保持和flowable时间一致
