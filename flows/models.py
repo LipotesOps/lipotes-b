@@ -14,9 +14,12 @@ flow -> flow_bpmn -> flow_instance -> task_instance
      -> flow_category
 '''
 
-def generateTagNum():
+def genTagNum():
     fmt = '%y%m%d%H%M%S'
     return datetime.now().strftime(fmt)
+
+def genOrderNum(prefix=''):
+    return prefix + genTagNum()
 
 class Base(models.Model):
     uuid = models.CharField(verbose_name="UUID", max_length=64, default=uuid.uuid1, editable=False, unique=True)
@@ -54,7 +57,7 @@ class FlowBpmn(Base):
         ('offline', '下线',),
         ('del', '删除',),
     )
-    tag = models.CharField(max_length=32, default=generateTagNum, editable=False)
+    tag = models.CharField(max_length=32, default=genTagNum, editable=False)
     content = models.TextField()
     flow = models.ForeignKey('Flow', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='related_flow')
     flowable_process_definition_id = models.CharField(max_length=64, null=True, unique=True, blank=True)
@@ -87,7 +90,8 @@ class FlowCategory(Base):
 
 class FlowInstance(Base):
     # 工单名称，发起时填写
-    name = models.CharField(max_length=64, null=True)
+    name = models.CharField(max_length=64)
+    num = models.CharField(default=genOrderNum, max_length=32, editable=False)
     flowable_process_instance_id = models.CharField(max_length=64, unique=True)
     start_user_id = models.CharField(max_length=32)
     # 保持和flowable时间一致

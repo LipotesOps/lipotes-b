@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('ctime', models.DateTimeField(auto_now_add=True, help_text='创建时间')),
                 ('mtime', models.DateTimeField(auto_now=True, help_text='修改时间')),
                 ('uuid', models.CharField(default=uuid.uuid1, editable=False, max_length=64, unique=True, verbose_name='UUID')),
-                ('tag', models.CharField(default=flows.models.generateTagNum, editable=False, max_length=32)),
+                ('tag', models.CharField(default=flows.models.genTagNum, editable=False, max_length=32)),
                 ('content', models.TextField()),
                 ('flowable_process_definition_id', models.CharField(blank=True, max_length=64, null=True, unique=True)),
                 ('status', models.CharField(choices=[('draft', '草稿'), ('online', '生效'), ('offline', '下线'), ('del', '删除')], default='draft', max_length=32)),
