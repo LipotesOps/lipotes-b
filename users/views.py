@@ -38,7 +38,8 @@ def getUserInfo(request):
     res = {
         "roles": ['admin'],
         "introduction": 'I am a super administrator',
-        "avatar": 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+        # "avatar": 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+        "avatar": 'https://media1.tenor.com/images/d89ffc48fde038c3083ab8c2280af2ca/tenor.gif?itemid=16099354',
         "name": 'Super Admin'
         },
     return Response(res, status.HTTP_200_OK)
