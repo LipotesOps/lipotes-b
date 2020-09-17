@@ -40,13 +40,20 @@ def post_start_event(instance, raw, **kwargs):
     '''
     if instance.task_definition_key !='start':
         return
+    if instance.status == 'completed':
+        return
     action_data = {"action": "complete"}
     resp = FR.request(uri='/runtime/tasks/{}'.format(instance.flowable_task_instance_id), method='post',data=action_data)
     if resp.status_code != 200:
-        raise 'flowable err'
-    # move completed task to another done task model
+        raise 'complete flowable task err'
+
+    # sync next flowable task
     post_flowable_task_action.send_robust(sender='flows.TaskInstance', instance=instance, raw=raw, created=True)
-    pass
+    
+    # 将第一个任务状态改为comleted
+    instance.status = 'completed'
+    instance.__dict__.update(instance.__dict__)
+    instance.save()
 
 # 查询两次，无flowable task 实例，则将当前工单标记为已完成
 def end_event(flowable_process_instance_id):

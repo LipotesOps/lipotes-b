@@ -14,6 +14,19 @@ flow -> flow_bpmn -> flow_instance -> task_instance
      -> flow_category
 '''
 
+FLOWBPMN_STATUS_CHOICES = (
+        ('draft', '草稿',),
+        ('deployed', '已部署',),
+        ('del', '删除',),
+    )
+
+TASKINSTANCE_STATUS_CHOICES = (
+        ('running', '进行中',),
+        ('completed', '已完成',),
+        ('rejected', '已拒绝',),
+        ('cancled', '已撤回',),
+    )
+
 def genTagNum():
     fmt = '%y%m%d%H%M%S'
     return datetime.now().strftime(fmt)
@@ -51,17 +64,11 @@ class Flow(Base):
 
 class FlowBpmn(Base):
     # FlowVersion
-    status_choices = (
-        ('draft', '草稿',),
-        ('online', '生效',),
-        ('offline', '下线',),
-        ('del', '删除',),
-    )
     tag = models.CharField(max_length=32, default=genTagNum, editable=False)
     content = models.TextField()
     flow = models.ForeignKey('Flow', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='related_flow')
     flowable_process_definition_id = models.CharField(max_length=64, null=True, unique=True, blank=True)
-    status = models.CharField(max_length=32, default='draft', choices=status_choices)
+    status = models.CharField(max_length=16, default='draft', choices=FLOWBPMN_STATUS_CHOICES)
 
     # 定义model的元数据
     class Meta:
@@ -111,6 +118,7 @@ class FlowInstance(Base):
 
 
 class TaskInstance(Base):
+    status = models.CharField(max_length=16, default='running', choices=TASKINSTANCE_STATUS_CHOICES)
     # flowable process instance id
     flowable_process_instance_id = models.CharField(max_length=64, null=True)
     # flowable_task_instance_id

@@ -153,6 +153,11 @@ class TaskInstanceViewSet(viewsets.ModelViewSet):
         if uuid is not None:
             queryset = self.queryset.filter(uuid=uuid)
             return queryset
+        
+        status =  self.request.query_params.get('status', None)
+        if status is not None:
+            queryset = self.queryset.filter(status=status)
+            return queryset
         return super().get_queryset()
     
     # 此处区分请求的HTTP1.1方法
@@ -170,6 +175,10 @@ class TaskInstanceViewSet(viewsets.ModelViewSet):
         excute a task instance action.
         """
         flowable_task_id = kwargs['pk']
+        task_instance = self.queryset.get(flowable_task_instance_id=flowable_task_id)
+        if task_instance.status == 'completed':
+            return Response(data='任务已完成，无须重复操作', status=500)
+
         data = {"action": "complete"}
         uri = '/runtime/tasks/{}'.format(flowable_task_id)
         resp = FR.request(uri=uri, method='post', data=data)
@@ -177,7 +186,10 @@ class TaskInstanceViewSet(viewsets.ModelViewSet):
             resp_data = resp.text
             return Response(data=resp_data if resp_data else 'complete flowable task error', status=resp.status_code)
         
-        task_instance = self.queryset.get(flowable_task_instance_id=flowable_task_id)
+        # 将第一个任务状态改为comleted
+        task_instance.status = 'completed'
+        task_instance.__dict__.update(task_instance.__dict__)
+        task_instance.save()
         post_flowable_task_action.send_robust(sender='flows.TaskInstance', instance=task_instance, raw='', created=True)
         resp_data = resp.text
         return Response(data=resp_data if resp_data else 'action done', status=resp.status_code)
