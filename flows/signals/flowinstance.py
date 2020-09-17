@@ -3,6 +3,7 @@ import json
 
 from django.dispatch import Signal
 
+from flows.models import FlowInstance
 from flowable_rest.flowable_rest import FR
 from flows.models import TaskInstance, FlowInstance
 from flows.signals import post_flowable_task_action
@@ -32,7 +33,7 @@ def post_start_flow_instance(instance, raw, **kwargs):
     task_instance.__dict__.update(task_instance.__dict__)
     task_instance.save()
 
-# 自动完成自一个task
+# 自动完成第一个task
 def post_start_event(instance, raw, **kwargs):
     '''
     如果是第一个task，则自动完成。
@@ -47,6 +48,16 @@ def post_start_event(instance, raw, **kwargs):
     post_flowable_task_action.send_robust(sender='flows.TaskInstance', instance=instance, raw=raw, created=True)
     pass
 
+# 查询两次，无flowable task 实例，则将当前工单标记为已完成
+def end_event(flowable_process_instance_id):
+    '''
+    将当前工单标记为已完成。
+    '''
+    query_obj = FlowInstance.objects.get(flowable_process_instance_id=flowable_process_instance_id)
+    query_obj.completed = True
+    query_obj.__dict__.update(query_obj.__dict__)
+    query_obj.save()
+
 def sync_next_flowable_task_instance(instance, raw, created, **kwargs):
     '''
     query next flowable task, and complete it
@@ -60,7 +71,17 @@ def sync_next_flowable_task_instance(instance, raw, created, **kwargs):
     flowable_tasks = json.loads(resp.text)['data']
     # 如果未查询到task直接返回。TODO
     if len(flowable_tasks) ==0:
-        return
+        # 查询flowable实例状态，是否已结合素
+        process_instance_resp = FR.getAProcessinstance(flowable_process_instance_id=flowable_process_instance_id)
+        instance_detail = json.loads(process_instance_resp.text)
+        if process_instance_resp.status_code ==404:
+            # 流程已结束
+            # todo
+            end_event(flowable_process_instance_id)
+            return
+        # 流程未结束
+        print('warning_______________________flowable_____________________________')
+        # sync_next_flowable_task_instance(instance, raw, created, **kwargs)
 
     # 循环创建查询到的flowable task
     for task in flowable_tasks:

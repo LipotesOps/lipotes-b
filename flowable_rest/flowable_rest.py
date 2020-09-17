@@ -51,12 +51,22 @@ class FlowableRest(object):
         query first stask and complete it
         '''
         if flowable_process_instance_id is None:
-            raise 'None flowable_process_instance_id'
+            raise 'Argument flowable_process_instance_id is required.'
 
         data = {'processInstanceId': flowable_process_instance_id}
         uri = '/query/tasks'
         method = 'post'
         return self.request(uri=uri, method=method, data=data)
+
+    def getAProcessinstance(self, flowable_process_instance_id=None):
+        '''
+        get a process instance detail.
+        '''
+        if flowable_process_instance_id is None:
+            raise 'Argument flowable_process_instance_id is required.'
+        uri = '/query/process-instance/{}'.format(flowable_process_instance_id)
+        method = 'get'
+        return self.request(uri=uri, method=method)
 
 
 FR = FlowableRest()

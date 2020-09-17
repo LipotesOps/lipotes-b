@@ -173,8 +173,9 @@ class TaskInstanceViewSet(viewsets.ModelViewSet):
         data = {"action": "complete"}
         uri = '/runtime/tasks/{}'.format(flowable_task_id)
         resp = FR.request(uri=uri, method='post', data=data)
-        # if resp.status_code!=200:
-            # raise 'flowable error'
+        if resp.status_code!=200:
+            resp_data = resp.text
+            return Response(data=resp_data if resp_data else 'complete flowable task error', status=resp.status_code)
         
         task_instance = self.queryset.get(flowable_task_instance_id=flowable_task_id)
         post_flowable_task_action.send_robust(sender='flows.TaskInstance', instance=task_instance, raw='', created=True)

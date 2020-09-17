@@ -89,6 +89,7 @@ class FlowCategory(Base):
 
 
 class FlowInstance(Base):
+    completed = models.BooleanField(default=False)
     # 工单名称，发起时填写
     name = models.CharField(max_length=64)
     num = models.CharField(default=genOrderNum, max_length=32, editable=False)
