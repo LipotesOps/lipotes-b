@@ -5,6 +5,7 @@ from requests.auth import HTTPBasicAuth
 
 from config.settings import local
 
+
 class FlowableRest(object):
 
     def __init__(self):
@@ -40,7 +41,7 @@ class FlowableRest(object):
         auth = HTTPBasicAuth(user, password)
         try:
             response = requests.request(method='POST', url=url, data=json.dumps(data), auth=auth, headers=headers)
-        except expression as identifier:
+        except Exception as identifier:
             return 500, "request flowable-rest err."
 
         return response.status_code, json.loads(response.text)
@@ -56,4 +57,6 @@ class FlowableRest(object):
         uri = '/query/tasks'
         method = 'post'
         return self.request(uri=uri, method=method, data=data)
-        
+
+
+FR = FlowableRest()

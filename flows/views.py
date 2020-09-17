@@ -1,19 +1,18 @@
 # Create your views here.
+import json
 
 from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework import viewsets, pagination
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 from flows.models import *
 from flows.serializers import *
+from flowable_rest.flowable_rest import FR
+from flows.signals import post_flowable_task_action
 
-from flowable_rest.flowable_rest import FlowableRest
-
-FR = FlowableRest()
 
 class LargeResultsSetPagination(PageNumberPagination):
     page_size = 10
@@ -164,3 +163,20 @@ class TaskInstanceViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             serializer_class = self.serializer_class
         return serializer_class
+    
+    @action(methods=['POST'], detail=True)
+    def complete(self, request, *args, **kwargs):
+        """
+        excute a task instance action.
+        """
+        flowable_task_id = kwargs['pk']
+        data = {"action": "complete"}
+        uri = '/runtime/tasks/{}'.format(flowable_task_id)
+        resp = FR.request(uri=uri, method='post', data=data)
+        # if resp.status_code!=200:
+            # raise 'flowable error'
+        
+        task_instance = self.queryset.get(flowable_task_instance_id=flowable_task_id)
+        post_flowable_task_action.send_robust(sender='flows.TaskInstance', instance=task_instance, raw='', created=True)
+        resp_data = resp.text
+        return Response(data=resp_data if resp_data else 'action done', status=resp.status_code)

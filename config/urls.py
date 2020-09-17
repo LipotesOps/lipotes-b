@@ -24,5 +24,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include('flows.urls')),
     path('users/', include('users.urls')),
-    path('api/docs/', schema_view),
+    path('swagger/docs/', schema_view),
 ]

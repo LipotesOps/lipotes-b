@@ -5,7 +5,6 @@ from django.db.models.signals import post_save
 from flows.signals import post_flowable_task_action
 
 
-
 class FlowsConfig(AppConfig):
     name = 'flows'
     verbose_name = 'A Much Better Name'
