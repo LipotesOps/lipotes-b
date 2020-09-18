@@ -13,6 +13,9 @@ def post_start_flow_instance(instance, raw, **kwargs):
     '''
     query first flowable task
     '''
+    # 已完成
+    if instance.completed:
+        return
 
     flowable_process_instance_id=instance.flowable_process_instance_id
     resp = FR.queryFirstTask(flowable_process_instance_id=flowable_process_instance_id)
@@ -92,15 +95,15 @@ def sync_next_flowable_task_instance(instance, raw, created, **kwargs):
 
     # 循环创建查询到的flowable task
     for task in flowable_tasks:
-        flowable_task_instance = flowable_tasks[0]
-
-        id = flowable_task_instance['id']
-        taskDefinitionKey = flowable_task_instance['taskDefinitionKey']
-        name = flowable_task_instance['name']
+        id = task['id']
+        taskDefinitionKey = task['taskDefinitionKey']
+        name = task['name']
         # flow_instance = instance.uuid
         flow_instance = instance.flow_instance
-        createTime = flowable_task_instance['createTime']
+        createTime = task['createTime']
         
-        task_instance = TaskInstance(flowable_task_instance_id=id, task_definition_key=taskDefinitionKey, flow_instance=flow_instance, name=name, flowable_created_time=createTime, flowable_process_instance_id=flowable_process_instance_id)
-        task_instance.__dict__.update(task_instance.__dict__)
-        task_instance.save()
+        # task_instance = TaskInstance(flowable_task_instance_id=id, task_definition_key=taskDefinitionKey, flow_instance=flow_instance, name=name, flowable_created_time=createTime, flowable_process_instance_id=flowable_process_instance_id)
+        # task_instance.__dict__.update(task_instance.__dict__)
+        # task_instance.save()
+
+        obj, created = TaskInstance.objects.get_or_create(flowable_task_instance_id=id, task_definition_key=taskDefinitionKey, flow_instance=flow_instance, name=name, flowable_created_time=createTime, flowable_process_instance_id=flowable_process_instance_id)
