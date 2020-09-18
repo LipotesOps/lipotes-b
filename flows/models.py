@@ -159,7 +159,7 @@ class Task(Base):
         verbose_name = "task"
         # human readable
         verbose_name_plural = 'tasks'
-        ordering = ['-id']
+        ordering = ['id']
 
 
 class Form(Base):

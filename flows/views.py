@@ -202,6 +202,10 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class_writable = TaskSerializerWritable
 
     def get_queryset(self):
+        flow_bpmn = self.request.query_params.get('flow_bpmn', None)
+        if flow_bpmn is not None:
+            queryset = self.queryset.filter(flow_bpmn=flow_bpmn)
+            return queryset
         return super().get_queryset()
 
     # 此处区分请求的HTTP1.1方法
