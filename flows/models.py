@@ -27,6 +27,12 @@ TASKINSTANCE_STATUS_CHOICES = (
         ('cancled', '已撤回',),
     )
 
+FORMCONTENT_STATUS_CHOICES = (
+        ('draft', '草稿',),
+        ('bound', '已绑定',),
+        ('del', '删除',),
+    )
+
 def genTagNum():
     fmt = '%y%m%d%H%M%S'
     return datetime.now().strftime(fmt)
@@ -98,7 +104,7 @@ class FlowCategory(Base):
 class FlowInstance(Base):
     completed = models.BooleanField(default=False)
     # 工单名称，发起时填写
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=32)
     num = models.CharField(default=genOrderNum, max_length=32, editable=False)
     flowable_process_instance_id = models.CharField(max_length=64, unique=True)
     start_user_id = models.CharField(max_length=32)
@@ -137,3 +143,54 @@ class TaskInstance(Base):
         # human readable
         verbose_name_plural = 'task_instances'
         ordering = ['-id']
+
+
+class Task(Base):
+    # task Definition
+    name = models.CharField(max_length=32)
+    task_definition_key = models.CharField(max_length=32)
+    # 已部署的bpmn，必填
+    flow_bpmn = models.ForeignKey('FlowBpmn', to_field='uuid', on_delete=models.PROTECT, related_name='task_related_bpmn')
+    form = models.ForeignKey('Form', to_field='uuid', on_delete=models.PROTECT, null=True, blank=True, related_name='task_related_form')
+
+    # 定义model的元数据
+    class Meta:
+        db_table = "task"
+        verbose_name = "task"
+        # human readable
+        verbose_name_plural = 'tasks'
+        ordering = ['-id']
+
+
+class Form(Base):
+    # from definition
+    name = models.CharField(max_length=32)
+    flow = models.ForeignKey('Flow', to_field='uuid', on_delete=models.PROTECT, null=True, blank=True, related_name='form_related_bpmn')
+    form_content = models.ForeignKey('FormContent', to_field='uuid', on_delete=models.PROTECT, null=True, blank=True, related_name='form_related_form_content')
+
+    # 定义model的元数据
+    class Meta:
+        db_table = "form"
+        verbose_name = "form"
+        # human readable
+        verbose_name_plural = 'forms'
+        ordering = ['-id']
+
+
+class FormContent(Base):
+    tag = models.CharField(max_length=32, default=genTagNum, editable=False)
+    content = models.TextField()
+    status = models.CharField(max_length=16, default='draft', choices=FORMCONTENT_STATUS_CHOICES)
+
+    # 定义model的元数据
+    class Meta:
+        db_table = "form_content"
+        verbose_name = "form_content"
+        # human readable
+        verbose_name_plural = 'form_contents'
+        ordering = ['-id']
+    
+    
+
+
+

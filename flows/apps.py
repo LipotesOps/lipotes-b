@@ -20,11 +20,14 @@ class FlowsConfig(AppConfig):
         from flows.signals.flowinstance import post_start_flow_instance
         from flows.signals.flowinstance import post_start_event
         from flows.signals.flowinstance import sync_next_flowable_task_instance
+        from flows.signals.flowinstance import sync_flowable_task_list
 
         # 同步第一个flowable task
-        post_save.connect(post_start_flow_instance, sender='flows.FlowInstance')
+        post_save.connect(post_start_flow_instance, sender='flows.FlowInstance', dispatch_uid='first_flowable_task')
         # 自动完成第一个flowable task
         post_save.connect(post_start_event, sender='flows.TaskInstance')
+        # 同步flowable task list
+        post_save.connect(sync_flowable_task_list, sender='flows.FlowBpmn')
 
         # post_flowable_task_action
         post_flowable_task_action.connect(sync_next_flowable_task_instance)

@@ -10,6 +10,9 @@ router.register(r'bpmn', FlowBpmnViewSet)
 router.register(r'category', FlowCategpryViewSet)
 router.register(r'flow-instance', FlowInstanceViewSet)
 router.register(r'task-instance', TaskInstanceViewSet)
+router.register(r'task', TaskViewSet)
+router.register(r'form', FormViewSet)
+router.register(r'form-content', FormContentViewSet)
 
 
 # Wire up our API using automatic URL routing.

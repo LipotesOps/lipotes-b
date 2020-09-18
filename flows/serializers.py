@@ -73,3 +73,42 @@ class TaskInstanceSerializerWritable(serializers.ModelSerializer):
     class Meta:
         model = TaskInstance
         fields = "__all__"
+
+# Serializers define the API representation.
+class TaskSerializerReadOnly(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = "__all__"
+        depth =2
+
+# Serializers define the API representation.
+class TaskSerializerWritable(serializers.ModelSerializer):
+    class Meta:
+        model = Task 
+        fields = "__all__"
+
+# Serializers define the API representation.
+class FormSerializerReadOnly(serializers.ModelSerializer):
+    class Meta:
+        model = Form
+        fields = "__all__"
+        depth =2
+
+# Serializers define the API representation.
+class FormSerializerWritable(serializers.ModelSerializer):
+    class Meta:
+        model = Form
+        fields = "__all__"
+
+# Serializers define the API representation.
+class FormContentSerializerReadOnly(serializers.ModelSerializer):
+    class Meta:
+        model = FormContent
+        fields = "__all__"
+        depth =2
+
+# Serializers define the API representation.
+class FormContentSerializerWritable(serializers.ModelSerializer):
+    class Meta:
+        model = FormContent
+        fields = "__all__"

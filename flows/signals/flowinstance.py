@@ -107,3 +107,28 @@ def sync_next_flowable_task_instance(instance, raw, created, **kwargs):
         # task_instance.save()
 
         obj, created = TaskInstance.objects.get_or_create(flowable_task_instance_id=id, task_definition_key=taskDefinitionKey, flow_instance=flow_instance, name=name, flowable_created_time=createTime, flowable_process_instance_id=flowable_process_instance_id)
+
+# deployed后，同步一次flowable的model信息，录入taskList，如果taskKey存在的，则继承已绑定的表单uuid
+# 同一FlowBpmn版本，只能同步task list一次。
+def sync_flowable_task_list(instance, raw, created, **kwargs):
+    '''
+    query next flowable task, and complete it
+    '''
+    # 尚未部署
+    if instance.status != 'deployed':
+        return
+
+    flowable_process_definition_id=instance.flowable_process_definition_id
+
+    resp = FR.request(uri='/repository/process-definitions/{processDefinitionId}/model'.format(processDefinitionId=flowable_process_definition_id), method='get',data={})
+    if resp.status_code != 200:
+        raise 'get flowable processDefinition model error'
+
+    flowElements = json.loads(resp.text)['mainProcess']['flowElements']
+    for task in flowElements:
+        # in 比has_key性能更好
+        # 根据formKey区分task
+        if 'formKey' not in task.keys():
+            continue
+        # todo: 创建对应的taskDefinition
+        pass

@@ -141,6 +141,7 @@ class FlowInstanceViewSet(viewsets.ModelViewSet):
             serializer_class = FlowInstanceSerializerReadOnly
         return serializer_class
 
+
 class TaskInstanceViewSet(viewsets.ModelViewSet):
     queryset = TaskInstance.objects.all()
     serializer_class = TaskInstanceSerializerReadOnly
@@ -193,3 +194,57 @@ class TaskInstanceViewSet(viewsets.ModelViewSet):
         post_flowable_task_action.send_robust(sender='flows.TaskInstance', instance=task_instance, raw='', created=True)
         resp_data = resp.text
         return Response(data=resp_data if resp_data else 'action done', status=resp.status_code)
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializerReadOnly
+    pagination_class = StandardResultsSetPagination
+    serializer_class_writable = TaskSerializerWritable
+
+    def get_queryset(self):
+        return super().get_queryset()
+
+    # 此处区分请求的HTTP1.1方法
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.request.method in ('PUT', 'PATCH', 'POST'):
+            serializer_class = self.serializer_class_writable
+        if self.request.method == 'GET':
+            serializer_class = self.serializer_class
+        return serializer_class
+
+class FormViewSet(viewsets.ModelViewSet):
+    queryset = Form.objects.all()
+    serializer_class = FormSerializerReadOnly
+    pagination_class = StandardResultsSetPagination
+    serializer_class_writable = FormSerializerWritable
+
+    def get_queryset(self):
+        return super().get_queryset()
+
+    # 此处区分请求的HTTP1.1方法
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.request.method in ('PUT', 'PATCH', 'POST'):
+            serializer_class = self.serializer_class_writable
+        if self.request.method == 'GET':
+            serializer_class = self.serializer_class
+        return serializer_class
+
+class FormContentViewSet(viewsets.ModelViewSet):
+    queryset = FormContent.objects.all()
+    serializer_class = FormContentSerializerReadOnly
+    pagination_class = StandardResultsSetPagination
+    serializer_class_writable = FormContentSerializerWritable
+
+    def get_queryset(self):
+        return super().get_queryset()
+
+    # 此处区分请求的HTTP1.1方法
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.request.method in ('PUT', 'PATCH', 'POST'):
+            serializer_class = self.serializer_class_writable
+        if self.request.method == 'GET':
+            serializer_class = self.serializer_class
+        return serializer_class
