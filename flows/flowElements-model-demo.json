@@ -1,0 +1,2980 @@
+{
+    "definitionsAttributes": {
+        "id": [
+            {
+                "name": "id",
+                "value": "sample-diagram",
+                "namespacePrefix": null,
+                "namespace": null
+            }
+        ],
+        "schemaLocation": [
+            {
+                "name": "schemaLocation",
+                "value": "http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd",
+                "namespacePrefix": "xsi",
+                "namespace": "http://www.w3.org/2001/XMLSchema-instance"
+            }
+        ]
+    },
+    "processes": [
+        {
+            "id": "New_process",
+            "xmlRowNumber": 3,
+            "xmlColumnNumber": 69,
+            "extensionElements": {},
+            "attributes": {},
+            "name": "网络设备变更",
+            "executable": true,
+            "documentation": null,
+            "ioSpecification": null,
+            "executionListeners": [],
+            "lanes": [],
+            "dataObjects": [],
+            "candidateStarterUsers": [],
+            "candidateStarterGroups": [],
+            "eventListeners": [],
+            "flowElementMap": {
+                "StartEvent_1": {
+                    "id": "StartEvent_1",
+                    "xmlRowNumber": 4,
+                    "xmlColumnNumber": 41,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_0tfnmoo",
+                            "xmlRowNumber": 7,
+                            "xmlColumnNumber": 88,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "StartEvent_1",
+                            "targetRef": "start",
+                            "skipExpression": null,
+                            "waypoints": [
+                                298,
+                                280,
+                                350,
+                                280
+                            ]
+                        }
+                    ],
+                    "eventDefinitions": [],
+                    "initiator": null,
+                    "formKey": null,
+                    "validateFormFields": null,
+                    "formProperties": [],
+                    "interrupting": true,
+                    "exclusive": true
+                },
+                "Flow_0tfnmoo": {
+                    "id": "Flow_0tfnmoo",
+                    "xmlRowNumber": 7,
+                    "xmlColumnNumber": 88,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "StartEvent_1",
+                    "targetRef": "start",
+                    "skipExpression": null,
+                    "waypoints": [
+                        298,
+                        280,
+                        350,
+                        280
+                    ]
+                },
+                "start": {
+                    "id": "start",
+                    "xmlRowNumber": 8,
+                    "xmlColumnNumber": 42,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": "申请",
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_0tfnmoo",
+                            "xmlRowNumber": 7,
+                            "xmlColumnNumber": 88,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "StartEvent_1",
+                            "targetRef": "start",
+                            "skipExpression": null,
+                            "waypoints": [
+                                298,
+                                280,
+                                350,
+                                280
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_0btwxer",
+                            "xmlRowNumber": 12,
+                            "xmlColumnNumber": 91,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "start",
+                            "targetRef": "Gateway_1npsoi3",
+                            "skipExpression": null,
+                            "waypoints": [
+                                450,
+                                280,
+                                505,
+                                280
+                            ]
+                        }
+                    ],
+                    "defaultFlow": null,
+                    "forCompensation": false,
+                    "loopCharacteristics": null,
+                    "ioSpecification": null,
+                    "dataInputAssociations": [],
+                    "dataOutputAssociations": [],
+                    "boundaryEvents": [],
+                    "failedJobRetryTimeCycleValue": null,
+                    "mapExceptions": [],
+                    "assignee": null,
+                    "owner": null,
+                    "priority": null,
+                    "formKey": null,
+                    "dueDate": null,
+                    "businessCalendarName": null,
+                    "category": null,
+                    "extensionId": null,
+                    "candidateUsers": [],
+                    "candidateGroups": [],
+                    "formProperties": [],
+                    "taskListeners": [],
+                    "skipExpression": null,
+                    "validateFormFields": null,
+                    "customUserIdentityLinks": {},
+                    "customGroupIdentityLinks": {},
+                    "customProperties": [],
+                    "extended": false,
+                    "exclusive": true
+                },
+                "Flow_0btwxer": {
+                    "id": "Flow_0btwxer",
+                    "xmlRowNumber": 12,
+                    "xmlColumnNumber": 91,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "start",
+                    "targetRef": "Gateway_1npsoi3",
+                    "skipExpression": null,
+                    "waypoints": [
+                        450,
+                        280,
+                        505,
+                        280
+                    ]
+                },
+                "Gateway_1npsoi3": {
+                    "id": "Gateway_1npsoi3",
+                    "xmlRowNumber": 13,
+                    "xmlColumnNumber": 49,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_0btwxer",
+                            "xmlRowNumber": 12,
+                            "xmlColumnNumber": 91,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "start",
+                            "targetRef": "Gateway_1npsoi3",
+                            "skipExpression": null,
+                            "waypoints": [
+                                450,
+                                280,
+                                505,
+                                280
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_1izl7db",
+                            "xmlRowNumber": 18,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1npsoi3",
+                            "targetRef": "Activity_1q02w2l",
+                            "skipExpression": null,
+                            "waypoints": [
+                                530,
+                                255,
+                                530,
+                                170,
+                                610,
+                                170
+                            ]
+                        },
+                        {
+                            "id": "Flow_1x6teag",
+                            "xmlRowNumber": 23,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1npsoi3",
+                            "targetRef": "Activity_1bx97vk",
+                            "skipExpression": null,
+                            "waypoints": [
+                                555,
+                                280,
+                                610,
+                                280
+                            ]
+                        }
+                    ],
+                    "defaultFlow": null,
+                    "exclusive": true
+                },
+                "Flow_1izl7db": {
+                    "id": "Flow_1izl7db",
+                    "xmlRowNumber": 18,
+                    "xmlColumnNumber": 102,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "Gateway_1npsoi3",
+                    "targetRef": "Activity_1q02w2l",
+                    "skipExpression": null,
+                    "waypoints": [
+                        530,
+                        255,
+                        530,
+                        170,
+                        610,
+                        170
+                    ]
+                },
+                "Activity_1q02w2l": {
+                    "id": "Activity_1q02w2l",
+                    "xmlRowNumber": 19,
+                    "xmlColumnNumber": 55,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": "财务审批",
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_1izl7db",
+                            "xmlRowNumber": 18,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1npsoi3",
+                            "targetRef": "Activity_1q02w2l",
+                            "skipExpression": null,
+                            "waypoints": [
+                                530,
+                                255,
+                                530,
+                                170,
+                                610,
+                                170
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_08gruua",
+                            "xmlRowNumber": 34,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Activity_1q02w2l",
+                            "targetRef": "Gateway_1c2tqn9",
+                            "skipExpression": null,
+                            "waypoints": [
+                                710,
+                                170,
+                                790,
+                                170,
+                                790,
+                                255
+                            ]
+                        }
+                    ],
+                    "defaultFlow": null,
+                    "forCompensation": false,
+                    "loopCharacteristics": null,
+                    "ioSpecification": null,
+                    "dataInputAssociations": [],
+                    "dataOutputAssociations": [],
+                    "boundaryEvents": [],
+                    "failedJobRetryTimeCycleValue": null,
+                    "mapExceptions": [],
+                    "assignee": null,
+                    "owner": null,
+                    "priority": null,
+                    "formKey": null,
+                    "dueDate": null,
+                    "businessCalendarName": null,
+                    "category": null,
+                    "extensionId": null,
+                    "candidateUsers": [],
+                    "candidateGroups": [],
+                    "formProperties": [],
+                    "taskListeners": [],
+                    "skipExpression": null,
+                    "validateFormFields": null,
+                    "customUserIdentityLinks": {},
+                    "customGroupIdentityLinks": {},
+                    "customProperties": [],
+                    "extended": false,
+                    "exclusive": true
+                },
+                "Flow_1x6teag": {
+                    "id": "Flow_1x6teag",
+                    "xmlRowNumber": 23,
+                    "xmlColumnNumber": 102,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "Gateway_1npsoi3",
+                    "targetRef": "Activity_1bx97vk",
+                    "skipExpression": null,
+                    "waypoints": [
+                        555,
+                        280,
+                        610,
+                        280
+                    ]
+                },
+                "Activity_1bx97vk": {
+                    "id": "Activity_1bx97vk",
+                    "xmlRowNumber": 24,
+                    "xmlColumnNumber": 55,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": "行政审批",
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_1x6teag",
+                            "xmlRowNumber": 23,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1npsoi3",
+                            "targetRef": "Activity_1bx97vk",
+                            "skipExpression": null,
+                            "waypoints": [
+                                555,
+                                280,
+                                610,
+                                280
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_0nfdey6",
+                            "xmlRowNumber": 28,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Activity_1bx97vk",
+                            "targetRef": "Gateway_1c2tqn9",
+                            "skipExpression": null,
+                            "waypoints": [
+                                710,
+                                280,
+                                765,
+                                280
+                            ]
+                        }
+                    ],
+                    "defaultFlow": null,
+                    "forCompensation": false,
+                    "loopCharacteristics": null,
+                    "ioSpecification": null,
+                    "dataInputAssociations": [],
+                    "dataOutputAssociations": [],
+                    "boundaryEvents": [],
+                    "failedJobRetryTimeCycleValue": null,
+                    "mapExceptions": [],
+                    "assignee": null,
+                    "owner": null,
+                    "priority": null,
+                    "formKey": null,
+                    "dueDate": null,
+                    "businessCalendarName": null,
+                    "category": null,
+                    "extensionId": null,
+                    "candidateUsers": [],
+                    "candidateGroups": [],
+                    "formProperties": [],
+                    "taskListeners": [],
+                    "skipExpression": null,
+                    "validateFormFields": null,
+                    "customUserIdentityLinks": {},
+                    "customGroupIdentityLinks": {},
+                    "customProperties": [],
+                    "extended": false,
+                    "exclusive": true
+                },
+                "Flow_0nfdey6": {
+                    "id": "Flow_0nfdey6",
+                    "xmlRowNumber": 28,
+                    "xmlColumnNumber": 102,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "Activity_1bx97vk",
+                    "targetRef": "Gateway_1c2tqn9",
+                    "skipExpression": null,
+                    "waypoints": [
+                        710,
+                        280,
+                        765,
+                        280
+                    ]
+                },
+                "Gateway_1c2tqn9": {
+                    "id": "Gateway_1c2tqn9",
+                    "xmlRowNumber": 29,
+                    "xmlColumnNumber": 49,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_0nfdey6",
+                            "xmlRowNumber": 28,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Activity_1bx97vk",
+                            "targetRef": "Gateway_1c2tqn9",
+                            "skipExpression": null,
+                            "waypoints": [
+                                710,
+                                280,
+                                765,
+                                280
+                            ]
+                        },
+                        {
+                            "id": "Flow_08gruua",
+                            "xmlRowNumber": 34,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Activity_1q02w2l",
+                            "targetRef": "Gateway_1c2tqn9",
+                            "skipExpression": null,
+                            "waypoints": [
+                                710,
+                                170,
+                                790,
+                                170,
+                                790,
+                                255
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_0nzcthb",
+                            "xmlRowNumber": 38,
+                            "xmlColumnNumber": 99,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1c2tqn9",
+                            "targetRef": "Event_0so8dnl",
+                            "skipExpression": null,
+                            "waypoints": [
+                                815,
+                                280,
+                                872,
+                                280
+                            ]
+                        }
+                    ],
+                    "defaultFlow": null,
+                    "exclusive": true
+                },
+                "Flow_08gruua": {
+                    "id": "Flow_08gruua",
+                    "xmlRowNumber": 34,
+                    "xmlColumnNumber": 102,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "Activity_1q02w2l",
+                    "targetRef": "Gateway_1c2tqn9",
+                    "skipExpression": null,
+                    "waypoints": [
+                        710,
+                        170,
+                        790,
+                        170,
+                        790,
+                        255
+                    ]
+                },
+                "Event_0so8dnl": {
+                    "id": "Event_0so8dnl",
+                    "xmlRowNumber": 35,
+                    "xmlColumnNumber": 40,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_0nzcthb",
+                            "xmlRowNumber": 38,
+                            "xmlColumnNumber": 99,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1c2tqn9",
+                            "targetRef": "Event_0so8dnl",
+                            "skipExpression": null,
+                            "waypoints": [
+                                815,
+                                280,
+                                872,
+                                280
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [],
+                    "eventDefinitions": [],
+                    "exclusive": true
+                },
+                "Flow_0nzcthb": {
+                    "id": "Flow_0nzcthb",
+                    "xmlRowNumber": 38,
+                    "xmlColumnNumber": 99,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "Gateway_1c2tqn9",
+                    "targetRef": "Event_0so8dnl",
+                    "skipExpression": null,
+                    "waypoints": [
+                        815,
+                        280,
+                        872,
+                        280
+                    ]
+                }
+            },
+            "initialFlowElement": {
+                "id": "StartEvent_1",
+                "xmlRowNumber": 4,
+                "xmlColumnNumber": 41,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_0tfnmoo",
+                        "xmlRowNumber": 7,
+                        "xmlColumnNumber": 88,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "StartEvent_1",
+                        "targetRef": "start",
+                        "skipExpression": null,
+                        "waypoints": [
+                            298,
+                            280,
+                            350,
+                            280
+                        ]
+                    }
+                ],
+                "eventDefinitions": [],
+                "initiator": null,
+                "formKey": null,
+                "validateFormFields": null,
+                "formProperties": [],
+                "interrupting": true,
+                "exclusive": true
+            },
+            "enableEagerExecutionTreeFetching": false,
+            "flowElements": [
+                {
+                    "id": "StartEvent_1",
+                    "xmlRowNumber": 4,
+                    "xmlColumnNumber": 41,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_0tfnmoo",
+                            "xmlRowNumber": 7,
+                            "xmlColumnNumber": 88,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "StartEvent_1",
+                            "targetRef": "start",
+                            "skipExpression": null,
+                            "waypoints": [
+                                298,
+                                280,
+                                350,
+                                280
+                            ]
+                        }
+                    ],
+                    "eventDefinitions": [],
+                    "initiator": null,
+                    "formKey": null,
+                    "validateFormFields": null,
+                    "formProperties": [],
+                    "interrupting": true,
+                    "exclusive": true
+                },
+                {
+                    "id": "Flow_0tfnmoo",
+                    "xmlRowNumber": 7,
+                    "xmlColumnNumber": 88,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "StartEvent_1",
+                    "targetRef": "start",
+                    "skipExpression": null,
+                    "waypoints": [
+                        298,
+                        280,
+                        350,
+                        280
+                    ]
+                },
+                {
+                    "id": "start",
+                    "xmlRowNumber": 8,
+                    "xmlColumnNumber": 42,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": "申请",
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_0tfnmoo",
+                            "xmlRowNumber": 7,
+                            "xmlColumnNumber": 88,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "StartEvent_1",
+                            "targetRef": "start",
+                            "skipExpression": null,
+                            "waypoints": [
+                                298,
+                                280,
+                                350,
+                                280
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_0btwxer",
+                            "xmlRowNumber": 12,
+                            "xmlColumnNumber": 91,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "start",
+                            "targetRef": "Gateway_1npsoi3",
+                            "skipExpression": null,
+                            "waypoints": [
+                                450,
+                                280,
+                                505,
+                                280
+                            ]
+                        }
+                    ],
+                    "defaultFlow": null,
+                    "forCompensation": false,
+                    "loopCharacteristics": null,
+                    "ioSpecification": null,
+                    "dataInputAssociations": [],
+                    "dataOutputAssociations": [],
+                    "boundaryEvents": [],
+                    "failedJobRetryTimeCycleValue": null,
+                    "mapExceptions": [],
+                    "assignee": null,
+                    "owner": null,
+                    "priority": null,
+                    "formKey": null,
+                    "dueDate": null,
+                    "businessCalendarName": null,
+                    "category": null,
+                    "extensionId": null,
+                    "candidateUsers": [],
+                    "candidateGroups": [],
+                    "formProperties": [],
+                    "taskListeners": [],
+                    "skipExpression": null,
+                    "validateFormFields": null,
+                    "customUserIdentityLinks": {},
+                    "customGroupIdentityLinks": {},
+                    "customProperties": [],
+                    "extended": false,
+                    "exclusive": true
+                },
+                {
+                    "id": "Flow_0btwxer",
+                    "xmlRowNumber": 12,
+                    "xmlColumnNumber": 91,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "start",
+                    "targetRef": "Gateway_1npsoi3",
+                    "skipExpression": null,
+                    "waypoints": [
+                        450,
+                        280,
+                        505,
+                        280
+                    ]
+                },
+                {
+                    "id": "Gateway_1npsoi3",
+                    "xmlRowNumber": 13,
+                    "xmlColumnNumber": 49,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_0btwxer",
+                            "xmlRowNumber": 12,
+                            "xmlColumnNumber": 91,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "start",
+                            "targetRef": "Gateway_1npsoi3",
+                            "skipExpression": null,
+                            "waypoints": [
+                                450,
+                                280,
+                                505,
+                                280
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_1izl7db",
+                            "xmlRowNumber": 18,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1npsoi3",
+                            "targetRef": "Activity_1q02w2l",
+                            "skipExpression": null,
+                            "waypoints": [
+                                530,
+                                255,
+                                530,
+                                170,
+                                610,
+                                170
+                            ]
+                        },
+                        {
+                            "id": "Flow_1x6teag",
+                            "xmlRowNumber": 23,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1npsoi3",
+                            "targetRef": "Activity_1bx97vk",
+                            "skipExpression": null,
+                            "waypoints": [
+                                555,
+                                280,
+                                610,
+                                280
+                            ]
+                        }
+                    ],
+                    "defaultFlow": null,
+                    "exclusive": true
+                },
+                {
+                    "id": "Flow_1izl7db",
+                    "xmlRowNumber": 18,
+                    "xmlColumnNumber": 102,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "Gateway_1npsoi3",
+                    "targetRef": "Activity_1q02w2l",
+                    "skipExpression": null,
+                    "waypoints": [
+                        530,
+                        255,
+                        530,
+                        170,
+                        610,
+                        170
+                    ]
+                },
+                {
+                    "id": "Activity_1q02w2l",
+                    "xmlRowNumber": 19,
+                    "xmlColumnNumber": 55,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": "财务审批",
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_1izl7db",
+                            "xmlRowNumber": 18,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1npsoi3",
+                            "targetRef": "Activity_1q02w2l",
+                            "skipExpression": null,
+                            "waypoints": [
+                                530,
+                                255,
+                                530,
+                                170,
+                                610,
+                                170
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_08gruua",
+                            "xmlRowNumber": 34,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Activity_1q02w2l",
+                            "targetRef": "Gateway_1c2tqn9",
+                            "skipExpression": null,
+                            "waypoints": [
+                                710,
+                                170,
+                                790,
+                                170,
+                                790,
+                                255
+                            ]
+                        }
+                    ],
+                    "defaultFlow": null,
+                    "forCompensation": false,
+                    "loopCharacteristics": null,
+                    "ioSpecification": null,
+                    "dataInputAssociations": [],
+                    "dataOutputAssociations": [],
+                    "boundaryEvents": [],
+                    "failedJobRetryTimeCycleValue": null,
+                    "mapExceptions": [],
+                    "assignee": null,
+                    "owner": null,
+                    "priority": null,
+                    "formKey": null,
+                    "dueDate": null,
+                    "businessCalendarName": null,
+                    "category": null,
+                    "extensionId": null,
+                    "candidateUsers": [],
+                    "candidateGroups": [],
+                    "formProperties": [],
+                    "taskListeners": [],
+                    "skipExpression": null,
+                    "validateFormFields": null,
+                    "customUserIdentityLinks": {},
+                    "customGroupIdentityLinks": {},
+                    "customProperties": [],
+                    "extended": false,
+                    "exclusive": true
+                },
+                {
+                    "id": "Flow_1x6teag",
+                    "xmlRowNumber": 23,
+                    "xmlColumnNumber": 102,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "Gateway_1npsoi3",
+                    "targetRef": "Activity_1bx97vk",
+                    "skipExpression": null,
+                    "waypoints": [
+                        555,
+                        280,
+                        610,
+                        280
+                    ]
+                },
+                {
+                    "id": "Activity_1bx97vk",
+                    "xmlRowNumber": 24,
+                    "xmlColumnNumber": 55,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": "行政审批",
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_1x6teag",
+                            "xmlRowNumber": 23,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1npsoi3",
+                            "targetRef": "Activity_1bx97vk",
+                            "skipExpression": null,
+                            "waypoints": [
+                                555,
+                                280,
+                                610,
+                                280
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_0nfdey6",
+                            "xmlRowNumber": 28,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Activity_1bx97vk",
+                            "targetRef": "Gateway_1c2tqn9",
+                            "skipExpression": null,
+                            "waypoints": [
+                                710,
+                                280,
+                                765,
+                                280
+                            ]
+                        }
+                    ],
+                    "defaultFlow": null,
+                    "forCompensation": false,
+                    "loopCharacteristics": null,
+                    "ioSpecification": null,
+                    "dataInputAssociations": [],
+                    "dataOutputAssociations": [],
+                    "boundaryEvents": [],
+                    "failedJobRetryTimeCycleValue": null,
+                    "mapExceptions": [],
+                    "assignee": null,
+                    "owner": null,
+                    "priority": null,
+                    "formKey": null,
+                    "dueDate": null,
+                    "businessCalendarName": null,
+                    "category": null,
+                    "extensionId": null,
+                    "candidateUsers": [],
+                    "candidateGroups": [],
+                    "formProperties": [],
+                    "taskListeners": [],
+                    "skipExpression": null,
+                    "validateFormFields": null,
+                    "customUserIdentityLinks": {},
+                    "customGroupIdentityLinks": {},
+                    "customProperties": [],
+                    "extended": false,
+                    "exclusive": true
+                },
+                {
+                    "id": "Flow_0nfdey6",
+                    "xmlRowNumber": 28,
+                    "xmlColumnNumber": 102,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "Activity_1bx97vk",
+                    "targetRef": "Gateway_1c2tqn9",
+                    "skipExpression": null,
+                    "waypoints": [
+                        710,
+                        280,
+                        765,
+                        280
+                    ]
+                },
+                {
+                    "id": "Gateway_1c2tqn9",
+                    "xmlRowNumber": 29,
+                    "xmlColumnNumber": 49,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_0nfdey6",
+                            "xmlRowNumber": 28,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Activity_1bx97vk",
+                            "targetRef": "Gateway_1c2tqn9",
+                            "skipExpression": null,
+                            "waypoints": [
+                                710,
+                                280,
+                                765,
+                                280
+                            ]
+                        },
+                        {
+                            "id": "Flow_08gruua",
+                            "xmlRowNumber": 34,
+                            "xmlColumnNumber": 102,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Activity_1q02w2l",
+                            "targetRef": "Gateway_1c2tqn9",
+                            "skipExpression": null,
+                            "waypoints": [
+                                710,
+                                170,
+                                790,
+                                170,
+                                790,
+                                255
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [
+                        {
+                            "id": "Flow_0nzcthb",
+                            "xmlRowNumber": 38,
+                            "xmlColumnNumber": 99,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1c2tqn9",
+                            "targetRef": "Event_0so8dnl",
+                            "skipExpression": null,
+                            "waypoints": [
+                                815,
+                                280,
+                                872,
+                                280
+                            ]
+                        }
+                    ],
+                    "defaultFlow": null,
+                    "exclusive": true
+                },
+                {
+                    "id": "Flow_08gruua",
+                    "xmlRowNumber": 34,
+                    "xmlColumnNumber": 102,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "Activity_1q02w2l",
+                    "targetRef": "Gateway_1c2tqn9",
+                    "skipExpression": null,
+                    "waypoints": [
+                        710,
+                        170,
+                        790,
+                        170,
+                        790,
+                        255
+                    ]
+                },
+                {
+                    "id": "Event_0so8dnl",
+                    "xmlRowNumber": 35,
+                    "xmlColumnNumber": 40,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "asynchronous": false,
+                    "notExclusive": false,
+                    "incomingFlows": [
+                        {
+                            "id": "Flow_0nzcthb",
+                            "xmlRowNumber": 38,
+                            "xmlColumnNumber": 99,
+                            "extensionElements": {},
+                            "attributes": {},
+                            "name": null,
+                            "documentation": null,
+                            "executionListeners": [],
+                            "conditionExpression": null,
+                            "sourceRef": "Gateway_1c2tqn9",
+                            "targetRef": "Event_0so8dnl",
+                            "skipExpression": null,
+                            "waypoints": [
+                                815,
+                                280,
+                                872,
+                                280
+                            ]
+                        }
+                    ],
+                    "outgoingFlows": [],
+                    "eventDefinitions": [],
+                    "exclusive": true
+                },
+                {
+                    "id": "Flow_0nzcthb",
+                    "xmlRowNumber": 38,
+                    "xmlColumnNumber": 99,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "Gateway_1c2tqn9",
+                    "targetRef": "Event_0so8dnl",
+                    "skipExpression": null,
+                    "waypoints": [
+                        815,
+                        280,
+                        872,
+                        280
+                    ]
+                }
+            ],
+            "artifacts": []
+        }
+    ],
+    "locationMap": {
+        "StartEvent_1": {
+            "x": 262.0,
+            "y": 262.0,
+            "height": 36.0,
+            "width": 36.0,
+            "element": null,
+            "expanded": null,
+            "xmlRowNumber": 72,
+            "xmlColumnNumber": 81
+        },
+        "start": {
+            "x": 350.0,
+            "y": 240.0,
+            "height": 80.0,
+            "width": 100.0,
+            "element": null,
+            "expanded": null,
+            "xmlRowNumber": 75,
+            "xmlColumnNumber": 70
+        },
+        "Gateway_1npsoi3": {
+            "x": 505.0,
+            "y": 255.0,
+            "height": 50.0,
+            "width": 50.0,
+            "element": null,
+            "expanded": null,
+            "xmlRowNumber": 78,
+            "xmlColumnNumber": 79
+        },
+        "Activity_1q02w2l": {
+            "x": 610.0,
+            "y": 130.0,
+            "height": 80.0,
+            "width": 100.0,
+            "element": null,
+            "expanded": null,
+            "xmlRowNumber": 81,
+            "xmlColumnNumber": 81
+        },
+        "Activity_1bx97vk": {
+            "x": 610.0,
+            "y": 240.0,
+            "height": 80.0,
+            "width": 100.0,
+            "element": null,
+            "expanded": null,
+            "xmlRowNumber": 84,
+            "xmlColumnNumber": 81
+        },
+        "Gateway_1c2tqn9": {
+            "x": 765.0,
+            "y": 255.0,
+            "height": 50.0,
+            "width": 50.0,
+            "element": null,
+            "expanded": null,
+            "xmlRowNumber": 87,
+            "xmlColumnNumber": 79
+        },
+        "Event_0so8dnl": {
+            "x": 872.0,
+            "y": 262.0,
+            "height": 36.0,
+            "width": 36.0,
+            "element": null,
+            "expanded": null,
+            "xmlRowNumber": 90,
+            "xmlColumnNumber": 75
+        }
+    },
+    "labelLocationMap": {},
+    "flowLocationMap": {
+        "Flow_0nzcthb": [
+            {
+                "x": 815.0,
+                "y": 280.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 43,
+                "xmlColumnNumber": 40
+            },
+            {
+                "x": 872.0,
+                "y": 280.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 44,
+                "xmlColumnNumber": 40
+            }
+        ],
+        "Flow_08gruua": [
+            {
+                "x": 710.0,
+                "y": 170.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 47,
+                "xmlColumnNumber": 40
+            },
+            {
+                "x": 790.0,
+                "y": 170.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 48,
+                "xmlColumnNumber": 40
+            },
+            {
+                "x": 790.0,
+                "y": 255.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 49,
+                "xmlColumnNumber": 40
+            }
+        ],
+        "Flow_0nfdey6": [
+            {
+                "x": 710.0,
+                "y": 280.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 52,
+                "xmlColumnNumber": 40
+            },
+            {
+                "x": 765.0,
+                "y": 280.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 53,
+                "xmlColumnNumber": 40
+            }
+        ],
+        "Flow_1x6teag": [
+            {
+                "x": 555.0,
+                "y": 280.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 56,
+                "xmlColumnNumber": 40
+            },
+            {
+                "x": 610.0,
+                "y": 280.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 57,
+                "xmlColumnNumber": 40
+            }
+        ],
+        "Flow_1izl7db": [
+            {
+                "x": 530.0,
+                "y": 255.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 60,
+                "xmlColumnNumber": 40
+            },
+            {
+                "x": 530.0,
+                "y": 170.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 61,
+                "xmlColumnNumber": 40
+            },
+            {
+                "x": 610.0,
+                "y": 170.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 62,
+                "xmlColumnNumber": 40
+            }
+        ],
+        "Flow_0btwxer": [
+            {
+                "x": 450.0,
+                "y": 280.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 65,
+                "xmlColumnNumber": 40
+            },
+            {
+                "x": 505.0,
+                "y": 280.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 66,
+                "xmlColumnNumber": 40
+            }
+        ],
+        "Flow_0tfnmoo": [
+            {
+                "x": 298.0,
+                "y": 280.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 69,
+                "xmlColumnNumber": 40
+            },
+            {
+                "x": 350.0,
+                "y": 280.0,
+                "height": 0.0,
+                "width": 0.0,
+                "element": null,
+                "expanded": null,
+                "xmlRowNumber": 70,
+                "xmlColumnNumber": 40
+            }
+        ]
+    },
+    "signals": [],
+    "pools": [],
+    "imports": [],
+    "interfaces": [],
+    "globalArtifacts": [],
+    "resources": [],
+    "targetNamespace": "http://bpmn.io/schema/bpmn",
+    "sourceSystemId": "网络设备变更.bpmn20.xml",
+    "userTaskFormTypes": null,
+    "startEventFormTypes": null,
+    "errors": {},
+    "messageFlows": {},
+    "messages": [],
+    "escalations": [],
+    "itemDefinitions": {},
+    "dataStores": {},
+    "mainProcess": {
+        "id": "New_process",
+        "xmlRowNumber": 3,
+        "xmlColumnNumber": 69,
+        "extensionElements": {},
+        "attributes": {},
+        "name": "网络设备变更",
+        "executable": true,
+        "documentation": null,
+        "ioSpecification": null,
+        "executionListeners": [],
+        "lanes": [],
+        "dataObjects": [],
+        "candidateStarterUsers": [],
+        "candidateStarterGroups": [],
+        "eventListeners": [],
+        "flowElementMap": {
+            "StartEvent_1": {
+                "id": "StartEvent_1",
+                "xmlRowNumber": 4,
+                "xmlColumnNumber": 41,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_0tfnmoo",
+                        "xmlRowNumber": 7,
+                        "xmlColumnNumber": 88,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "StartEvent_1",
+                        "targetRef": "start",
+                        "skipExpression": null,
+                        "waypoints": [
+                            298,
+                            280,
+                            350,
+                            280
+                        ]
+                    }
+                ],
+                "eventDefinitions": [],
+                "initiator": null,
+                "formKey": null,
+                "validateFormFields": null,
+                "formProperties": [],
+                "interrupting": true,
+                "exclusive": true
+            },
+            "Flow_0tfnmoo": {
+                "id": "Flow_0tfnmoo",
+                "xmlRowNumber": 7,
+                "xmlColumnNumber": 88,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "StartEvent_1",
+                "targetRef": "start",
+                "skipExpression": null,
+                "waypoints": [
+                    298,
+                    280,
+                    350,
+                    280
+                ]
+            },
+            "start": {
+                "id": "start",
+                "xmlRowNumber": 8,
+                "xmlColumnNumber": 42,
+                "extensionElements": {},
+                "attributes": {},
+                "name": "申请",
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_0tfnmoo",
+                        "xmlRowNumber": 7,
+                        "xmlColumnNumber": 88,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "StartEvent_1",
+                        "targetRef": "start",
+                        "skipExpression": null,
+                        "waypoints": [
+                            298,
+                            280,
+                            350,
+                            280
+                        ]
+                    }
+                ],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_0btwxer",
+                        "xmlRowNumber": 12,
+                        "xmlColumnNumber": 91,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "start",
+                        "targetRef": "Gateway_1npsoi3",
+                        "skipExpression": null,
+                        "waypoints": [
+                            450,
+                            280,
+                            505,
+                            280
+                        ]
+                    }
+                ],
+                "defaultFlow": null,
+                "forCompensation": false,
+                "loopCharacteristics": null,
+                "ioSpecification": null,
+                "dataInputAssociations": [],
+                "dataOutputAssociations": [],
+                "boundaryEvents": [],
+                "failedJobRetryTimeCycleValue": null,
+                "mapExceptions": [],
+                "assignee": null,
+                "owner": null,
+                "priority": null,
+                "formKey": null,
+                "dueDate": null,
+                "businessCalendarName": null,
+                "category": null,
+                "extensionId": null,
+                "candidateUsers": [],
+                "candidateGroups": [],
+                "formProperties": [],
+                "taskListeners": [],
+                "skipExpression": null,
+                "validateFormFields": null,
+                "customUserIdentityLinks": {},
+                "customGroupIdentityLinks": {},
+                "customProperties": [],
+                "extended": false,
+                "exclusive": true
+            },
+            "Flow_0btwxer": {
+                "id": "Flow_0btwxer",
+                "xmlRowNumber": 12,
+                "xmlColumnNumber": 91,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "start",
+                "targetRef": "Gateway_1npsoi3",
+                "skipExpression": null,
+                "waypoints": [
+                    450,
+                    280,
+                    505,
+                    280
+                ]
+            },
+            "Gateway_1npsoi3": {
+                "id": "Gateway_1npsoi3",
+                "xmlRowNumber": 13,
+                "xmlColumnNumber": 49,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_0btwxer",
+                        "xmlRowNumber": 12,
+                        "xmlColumnNumber": 91,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "start",
+                        "targetRef": "Gateway_1npsoi3",
+                        "skipExpression": null,
+                        "waypoints": [
+                            450,
+                            280,
+                            505,
+                            280
+                        ]
+                    }
+                ],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_1izl7db",
+                        "xmlRowNumber": 18,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1npsoi3",
+                        "targetRef": "Activity_1q02w2l",
+                        "skipExpression": null,
+                        "waypoints": [
+                            530,
+                            255,
+                            530,
+                            170,
+                            610,
+                            170
+                        ]
+                    },
+                    {
+                        "id": "Flow_1x6teag",
+                        "xmlRowNumber": 23,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1npsoi3",
+                        "targetRef": "Activity_1bx97vk",
+                        "skipExpression": null,
+                        "waypoints": [
+                            555,
+                            280,
+                            610,
+                            280
+                        ]
+                    }
+                ],
+                "defaultFlow": null,
+                "exclusive": true
+            },
+            "Flow_1izl7db": {
+                "id": "Flow_1izl7db",
+                "xmlRowNumber": 18,
+                "xmlColumnNumber": 102,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "Gateway_1npsoi3",
+                "targetRef": "Activity_1q02w2l",
+                "skipExpression": null,
+                "waypoints": [
+                    530,
+                    255,
+                    530,
+                    170,
+                    610,
+                    170
+                ]
+            },
+            "Activity_1q02w2l": {
+                "id": "Activity_1q02w2l",
+                "xmlRowNumber": 19,
+                "xmlColumnNumber": 55,
+                "extensionElements": {},
+                "attributes": {},
+                "name": "财务审批",
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_1izl7db",
+                        "xmlRowNumber": 18,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1npsoi3",
+                        "targetRef": "Activity_1q02w2l",
+                        "skipExpression": null,
+                        "waypoints": [
+                            530,
+                            255,
+                            530,
+                            170,
+                            610,
+                            170
+                        ]
+                    }
+                ],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_08gruua",
+                        "xmlRowNumber": 34,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Activity_1q02w2l",
+                        "targetRef": "Gateway_1c2tqn9",
+                        "skipExpression": null,
+                        "waypoints": [
+                            710,
+                            170,
+                            790,
+                            170,
+                            790,
+                            255
+                        ]
+                    }
+                ],
+                "defaultFlow": null,
+                "forCompensation": false,
+                "loopCharacteristics": null,
+                "ioSpecification": null,
+                "dataInputAssociations": [],
+                "dataOutputAssociations": [],
+                "boundaryEvents": [],
+                "failedJobRetryTimeCycleValue": null,
+                "mapExceptions": [],
+                "assignee": null,
+                "owner": null,
+                "priority": null,
+                "formKey": null,
+                "dueDate": null,
+                "businessCalendarName": null,
+                "category": null,
+                "extensionId": null,
+                "candidateUsers": [],
+                "candidateGroups": [],
+                "formProperties": [],
+                "taskListeners": [],
+                "skipExpression": null,
+                "validateFormFields": null,
+                "customUserIdentityLinks": {},
+                "customGroupIdentityLinks": {},
+                "customProperties": [],
+                "extended": false,
+                "exclusive": true
+            },
+            "Flow_1x6teag": {
+                "id": "Flow_1x6teag",
+                "xmlRowNumber": 23,
+                "xmlColumnNumber": 102,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "Gateway_1npsoi3",
+                "targetRef": "Activity_1bx97vk",
+                "skipExpression": null,
+                "waypoints": [
+                    555,
+                    280,
+                    610,
+                    280
+                ]
+            },
+            "Activity_1bx97vk": {
+                "id": "Activity_1bx97vk",
+                "xmlRowNumber": 24,
+                "xmlColumnNumber": 55,
+                "extensionElements": {},
+                "attributes": {},
+                "name": "行政审批",
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_1x6teag",
+                        "xmlRowNumber": 23,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1npsoi3",
+                        "targetRef": "Activity_1bx97vk",
+                        "skipExpression": null,
+                        "waypoints": [
+                            555,
+                            280,
+                            610,
+                            280
+                        ]
+                    }
+                ],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_0nfdey6",
+                        "xmlRowNumber": 28,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Activity_1bx97vk",
+                        "targetRef": "Gateway_1c2tqn9",
+                        "skipExpression": null,
+                        "waypoints": [
+                            710,
+                            280,
+                            765,
+                            280
+                        ]
+                    }
+                ],
+                "defaultFlow": null,
+                "forCompensation": false,
+                "loopCharacteristics": null,
+                "ioSpecification": null,
+                "dataInputAssociations": [],
+                "dataOutputAssociations": [],
+                "boundaryEvents": [],
+                "failedJobRetryTimeCycleValue": null,
+                "mapExceptions": [],
+                "assignee": null,
+                "owner": null,
+                "priority": null,
+                "formKey": null,
+                "dueDate": null,
+                "businessCalendarName": null,
+                "category": null,
+                "extensionId": null,
+                "candidateUsers": [],
+                "candidateGroups": [],
+                "formProperties": [],
+                "taskListeners": [],
+                "skipExpression": null,
+                "validateFormFields": null,
+                "customUserIdentityLinks": {},
+                "customGroupIdentityLinks": {},
+                "customProperties": [],
+                "extended": false,
+                "exclusive": true
+            },
+            "Flow_0nfdey6": {
+                "id": "Flow_0nfdey6",
+                "xmlRowNumber": 28,
+                "xmlColumnNumber": 102,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "Activity_1bx97vk",
+                "targetRef": "Gateway_1c2tqn9",
+                "skipExpression": null,
+                "waypoints": [
+                    710,
+                    280,
+                    765,
+                    280
+                ]
+            },
+            "Gateway_1c2tqn9": {
+                "id": "Gateway_1c2tqn9",
+                "xmlRowNumber": 29,
+                "xmlColumnNumber": 49,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_0nfdey6",
+                        "xmlRowNumber": 28,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Activity_1bx97vk",
+                        "targetRef": "Gateway_1c2tqn9",
+                        "skipExpression": null,
+                        "waypoints": [
+                            710,
+                            280,
+                            765,
+                            280
+                        ]
+                    },
+                    {
+                        "id": "Flow_08gruua",
+                        "xmlRowNumber": 34,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Activity_1q02w2l",
+                        "targetRef": "Gateway_1c2tqn9",
+                        "skipExpression": null,
+                        "waypoints": [
+                            710,
+                            170,
+                            790,
+                            170,
+                            790,
+                            255
+                        ]
+                    }
+                ],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_0nzcthb",
+                        "xmlRowNumber": 38,
+                        "xmlColumnNumber": 99,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1c2tqn9",
+                        "targetRef": "Event_0so8dnl",
+                        "skipExpression": null,
+                        "waypoints": [
+                            815,
+                            280,
+                            872,
+                            280
+                        ]
+                    }
+                ],
+                "defaultFlow": null,
+                "exclusive": true
+            },
+            "Flow_08gruua": {
+                "id": "Flow_08gruua",
+                "xmlRowNumber": 34,
+                "xmlColumnNumber": 102,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "Activity_1q02w2l",
+                "targetRef": "Gateway_1c2tqn9",
+                "skipExpression": null,
+                "waypoints": [
+                    710,
+                    170,
+                    790,
+                    170,
+                    790,
+                    255
+                ]
+            },
+            "Event_0so8dnl": {
+                "id": "Event_0so8dnl",
+                "xmlRowNumber": 35,
+                "xmlColumnNumber": 40,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_0nzcthb",
+                        "xmlRowNumber": 38,
+                        "xmlColumnNumber": 99,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1c2tqn9",
+                        "targetRef": "Event_0so8dnl",
+                        "skipExpression": null,
+                        "waypoints": [
+                            815,
+                            280,
+                            872,
+                            280
+                        ]
+                    }
+                ],
+                "outgoingFlows": [],
+                "eventDefinitions": [],
+                "exclusive": true
+            },
+            "Flow_0nzcthb": {
+                "id": "Flow_0nzcthb",
+                "xmlRowNumber": 38,
+                "xmlColumnNumber": 99,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "Gateway_1c2tqn9",
+                "targetRef": "Event_0so8dnl",
+                "skipExpression": null,
+                "waypoints": [
+                    815,
+                    280,
+                    872,
+                    280
+                ]
+            }
+        },
+        "initialFlowElement": {
+            "id": "StartEvent_1",
+            "xmlRowNumber": 4,
+            "xmlColumnNumber": 41,
+            "extensionElements": {},
+            "attributes": {},
+            "name": null,
+            "documentation": null,
+            "executionListeners": [],
+            "asynchronous": false,
+            "notExclusive": false,
+            "incomingFlows": [],
+            "outgoingFlows": [
+                {
+                    "id": "Flow_0tfnmoo",
+                    "xmlRowNumber": 7,
+                    "xmlColumnNumber": 88,
+                    "extensionElements": {},
+                    "attributes": {},
+                    "name": null,
+                    "documentation": null,
+                    "executionListeners": [],
+                    "conditionExpression": null,
+                    "sourceRef": "StartEvent_1",
+                    "targetRef": "start",
+                    "skipExpression": null,
+                    "waypoints": [
+                        298,
+                        280,
+                        350,
+                        280
+                    ]
+                }
+            ],
+            "eventDefinitions": [],
+            "initiator": null,
+            "formKey": null,
+            "validateFormFields": null,
+            "formProperties": [],
+            "interrupting": true,
+            "exclusive": true
+        },
+        "enableEagerExecutionTreeFetching": false,
+        "flowElements": [
+            {
+                "id": "StartEvent_1",
+                "xmlRowNumber": 4,
+                "xmlColumnNumber": 41,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_0tfnmoo",
+                        "xmlRowNumber": 7,
+                        "xmlColumnNumber": 88,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "StartEvent_1",
+                        "targetRef": "start",
+                        "skipExpression": null,
+                        "waypoints": [
+                            298,
+                            280,
+                            350,
+                            280
+                        ]
+                    }
+                ],
+                "eventDefinitions": [],
+                "initiator": null,
+                "formKey": null,
+                "validateFormFields": null,
+                "formProperties": [],
+                "interrupting": true,
+                "exclusive": true
+            },
+            {
+                "id": "Flow_0tfnmoo",
+                "xmlRowNumber": 7,
+                "xmlColumnNumber": 88,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "StartEvent_1",
+                "targetRef": "start",
+                "skipExpression": null,
+                "waypoints": [
+                    298,
+                    280,
+                    350,
+                    280
+                ]
+            },
+            {
+                "id": "start",
+                "xmlRowNumber": 8,
+                "xmlColumnNumber": 42,
+                "extensionElements": {},
+                "attributes": {},
+                "name": "申请",
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_0tfnmoo",
+                        "xmlRowNumber": 7,
+                        "xmlColumnNumber": 88,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "StartEvent_1",
+                        "targetRef": "start",
+                        "skipExpression": null,
+                        "waypoints": [
+                            298,
+                            280,
+                            350,
+                            280
+                        ]
+                    }
+                ],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_0btwxer",
+                        "xmlRowNumber": 12,
+                        "xmlColumnNumber": 91,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "start",
+                        "targetRef": "Gateway_1npsoi3",
+                        "skipExpression": null,
+                        "waypoints": [
+                            450,
+                            280,
+                            505,
+                            280
+                        ]
+                    }
+                ],
+                "defaultFlow": null,
+                "forCompensation": false,
+                "loopCharacteristics": null,
+                "ioSpecification": null,
+                "dataInputAssociations": [],
+                "dataOutputAssociations": [],
+                "boundaryEvents": [],
+                "failedJobRetryTimeCycleValue": null,
+                "mapExceptions": [],
+                "assignee": null,
+                "owner": null,
+                "priority": null,
+                "formKey": null,
+                "dueDate": null,
+                "businessCalendarName": null,
+                "category": null,
+                "extensionId": null,
+                "candidateUsers": [],
+                "candidateGroups": [],
+                "formProperties": [],
+                "taskListeners": [],
+                "skipExpression": null,
+                "validateFormFields": null,
+                "customUserIdentityLinks": {},
+                "customGroupIdentityLinks": {},
+                "customProperties": [],
+                "extended": false,
+                "exclusive": true
+            },
+            {
+                "id": "Flow_0btwxer",
+                "xmlRowNumber": 12,
+                "xmlColumnNumber": 91,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "start",
+                "targetRef": "Gateway_1npsoi3",
+                "skipExpression": null,
+                "waypoints": [
+                    450,
+                    280,
+                    505,
+                    280
+                ]
+            },
+            {
+                "id": "Gateway_1npsoi3",
+                "xmlRowNumber": 13,
+                "xmlColumnNumber": 49,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_0btwxer",
+                        "xmlRowNumber": 12,
+                        "xmlColumnNumber": 91,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "start",
+                        "targetRef": "Gateway_1npsoi3",
+                        "skipExpression": null,
+                        "waypoints": [
+                            450,
+                            280,
+                            505,
+                            280
+                        ]
+                    }
+                ],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_1izl7db",
+                        "xmlRowNumber": 18,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1npsoi3",
+                        "targetRef": "Activity_1q02w2l",
+                        "skipExpression": null,
+                        "waypoints": [
+                            530,
+                            255,
+                            530,
+                            170,
+                            610,
+                            170
+                        ]
+                    },
+                    {
+                        "id": "Flow_1x6teag",
+                        "xmlRowNumber": 23,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1npsoi3",
+                        "targetRef": "Activity_1bx97vk",
+                        "skipExpression": null,
+                        "waypoints": [
+                            555,
+                            280,
+                            610,
+                            280
+                        ]
+                    }
+                ],
+                "defaultFlow": null,
+                "exclusive": true
+            },
+            {
+                "id": "Flow_1izl7db",
+                "xmlRowNumber": 18,
+                "xmlColumnNumber": 102,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "Gateway_1npsoi3",
+                "targetRef": "Activity_1q02w2l",
+                "skipExpression": null,
+                "waypoints": [
+                    530,
+                    255,
+                    530,
+                    170,
+                    610,
+                    170
+                ]
+            },
+            {
+                "id": "Activity_1q02w2l",
+                "xmlRowNumber": 19,
+                "xmlColumnNumber": 55,
+                "extensionElements": {},
+                "attributes": {},
+                "name": "财务审批",
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_1izl7db",
+                        "xmlRowNumber": 18,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1npsoi3",
+                        "targetRef": "Activity_1q02w2l",
+                        "skipExpression": null,
+                        "waypoints": [
+                            530,
+                            255,
+                            530,
+                            170,
+                            610,
+                            170
+                        ]
+                    }
+                ],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_08gruua",
+                        "xmlRowNumber": 34,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Activity_1q02w2l",
+                        "targetRef": "Gateway_1c2tqn9",
+                        "skipExpression": null,
+                        "waypoints": [
+                            710,
+                            170,
+                            790,
+                            170,
+                            790,
+                            255
+                        ]
+                    }
+                ],
+                "defaultFlow": null,
+                "forCompensation": false,
+                "loopCharacteristics": null,
+                "ioSpecification": null,
+                "dataInputAssociations": [],
+                "dataOutputAssociations": [],
+                "boundaryEvents": [],
+                "failedJobRetryTimeCycleValue": null,
+                "mapExceptions": [],
+                "assignee": null,
+                "owner": null,
+                "priority": null,
+                "formKey": null,
+                "dueDate": null,
+                "businessCalendarName": null,
+                "category": null,
+                "extensionId": null,
+                "candidateUsers": [],
+                "candidateGroups": [],
+                "formProperties": [],
+                "taskListeners": [],
+                "skipExpression": null,
+                "validateFormFields": null,
+                "customUserIdentityLinks": {},
+                "customGroupIdentityLinks": {},
+                "customProperties": [],
+                "extended": false,
+                "exclusive": true
+            },
+            {
+                "id": "Flow_1x6teag",
+                "xmlRowNumber": 23,
+                "xmlColumnNumber": 102,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "Gateway_1npsoi3",
+                "targetRef": "Activity_1bx97vk",
+                "skipExpression": null,
+                "waypoints": [
+                    555,
+                    280,
+                    610,
+                    280
+                ]
+            },
+            {
+                "id": "Activity_1bx97vk",
+                "xmlRowNumber": 24,
+                "xmlColumnNumber": 55,
+                "extensionElements": {},
+                "attributes": {},
+                "name": "行政审批",
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_1x6teag",
+                        "xmlRowNumber": 23,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1npsoi3",
+                        "targetRef": "Activity_1bx97vk",
+                        "skipExpression": null,
+                        "waypoints": [
+                            555,
+                            280,
+                            610,
+                            280
+                        ]
+                    }
+                ],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_0nfdey6",
+                        "xmlRowNumber": 28,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Activity_1bx97vk",
+                        "targetRef": "Gateway_1c2tqn9",
+                        "skipExpression": null,
+                        "waypoints": [
+                            710,
+                            280,
+                            765,
+                            280
+                        ]
+                    }
+                ],
+                "defaultFlow": null,
+                "forCompensation": false,
+                "loopCharacteristics": null,
+                "ioSpecification": null,
+                "dataInputAssociations": [],
+                "dataOutputAssociations": [],
+                "boundaryEvents": [],
+                "failedJobRetryTimeCycleValue": null,
+                "mapExceptions": [],
+                "assignee": null,
+                "owner": null,
+                "priority": null,
+                "formKey": null,
+                "dueDate": null,
+                "businessCalendarName": null,
+                "category": null,
+                "extensionId": null,
+                "candidateUsers": [],
+                "candidateGroups": [],
+                "formProperties": [],
+                "taskListeners": [],
+                "skipExpression": null,
+                "validateFormFields": null,
+                "customUserIdentityLinks": {},
+                "customGroupIdentityLinks": {},
+                "customProperties": [],
+                "extended": false,
+                "exclusive": true
+            },
+            {
+                "id": "Flow_0nfdey6",
+                "xmlRowNumber": 28,
+                "xmlColumnNumber": 102,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "Activity_1bx97vk",
+                "targetRef": "Gateway_1c2tqn9",
+                "skipExpression": null,
+                "waypoints": [
+                    710,
+                    280,
+                    765,
+                    280
+                ]
+            },
+            {
+                "id": "Gateway_1c2tqn9",
+                "xmlRowNumber": 29,
+                "xmlColumnNumber": 49,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_0nfdey6",
+                        "xmlRowNumber": 28,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Activity_1bx97vk",
+                        "targetRef": "Gateway_1c2tqn9",
+                        "skipExpression": null,
+                        "waypoints": [
+                            710,
+                            280,
+                            765,
+                            280
+                        ]
+                    },
+                    {
+                        "id": "Flow_08gruua",
+                        "xmlRowNumber": 34,
+                        "xmlColumnNumber": 102,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Activity_1q02w2l",
+                        "targetRef": "Gateway_1c2tqn9",
+                        "skipExpression": null,
+                        "waypoints": [
+                            710,
+                            170,
+                            790,
+                            170,
+                            790,
+                            255
+                        ]
+                    }
+                ],
+                "outgoingFlows": [
+                    {
+                        "id": "Flow_0nzcthb",
+                        "xmlRowNumber": 38,
+                        "xmlColumnNumber": 99,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1c2tqn9",
+                        "targetRef": "Event_0so8dnl",
+                        "skipExpression": null,
+                        "waypoints": [
+                            815,
+                            280,
+                            872,
+                            280
+                        ]
+                    }
+                ],
+                "defaultFlow": null,
+                "exclusive": true
+            },
+            {
+                "id": "Flow_08gruua",
+                "xmlRowNumber": 34,
+                "xmlColumnNumber": 102,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "Activity_1q02w2l",
+                "targetRef": "Gateway_1c2tqn9",
+                "skipExpression": null,
+                "waypoints": [
+                    710,
+                    170,
+                    790,
+                    170,
+                    790,
+                    255
+                ]
+            },
+            {
+                "id": "Event_0so8dnl",
+                "xmlRowNumber": 35,
+                "xmlColumnNumber": 40,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "asynchronous": false,
+                "notExclusive": false,
+                "incomingFlows": [
+                    {
+                        "id": "Flow_0nzcthb",
+                        "xmlRowNumber": 38,
+                        "xmlColumnNumber": 99,
+                        "extensionElements": {},
+                        "attributes": {},
+                        "name": null,
+                        "documentation": null,
+                        "executionListeners": [],
+                        "conditionExpression": null,
+                        "sourceRef": "Gateway_1c2tqn9",
+                        "targetRef": "Event_0so8dnl",
+                        "skipExpression": null,
+                        "waypoints": [
+                            815,
+                            280,
+                            872,
+                            280
+                        ]
+                    }
+                ],
+                "outgoingFlows": [],
+                "eventDefinitions": [],
+                "exclusive": true
+            },
+            {
+                "id": "Flow_0nzcthb",
+                "xmlRowNumber": 38,
+                "xmlColumnNumber": 99,
+                "extensionElements": {},
+                "attributes": {},
+                "name": null,
+                "documentation": null,
+                "executionListeners": [],
+                "conditionExpression": null,
+                "sourceRef": "Gateway_1c2tqn9",
+                "targetRef": "Event_0so8dnl",
+                "skipExpression": null,
+                "waypoints": [
+                    815,
+                    280,
+                    872,
+                    280
+                ]
+            }
+        ],
+        "artifacts": []
+    },
+    "namespaces": {
+        "xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "bpmn2": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+        "bpmndi": "http://www.omg.org/spec/BPMN/20100524/DI",
+        "dc": "http://www.omg.org/spec/DD/20100524/DC",
+        "di": "http://www.omg.org/spec/DD/20100524/DI"
+    }
+}
