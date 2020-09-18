@@ -5,7 +5,7 @@ from django.dispatch import Signal
 
 from flows.models import FlowInstance
 from flowable_rest.flowable_rest import FR
-from flows.models import TaskInstance, FlowInstance
+from flows.models import TaskInstance, FlowInstance, Task
 from flows.signals import post_flowable_task_action
 
 
@@ -131,4 +131,12 @@ def sync_flowable_task_list(instance, raw, created, **kwargs):
         if 'formKey' not in task.keys():
             continue
         # todo: 创建对应的taskDefinition
+        name = task["name"]
+        task_definition_key = task['id']
+        flow_bpmn = instance
+
+        obj, created = Task.objects.get_or_create(name=name, task_definition_key=task_definition_key, flow_bpmn=flow_bpmn)
         pass
+
+
+        
