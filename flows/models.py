@@ -181,6 +181,7 @@ class FormContent(Base):
     tag = models.CharField(max_length=32, default=genTagNum, editable=False)
     content = models.TextField()
     status = models.CharField(max_length=16, default='draft', choices=FORMCONTENT_STATUS_CHOICES)
+    form = models.ForeignKey('Form', to_field='uuid', on_delete=models.PROTECT, null=True, blank=True, related_name='form_content_related_form')
 
     # 定义model的元数据
     class Meta:
