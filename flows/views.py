@@ -224,6 +224,10 @@ class FormViewSet(viewsets.ModelViewSet):
     serializer_class_writable = FormSerializerWritable
 
     def get_queryset(self):
+        uuid = self.request.query_params.get('uuid', None)
+        if uuid is not None:
+            queryset = self.queryset.filter(uuid=uuid)
+            return queryset
         return super().get_queryset()
 
     # 此处区分请求的HTTP1.1方法
