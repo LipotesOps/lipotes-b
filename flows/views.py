@@ -246,6 +246,10 @@ class FormContentViewSet(viewsets.ModelViewSet):
     serializer_class_writable = FormContentSerializerWritable
 
     def get_queryset(self):
+        form = self.request.query_params.get('form', None)
+        if form is not None:
+            queryset = self.queryset.filter(form=form)
+            return queryset
         return super().get_queryset()
 
     # 此处区分请求的HTTP1.1方法
