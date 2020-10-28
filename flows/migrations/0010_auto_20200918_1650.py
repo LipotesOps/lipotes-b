@@ -9,72 +9,194 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('flows', '0009_auto_20200917_2135'),
+        ("flows", "0009_auto_20200917_2135"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Form',
+            name="Form",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.CharField(default=uuid.uuid1, editable=False, max_length=64, unique=True, verbose_name='UUID')),
-                ('ctime', models.DateTimeField(auto_now_add=True, help_text='创建时间', null=True)),
-                ('mtime', models.DateTimeField(auto_now=True, help_text='修改时间', null=True)),
-                ('name', models.CharField(max_length=32)),
-                ('flow', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='form_related_bpmn', to='flows.Flow', to_field='uuid')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "uuid",
+                    models.CharField(
+                        default=uuid.uuid1,
+                        editable=False,
+                        max_length=64,
+                        unique=True,
+                        verbose_name="UUID",
+                    ),
+                ),
+                (
+                    "ctime",
+                    models.DateTimeField(
+                        auto_now_add=True, help_text="创建时间", null=True
+                    ),
+                ),
+                (
+                    "mtime",
+                    models.DateTimeField(auto_now=True, help_text="修改时间", null=True),
+                ),
+                ("name", models.CharField(max_length=32)),
+                (
+                    "flow",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="form_related_bpmn",
+                        to="flows.Flow",
+                        to_field="uuid",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'form',
-                'verbose_name_plural': 'forms',
-                'db_table': 'form',
-                'ordering': ['-id'],
+                "verbose_name": "form",
+                "verbose_name_plural": "forms",
+                "db_table": "form",
+                "ordering": ["-id"],
             },
         ),
         migrations.CreateModel(
-            name='FormContent',
+            name="FormContent",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.CharField(default=uuid.uuid1, editable=False, max_length=64, unique=True, verbose_name='UUID')),
-                ('ctime', models.DateTimeField(auto_now_add=True, help_text='创建时间', null=True)),
-                ('mtime', models.DateTimeField(auto_now=True, help_text='修改时间', null=True)),
-                ('tag', models.CharField(default=flows.models.genTagNum, editable=False, max_length=32)),
-                ('content', models.TextField()),
-                ('status', models.CharField(choices=[('draft', '草稿'), ('bound', '已绑定'), ('del', '删除')], default='draft', max_length=16)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "uuid",
+                    models.CharField(
+                        default=uuid.uuid1,
+                        editable=False,
+                        max_length=64,
+                        unique=True,
+                        verbose_name="UUID",
+                    ),
+                ),
+                (
+                    "ctime",
+                    models.DateTimeField(
+                        auto_now_add=True, help_text="创建时间", null=True
+                    ),
+                ),
+                (
+                    "mtime",
+                    models.DateTimeField(auto_now=True, help_text="修改时间", null=True),
+                ),
+                (
+                    "tag",
+                    models.CharField(
+                        default=flows.models.genTagNum, editable=False, max_length=32
+                    ),
+                ),
+                ("content", models.TextField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("draft", "草稿"), ("bound", "已绑定"), ("del", "删除")],
+                        default="draft",
+                        max_length=16,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'form_content',
-                'verbose_name_plural': 'form_contents',
-                'db_table': 'form_content',
-                'ordering': ['-id'],
+                "verbose_name": "form_content",
+                "verbose_name_plural": "form_contents",
+                "db_table": "form_content",
+                "ordering": ["-id"],
             },
         ),
         migrations.AlterField(
-            model_name='flowinstance',
-            name='name',
+            model_name="flowinstance",
+            name="name",
             field=models.CharField(max_length=32),
         ),
         migrations.CreateModel(
-            name='Task',
+            name="Task",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.CharField(default=uuid.uuid1, editable=False, max_length=64, unique=True, verbose_name='UUID')),
-                ('ctime', models.DateTimeField(auto_now_add=True, help_text='创建时间', null=True)),
-                ('mtime', models.DateTimeField(auto_now=True, help_text='修改时间', null=True)),
-                ('name', models.CharField(max_length=32)),
-                ('task_definition_key', models.CharField(max_length=32)),
-                ('flow_bpmn', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='task_related_bpmn', to='flows.FlowBpmn', to_field='uuid')),
-                ('form', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='task_related_form', to='flows.Form', to_field='uuid')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "uuid",
+                    models.CharField(
+                        default=uuid.uuid1,
+                        editable=False,
+                        max_length=64,
+                        unique=True,
+                        verbose_name="UUID",
+                    ),
+                ),
+                (
+                    "ctime",
+                    models.DateTimeField(
+                        auto_now_add=True, help_text="创建时间", null=True
+                    ),
+                ),
+                (
+                    "mtime",
+                    models.DateTimeField(auto_now=True, help_text="修改时间", null=True),
+                ),
+                ("name", models.CharField(max_length=32)),
+                ("task_definition_key", models.CharField(max_length=32)),
+                (
+                    "flow_bpmn",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="task_related_bpmn",
+                        to="flows.FlowBpmn",
+                        to_field="uuid",
+                    ),
+                ),
+                (
+                    "form",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="task_related_form",
+                        to="flows.Form",
+                        to_field="uuid",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'task',
-                'verbose_name_plural': 'tasks',
-                'db_table': 'task',
-                'ordering': ['-id'],
+                "verbose_name": "task",
+                "verbose_name_plural": "tasks",
+                "db_table": "task",
+                "ordering": ["-id"],
             },
         ),
         migrations.AddField(
-            model_name='form',
-            name='form_content',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='form_related_form_content', to='flows.FormContent', to_field='uuid'),
+            model_name="form",
+            name="form_content",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="form_related_form_content",
+                to="flows.FormContent",
+                to_field="uuid",
+            ),
         ),
     ]

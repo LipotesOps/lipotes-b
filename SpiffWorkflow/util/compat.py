@@ -9,7 +9,6 @@ except ImportError:
     from threading import Lock
 
     class mutex(object):
-
         def __init__(self):
             self.lock = Lock()
 

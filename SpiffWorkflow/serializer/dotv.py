@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
@@ -21,7 +22,6 @@ from .base import Serializer
 
 
 class dotVisualizer(Serializer):
-
     def serialize_workflow_spec(self, wf_spec):
         nodes = set()
         linked = set()
@@ -30,25 +30,25 @@ class dotVisualizer(Serializer):
 
         # these built in shapes are available:
         # http://www.graphviz.org/doc/info/shapes.html
-        graph.styleAppend("Cancel",          "shape", "oval")
-        graph.styleAppend("CancelTask",      "shape", "oval")
-        graph.styleAppend("Choose",          "shape", "diamond")
+        graph.styleAppend("Cancel", "shape", "oval")
+        graph.styleAppend("CancelTask", "shape", "oval")
+        graph.styleAppend("Choose", "shape", "diamond")
         graph.styleAppend("ExclusiveChoice", "shape", "diamond")
-        graph.styleAppend("Execute",         "shape", "rect")
-        graph.styleAppend("Gate",            "shape", "trapezium")
-        graph.styleAppend("Join",            "shape", "invtriangle")
-        graph.styleAppend("Merge",           "shape", "invtriangle")
-        graph.styleAppend("MultiChoice",     "shape", "diamond")
-        graph.styleAppend("MultiInstance",   "shape", "box")
-        graph.styleAppend("ReleaseMutex",    "shape", "diamond")
-        graph.styleAppend("Simple",          "shape", "rect")
-        graph.styleAppend("StartTask",       "shape", "oval")
-        graph.styleAppend("SubWorkflow",     "shape", "invhouse")
-        graph.styleAppend("ThreadMerge",     "shape", "invtriangle")
-        graph.styleAppend("ThreadSplit",     "shape", "triangle")
-        graph.styleAppend("ThreadStart",     "shape", "oval")
-        graph.styleAppend("Transform",       "shape", "rect")
-        graph.styleAppend("Trigger",         "shape", "oval")
+        graph.styleAppend("Execute", "shape", "rect")
+        graph.styleAppend("Gate", "shape", "trapezium")
+        graph.styleAppend("Join", "shape", "invtriangle")
+        graph.styleAppend("Merge", "shape", "invtriangle")
+        graph.styleAppend("MultiChoice", "shape", "diamond")
+        graph.styleAppend("MultiInstance", "shape", "box")
+        graph.styleAppend("ReleaseMutex", "shape", "diamond")
+        graph.styleAppend("Simple", "shape", "rect")
+        graph.styleAppend("StartTask", "shape", "oval")
+        graph.styleAppend("SubWorkflow", "shape", "invhouse")
+        graph.styleAppend("ThreadMerge", "shape", "invtriangle")
+        graph.styleAppend("ThreadSplit", "shape", "triangle")
+        graph.styleAppend("ThreadStart", "shape", "oval")
+        graph.styleAppend("Transform", "shape", "rect")
+        graph.styleAppend("Trigger", "shape", "oval")
 
         # build graph with all the nodes first
         def recurisvelyAddNodes(task_spec):
@@ -60,8 +60,9 @@ class dotVisualizer(Serializer):
             graph.styleAppend(task_spec.__class__.__name__, "ignore", "this")
             graph.styleApply(task_spec.__class__.__name__, task_spec.gv)
             nodes.add(task_spec)
-            sub_specs = ([task_spec.spec.start] if hasattr(
-                task_spec, 'spec') else []) + task_spec.outputs
+            sub_specs = (
+                [task_spec.spec.start] if hasattr(task_spec, "spec") else []
+            ) + task_spec.outputs
             for t in sub_specs:
                 recurisvelyAddNodes(t)
 
@@ -70,12 +71,13 @@ class dotVisualizer(Serializer):
             if task_spec in linked:
                 return
             linked.add(task_spec)
-            sub_specs = ([task_spec.spec.start] if hasattr(
-                task_spec, 'spec') else []) + task_spec.outputs
+            sub_specs = (
+                [task_spec.spec.start] if hasattr(task_spec, "spec") else []
+            ) + task_spec.outputs
             for i, t in enumerate(sub_specs):
                 graph.newLink(task_spec.gv, t.gv)
                 recursive_linking(t)
 
         recurisvelyAddNodes(wf_spec.start)
         recursive_linking(wf_spec.start)
-        return (graph.dot() if graph.dot() else '')
+        return graph.dot() if graph.dot() else ""

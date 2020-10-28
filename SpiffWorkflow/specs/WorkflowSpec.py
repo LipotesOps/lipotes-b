@@ -3,6 +3,7 @@ from __future__ import division, absolute_import
 from __future__ import print_function
 from builtins import hex
 from builtins import object
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -36,8 +37,8 @@ class WorkflowSpec(object):
         """
         Constructor.
         """
-        self.name = name or ''
-        self.description = ''
+        self.name = name or ""
+        self.description = ""
         self.file = filename
         self.task_specs = dict()
         self.start = None
@@ -49,7 +50,7 @@ class WorkflowSpec(object):
         Called by a task spec when it was added into the workflow.
         """
         if task_spec.name in self.task_specs:
-            raise KeyError('Duplicate task spec name: ' + task_spec.name)
+            raise KeyError("Duplicate task spec name: " + task_spec.name)
         self.task_specs[task_spec.name] = task_spec
         task_spec.id = len(self.task_specs)
 
@@ -80,8 +81,10 @@ class WorkflowSpec(object):
             if isinstance(task, Join):
                 if task in history:
                     msg = "Found loop with '%s': %s then '%s' again" % (
-                        task.name, '->'.join([p.name for p in history]),
-                        task.name)
+                        task.name,
+                        "->".join([p.name for p in history]),
+                        task.name,
+                    )
                     raise Exception(msg)
                 for predecessor in task.inputs:
                     recursive_find_loop(predecessor, current)
@@ -97,10 +100,9 @@ class WorkflowSpec(object):
                 results.append(exc.__str__())
 
             # Check for disconnected tasks
-            if not task.inputs and task.name not in ['Start', 'Root']:
+            if not task.inputs and task.name not in ["Start", "Root"]:
                 if task.outputs:
-                    results.append("Task '%s' is disconnected (no inputs)" %
-                                   task.name)
+                    results.append("Task '%s' is disconnected (no inputs)" % task.name)
                 else:
                     LOG.debug("Task '%s' is not being used" % task.name)
 
@@ -140,33 +142,54 @@ class WorkflowSpec(object):
 
         def recursive_dump(task_spec, indent):
             if task_spec in done:
-                return '[shown earlier] %s (%s:%s)' % (
-                    task_spec.name, task_spec.__class__.__name__,
-                    hex(id(task_spec))) + '\n'
+                return (
+                    "[shown earlier] %s (%s:%s)"
+                    % (task_spec.name, task_spec.__class__.__name__, hex(id(task_spec)))
+                    + "\n"
+                )
 
             done.add(task_spec)
-            dump = '%s (%s:%s)' % (
-                task_spec.name,
-                task_spec.__class__.__name__, hex(id(task_spec))) + '\n'
+            dump = (
+                "%s (%s:%s)"
+                % (task_spec.name, task_spec.__class__.__name__, hex(id(task_spec)))
+                + "\n"
+            )
             if verbose:
                 if task_spec.inputs:
-                    dump += indent + '-  IN: ' + \
-                        ','.join(['%s (%s)' % (t.name, hex(id(t)))
-                                  for t in task_spec.inputs]) + '\n'
+                    dump += (
+                        indent
+                        + "-  IN: "
+                        + ",".join(
+                            ["%s (%s)" % (t.name, hex(id(t))) for t in task_spec.inputs]
+                        )
+                        + "\n"
+                    )
                 if task_spec.outputs:
-                    dump += indent + '- OUT: ' + \
-                        ','.join(['%s (%s)' % (t.name, hex(id(t)))
-                                  for t in task_spec.outputs]) + '\n'
-            sub_specs = ([task_spec.spec.start] if hasattr(
-                task_spec, 'spec') else []) + task_spec.outputs
+                    dump += (
+                        indent
+                        + "- OUT: "
+                        + ",".join(
+                            [
+                                "%s (%s)" % (t.name, hex(id(t)))
+                                for t in task_spec.outputs
+                            ]
+                        )
+                        + "\n"
+                    )
+            sub_specs = (
+                [task_spec.spec.start] if hasattr(task_spec, "spec") else []
+            ) + task_spec.outputs
             for i, t in enumerate(sub_specs):
-                dump += indent + '   --> ' + \
-                    recursive_dump(
-                        t, indent + ('   |   ' if i + 1 < len(sub_specs) else
-                                     '       '))
+                dump += (
+                    indent
+                    + "   --> "
+                    + recursive_dump(
+                        t, indent + ("   |   " if i + 1 < len(sub_specs) else "       ")
+                    )
+                )
             return dump
 
-        dump = recursive_dump(self.start, '')
+        dump = recursive_dump(self.start, "")
 
         return dump
 

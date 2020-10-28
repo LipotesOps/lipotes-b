@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -70,13 +71,13 @@ class MultiChoice(TaskSpec):
         """
         TaskSpec.test(self)
         if len(self.cond_task_specs) < 1:
-            raise WorkflowException(self, 'At least one output required.')
+            raise WorkflowException(self, "At least one output required.")
         for condition, name in self.cond_task_specs:
             if name is None:
-                raise WorkflowException(self, 'Condition with no task spec.')
+                raise WorkflowException(self, "Condition with no task spec.")
             task_spec = self._wf_spec.get_task_spec_from_name(name)
             if task_spec is None:
-                msg = 'Condition leads to non-existent task ' + repr(name)
+                msg = "Condition leads to non-existent task " + repr(name)
                 raise WorkflowException(self, msg)
             if condition is None:
                 continue
@@ -90,8 +91,7 @@ class MultiChoice(TaskSpec):
 
     def _predict_hook(self, my_task):
         if self.choice:
-            outputs = [self._wf_spec.get_task_spec_from_name(o)
-                       for o in self.choice]
+            outputs = [self._wf_spec.get_task_spec_from_name(o) for o in self.choice]
         else:
             outputs = self.outputs
 

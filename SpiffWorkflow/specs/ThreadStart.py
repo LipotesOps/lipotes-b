@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -30,7 +31,7 @@ class ThreadStart(TaskSpec):
     parallel split.
     """
 
-    def __init__(self, wf_spec, name='ThreadStart', **kwargs):
+    def __init__(self, wf_spec, name="ThreadStart", **kwargs):
         """
         Constructor. The name of this task is *always* 'ThreadStart'.
 

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
@@ -18,7 +19,7 @@ import sys
 
 
 def get_class(full_class_name):
-    parts = full_class_name.rsplit('.', 1)
+    parts = full_class_name.rsplit(".", 1)
     module_name = parts[0]
     class_name = parts[1]
     __import__(module_name)

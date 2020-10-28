@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -34,13 +35,7 @@ class SubWorkflow(TaskSpec):
     parallel split.
     """
 
-    def __init__(self,
-                 wf_spec,
-                 name,
-                 file,
-                 in_assign=None,
-                 out_assign=None,
-                 **kwargs):
+    def __init__(self, wf_spec, name, file, in_assign=None, out_assign=None, **kwargs):
         """
         Constructor.
 
@@ -70,8 +65,7 @@ class SubWorkflow(TaskSpec):
     def test(self):
         TaskSpec.test(self)
         if self.file is not None and not os.path.exists(self.file):
-            raise WorkflowException(
-                self, 'File does not exist: %s' % self.file)
+            raise WorkflowException(self, "File does not exist: %s" % self.file)
 
     def _predict_hook(self, my_task):
         outputs = [task.task_spec for task in my_task.children]
@@ -87,19 +81,18 @@ class SubWorkflow(TaskSpec):
         from ..serializer.prettyxml import XmlSerializer
         from ..specs import WorkflowSpec
         from ..workflow import Workflow
+
         file = valueof(my_task, self.file)
         serializer = XmlSerializer()
         with open(file) as fp:
             xml = fp.read()
-        wf_spec = WorkflowSpec.deserialize(
-            serializer, xml, filename=file)
+        wf_spec = WorkflowSpec.deserialize(serializer, xml, filename=file)
         outer_workflow = my_task.workflow.outer_workflow
         return Workflow(wf_spec, parent=outer_workflow)
 
     def _on_ready_before_hook(self, my_task):
         subworkflow = self._create_subworkflow(my_task)
-        subworkflow.completed_event.connect(
-            self._on_subworkflow_completed, my_task)
+        subworkflow.completed_event.connect(self._on_subworkflow_completed, my_task)
 
         # Integrate the tree of the subworkflow into the tree of this workflow.
         my_task._sync_children(self.outputs, Task.FUTURE)
@@ -114,7 +107,7 @@ class SubWorkflow(TaskSpec):
 
     def _on_ready_hook(self, my_task):
         # Assign variables, if so requested.
-        subworkflow = my_task._get_internal_data('subworkflow')
+        subworkflow = my_task._get_internal_data("subworkflow")
         for child in subworkflow.task_tree.children:
             for assignment in self.in_assign:
                 assignment.assign(my_task, child)

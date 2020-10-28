@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -25,4 +26,5 @@ class NoneTask(UserTask):
     Task Spec for a bpmn:task node. In the base framework, it is assumed that a
     task with an unspecified type is actually a user task
     """
+
     pass

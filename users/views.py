@@ -18,7 +18,8 @@ from .serializers import UserCreateSerializer
 
 User = get_user_model()
 
-@decorators.api_view(['post'])
+
+@decorators.api_view(["post"])
 @decorators.permission_classes([permissions.AllowAny])
 def registration(request):
     serializer = UserCreateSerializer(data=request.data)
@@ -32,17 +33,21 @@ def registration(request):
     }
     return Response(res, status.HTTP_201_CREATED)
 
-@decorators.api_view(['post'])
+
+@decorators.api_view(["post"])
 @decorators.permission_classes([permissions.AllowAny])
 def getUserInfo(request):
-    res = {
-        "roles": ['admin'],
-        "introduction": 'I am a super administrator',
-        # "avatar": 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-        "avatar": 'https://media1.tenor.com/images/d89ffc48fde038c3083ab8c2280af2ca/tenor.gif?itemid=16099354',
-        "name": 'Super Admin'
+    res = (
+        {
+            "roles": ["admin"],
+            "introduction": "I am a super administrator",
+            # "avatar": 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+            "avatar": "https://media1.tenor.com/images/d89ffc48fde038c3083ab8c2280af2ca/tenor.gif?itemid=16099354",
+            "name": "Super Admin",
         },
+    )
     return Response(res, status.HTTP_200_OK)
+
 
 # user auth
 class UserLoginAPIView(JSONWebTokenAPIView):
@@ -56,9 +61,11 @@ class UserLogoutAPIView(views.APIView):
         user = request.user
         user.user_secret = uuid.uuid4()
         user.save()
-        return Response({'detail': 'login out.', 'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
+        return Response(
+            {"detail": "login out.", "status": status.HTTP_200_OK},
+            status=status.HTTP_200_OK,
+        )
 
 
 def get_user_secret(user):
     return user.user_secret
-

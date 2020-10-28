@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
 from builtins import range
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -48,7 +49,7 @@ class MultiInstance(TaskSpec):
         :param kwargs: See :class:`SpiffWorkflow.specs.TaskSpec`.
         """
         if times is None:
-            raise ValueError('times argument is required')
+            raise ValueError("times argument is required")
         TaskSpec.__init__(self, wf_spec, name, **kwargs)
         self.times = times
 

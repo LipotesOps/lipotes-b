@@ -6,7 +6,7 @@ def jwt_response_payload_handler(token, user=None, request=None):
     :request 当前本次客户端提交过来的数据
     """
     return {
-        'token': token,
-        'id': user.id,
-        'username': user.username,
+        "token": token,
+        "id": user.id,
+        "username": user.username,
     }

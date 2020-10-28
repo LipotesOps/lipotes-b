@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -28,8 +29,7 @@ class CallActivity(SubWorkflow, BpmnSpecMixin):
     Task Spec for a bpmn:callActivity node.
     """
 
-    def __init__(self, wf_spec, name, bpmn_wf_spec=None, bpmn_wf_class=None,
-                 **kwargs):
+    def __init__(self, wf_spec, name, bpmn_wf_spec=None, bpmn_wf_class=None, **kwargs):
         """
         Constructor.
 
@@ -45,10 +45,12 @@ class CallActivity(SubWorkflow, BpmnSpecMixin):
 
     def _create_subworkflow(self, my_task):
         return self.get_workflow_class()(
-            self.spec, name=self.name,
+            self.spec,
+            name=self.name,
             read_only=my_task.workflow.read_only,
             script_engine=my_task.workflow.outer_workflow.script_engine,
-            parent=my_task.workflow)
+            parent=my_task.workflow,
+        )
 
     def get_workflow_class(self):
         """
@@ -57,7 +59,6 @@ class CallActivity(SubWorkflow, BpmnSpecMixin):
         return self.wf_class
 
     def _on_subworkflow_completed(self, subworkflow, my_task):
-        super(CallActivity, self)._on_subworkflow_completed(
-            subworkflow, my_task)
+        super(CallActivity, self)._on_subworkflow_completed(subworkflow, my_task)
         if isinstance(my_task.parent.task_spec, BpmnSpecMixin):
             my_task.parent.task_spec._child_complete_hook(my_task)

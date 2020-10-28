@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
 from builtins import object
+
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
@@ -18,19 +19,18 @@ from builtins import object
 
 
 class Serializer(object):
-
     def serialize_workflow_spec(self, wf_spec, **kwargs):
         raise NotImplementedError(
-            "You must implement the serialize_workflow_spec method.")
+            "You must implement the serialize_workflow_spec method."
+        )
 
     def deserialize_workflow_spec(self, s_state, **kwargs):
         raise NotImplementedError(
-            "You must implement the deserialize_workflow_spec method.")
+            "You must implement the deserialize_workflow_spec method."
+        )
 
     def serialize_workflow(self, workflow, **kwargs):
-        raise NotImplementedError(
-            "You must implement the serialize_workflow method.")
+        raise NotImplementedError("You must implement the serialize_workflow method.")
 
     def deserialize_workflow(self, s_state, **kwargs):
-        raise NotImplementedError(
-            "You must implement the deserialize_workflow method.")
+        raise NotImplementedError("You must implement the deserialize_workflow method.")

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -47,5 +48,4 @@ class ParallelGateway(UnstructuredJoin):
         completed_inputs, waiting_tasks = self._get_inputs_with_tokens(my_task)
 
         # If the threshold was reached, get ready to fire.
-        return (force or len(completed_inputs) >= len(self.inputs),
-                waiting_tasks)
+        return (force or len(completed_inputs) >= len(self.inputs), waiting_tasks)

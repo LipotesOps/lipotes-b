@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -54,10 +55,10 @@ class Execute(TaskSpec):
 
     def _start(self, my_task, force=False):
         """Returns False when successfully fired, True otherwise"""
-        if (not hasattr(my_task, 'subprocess')) or my_task.subprocess is None:
-            my_task.subprocess = subprocess.Popen(self.args,
-                                                  stderr=subprocess.STDOUT,
-                                                  stdout=subprocess.PIPE)
+        if (not hasattr(my_task, "subprocess")) or my_task.subprocess is None:
+            my_task.subprocess = subprocess.Popen(
+                self.args, stderr=subprocess.STDOUT, stdout=subprocess.PIPE
+            )
 
         if my_task.subprocess:
             my_task.subprocess.poll()

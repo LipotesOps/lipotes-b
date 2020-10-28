@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 from builtins import object
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -32,7 +33,7 @@ class CatchingEventDefinition(object):
         This should return True if the event has occurred (i.e. the task may
         move from WAITING to READY). This will be called multiple times.
         """
-        return my_task._get_internal_data('event_fired', False)
+        return my_task._get_internal_data("event_fired", False)
 
     def _accept_message(self, my_task, message):
         return False
@@ -67,7 +68,7 @@ class MessageEventDefinition(CatchingEventDefinition, ThrowingEventDefinition):
         Returns true if the message was received while the task was in a
         WAITING state.
         """
-        return my_task._get_internal_data('event_fired', False)
+        return my_task._get_internal_data("event_fired", False)
 
     def _accept_message(self, my_task, message):
         if message != self.message:

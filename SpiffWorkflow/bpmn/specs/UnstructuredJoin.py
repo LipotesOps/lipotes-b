@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -52,11 +53,13 @@ class UnstructuredJoin(Join, BpmnSpecMixin):
         completed_inputs = set()
         for task in tasks:
             if task.parent._has_state(Task.COMPLETED) and (
-                    task._has_state(Task.WAITING) or task == my_task):
+                task._has_state(Task.WAITING) or task == my_task
+            ):
                 if task.parent.task_spec in completed_inputs:
                     raise NotImplementedError(
                         "Unsupported looping behaviour: two threads waiting "
-                        "on the same sequence flow.")
+                        "on the same sequence flow."
+                    )
                 completed_inputs.add(task.parent.task_spec)
             else:
                 waiting_tasks.append(task.parent)
@@ -80,8 +83,7 @@ class UnstructuredJoin(Join, BpmnSpecMixin):
         # We are looking for all task instances that must be joined.
         # We limit our search by starting at the split point.
         if self.split_task:
-            split_task = my_task.workflow.get_task_spec_from_name(
-                self.split_task)
+            split_task = my_task.workflow.get_task_spec_from_name(self.split_task)
             split_task = my_task._find_ancestor(split_task)
         else:
             split_task = my_task.workflow.task_tree
@@ -118,8 +120,7 @@ class UnstructuredJoin(Join, BpmnSpecMixin):
             # Check whether the state of the instance was recently
             # changed.
             changed = task.parent.last_state_change
-            if last_changed is None\
-                    or changed > last_changed.parent.last_state_change:
+            if last_changed is None or changed > last_changed.parent.last_state_change:
                 last_changed = task
 
         # Mark the identified task instances as COMPLETED. The exception
@@ -142,11 +143,15 @@ class UnstructuredJoin(Join, BpmnSpecMixin):
         if not my_task.parent._is_finished():
             return
 
-        target_state = getattr(my_task, '_bpmn_load_target_state', None)
+        target_state = getattr(my_task, "_bpmn_load_target_state", None)
         if target_state == Task.WAITING:
             my_task._set_state(Task.WAITING)
             return
 
-        logging.debug('UnstructuredJoin._update_hook: %s (%s) - Children: %s',
-                      self.name, self.description, len(my_task.children))
+        logging.debug(
+            "UnstructuredJoin._update_hook: %s (%s) - Children: %s",
+            self.name,
+            self.description,
+            len(my_task.children),
+        )
         super(UnstructuredJoin, self)._update_hook(my_task)

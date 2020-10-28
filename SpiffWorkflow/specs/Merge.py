@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -33,13 +34,17 @@ class Merge(Join):
     def _do_join(self, my_task):
         # Merge all inputs (in order)
         for input_spec in self.inputs:
-            tasks = [task for task in my_task.workflow.task_tree
-                     if task.task_spec is input_spec]
+            tasks = [
+                task
+                for task in my_task.workflow.task_tree
+                if task.task_spec is input_spec
+            ]
             for task in tasks:
-                LOG.debug("Merging %s (%s) into %s" % (task.get_name(),
-                                                       task.get_state_name(
-                ), self.name),
-                    extra=dict(data=task.data))
+                LOG.debug(
+                    "Merging %s (%s) into %s"
+                    % (task.get_name(), task.get_state_name(), self.name),
+                    extra=dict(data=task.data),
+                )
                 _log_overwrites(my_task.data, task.data)
                 merge_dictionary(my_task.data, task.data)
         return super(Merge, self)._do_join(my_task)

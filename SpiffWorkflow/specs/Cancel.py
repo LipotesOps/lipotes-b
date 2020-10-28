@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -53,7 +54,7 @@ class Cancel(TaskSpec):
         """
         TaskSpec.test(self)
         if len(self.outputs) > 0:
-            raise WorkflowException(self, 'Cancel with an output.')
+            raise WorkflowException(self, "Cancel with an output.")
 
     def _on_complete_hook(self, my_task):
         my_task.workflow.cancel(self.cancel_successfully)

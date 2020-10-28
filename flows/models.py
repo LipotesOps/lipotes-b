@@ -1,59 +1,113 @@
-
 import uuid
 from datetime import datetime
 
 from django.db import models
 from django.utils import timezone
 
-'''
+"""
 flowable model:
 deployment -> processDefinition -> processInstance -> taskInstance
 
 lipotes model:
 flow -> flow_bpmn -> flow_instance -> task_instance
      -> flow_category
-'''
+"""
 
 FLOWBPMN_STATUS_CHOICES = (
-        ('draft', '草稿',),
-        ('deployed', '已部署',),
-        ('del', '删除',),
-    )
+    (
+        "draft",
+        "草稿",
+    ),
+    (
+        "deployed",
+        "已部署",
+    ),
+    (
+        "del",
+        "删除",
+    ),
+)
 
 TASKINSTANCE_STATUS_CHOICES = (
-        ('running', '进行中',),
-        ('completed', '已完成',),
-        ('rejected', '已拒绝',),
-        ('cancled', '已撤回',),
-    )
+    (
+        "running",
+        "进行中",
+    ),
+    (
+        "completed",
+        "已完成",
+    ),
+    (
+        "rejected",
+        "已拒绝",
+    ),
+    (
+        "cancled",
+        "已撤回",
+    ),
+)
 
 FORMCONTENT_STATUS_CHOICES = (
-        ('draft', '草稿',),
-        ('bound', '已绑定',),
-        ('del', '删除',),
-    )
+    (
+        "draft",
+        "草稿",
+    ),
+    (
+        "bound",
+        "已绑定",
+    ),
+    (
+        "del",
+        "删除",
+    ),
+)
+
 
 def genTagNum():
-    fmt = '%y%m%d%H%M%S'
+    fmt = "%y%m%d%H%M%S"
     return datetime.now().strftime(fmt)
 
-def genOrderNum(prefix=''):
+
+def genOrderNum(prefix=""):
     return prefix + genTagNum()
 
+
 class Base(models.Model):
-    uuid = models.CharField(verbose_name="UUID", max_length=64, default=uuid.uuid1, editable=False, unique=True)
-    ctime = models.DateTimeField(auto_now_add=True, help_text='创建时间', blank=True, null=True)
-    mtime = models.DateTimeField(auto_now=True, help_text='修改时间', blank=True, null=True)
-    
+    uuid = models.CharField(
+        verbose_name="UUID",
+        max_length=64,
+        default=uuid.uuid1,
+        editable=False,
+        unique=True,
+    )
+    ctime = models.DateTimeField(
+        auto_now_add=True, help_text="创建时间", blank=True, null=True
+    )
+    mtime = models.DateTimeField(auto_now=True, help_text="修改时间", blank=True, null=True)
+
     class Meta:
-        abstract=True
+        abstract = True
 
 
 class Flow(Base):
     # FlowBaseInfo
     name = models.CharField(max_length=32, unique=True)
-    category = models.ForeignKey('FlowCategory', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='flows') # CASCADE 主表的字段删除时，和它有关的子表字段也删除
-    bpmn = models.ForeignKey('FlowBpmn', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='flows')
+    category = models.ForeignKey(
+        "FlowCategory",
+        to_field="uuid",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="flows",
+    )  # CASCADE 主表的字段删除时，和它有关的子表字段也删除
+    bpmn = models.ForeignKey(
+        "FlowBpmn",
+        to_field="uuid",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="flows",
+    )
     # 自定义字段
     extend_fields = models.TextField(default={})
 
@@ -62,29 +116,40 @@ class Flow(Base):
         # 数据库中的表名称
         db_table = "flow"
         # 单数名
-        verbose_name = 'flows'
+        verbose_name = "flows"
         # 复数名
-        verbose_name_plural = '流程定义'
-        ordering = ['-id']
+        verbose_name_plural = "流程定义"
+        ordering = ["-id"]
 
 
 class FlowBpmn(Base):
     # FlowVersion
     tag = models.CharField(max_length=32, default=genTagNum, editable=False)
     content = models.TextField()
-    flow = models.ForeignKey('Flow', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='related_flow')
-    flowable_process_definition_id = models.CharField(max_length=64, null=True, unique=True, blank=True)
-    status = models.CharField(max_length=16, default='draft', choices=FLOWBPMN_STATUS_CHOICES)
+    flow = models.ForeignKey(
+        "Flow",
+        to_field="uuid",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="related_flow",
+    )
+    flowable_process_definition_id = models.CharField(
+        max_length=64, null=True, unique=True, blank=True
+    )
+    status = models.CharField(
+        max_length=16, default="draft", choices=FLOWBPMN_STATUS_CHOICES
+    )
 
     # 定义model的元数据
     class Meta:
         # 数据库中的表名称
         db_table = "flow_bpmn"
         # 数据库表名
-        verbose_name = 'flow_bpmn'
+        verbose_name = "flow_bpmn"
         # human readable
-        verbose_name_plural = 'flow_bpmns'
-        ordering = ['-id']
+        verbose_name_plural = "flow_bpmns"
+        ordering = ["-id"]
 
 
 class FlowCategory(Base):
@@ -95,10 +160,10 @@ class FlowCategory(Base):
         # 数据库中的表名称
         db_table = "flow_category"
         # 单数名
-        verbose_name = 'flow_category'
+        verbose_name = "flow_category"
         # 复数名
-        verbose_name_plural = 'flow_categories'
-        ordering = ['-id']
+        verbose_name_plural = "flow_categories"
+        ordering = ["-id"]
 
 
 class FlowInstance(Base):
@@ -109,22 +174,31 @@ class FlowInstance(Base):
     flowable_process_instance_id = models.CharField(max_length=64, unique=True)
     start_user_id = models.CharField(max_length=32)
     # 保持和flowable时间一致
-    start_time = models.DateTimeField(auto_now_add=False, help_text='创建时间')
-    flow_bpmn = models.ForeignKey('FlowBpmn', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='related_bpmn')
-    
+    start_time = models.DateTimeField(auto_now_add=False, help_text="创建时间")
+    flow_bpmn = models.ForeignKey(
+        "FlowBpmn",
+        to_field="uuid",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="related_bpmn",
+    )
+
     # 定义model的元数据
     class Meta:
         # 数据库中的表名称
         db_table = "flow_instance"
         # 数据库表名
-        verbose_name = 'flow_instance'
+        verbose_name = "flow_instance"
         # human readable
-        verbose_name_plural = 'flow_instances'
-        ordering = ['-id']
+        verbose_name_plural = "flow_instances"
+        ordering = ["-id"]
 
 
 class TaskInstance(Base):
-    status = models.CharField(max_length=16, default='running', choices=TASKINSTANCE_STATUS_CHOICES)
+    status = models.CharField(
+        max_length=16, default="running", choices=TASKINSTANCE_STATUS_CHOICES
+    )
     # flowable process instance id
     flowable_process_instance_id = models.CharField(max_length=64, null=True)
     # flowable_task_instance_id
@@ -134,15 +208,22 @@ class TaskInstance(Base):
     name = models.CharField(max_length=32)
     # 同步flowable的创建时间
     flowable_created_time = models.DateTimeField()
-    flow_instance = models.ForeignKey('FlowInstance', to_field='uuid', null=True, blank=True, on_delete=models.PROTECT, related_name='related_flow_instance')
+    flow_instance = models.ForeignKey(
+        "FlowInstance",
+        to_field="uuid",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="related_flow_instance",
+    )
 
     # 定义model的元数据
     class Meta:
         db_table = "task_instance"
         verbose_name = "task_instance"
         # human readable
-        verbose_name_plural = 'task_instances'
-        ordering = ['-id']
+        verbose_name_plural = "task_instances"
+        ordering = ["-id"]
 
 
 class Task(Base):
@@ -150,48 +231,78 @@ class Task(Base):
     name = models.CharField(max_length=32)
     task_definition_key = models.CharField(max_length=32)
     # 已部署的bpmn，必填
-    flow_bpmn = models.ForeignKey('FlowBpmn', to_field='uuid', on_delete=models.PROTECT, related_name='task_related_bpmn')
-    form = models.ForeignKey('Form', to_field='uuid', on_delete=models.PROTECT, null=True, blank=True, related_name='task_related_form')
+    flow_bpmn = models.ForeignKey(
+        "FlowBpmn",
+        to_field="uuid",
+        on_delete=models.PROTECT,
+        related_name="task_related_bpmn",
+    )
+    form = models.ForeignKey(
+        "Form",
+        to_field="uuid",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="task_related_form",
+    )
 
     # 定义model的元数据
     class Meta:
         db_table = "task"
         verbose_name = "task"
         # human readable
-        verbose_name_plural = 'tasks'
-        ordering = ['id']
+        verbose_name_plural = "tasks"
+        ordering = ["id"]
 
 
 class Form(Base):
     # from definition
     name = models.CharField(max_length=32)
-    flow = models.ForeignKey('Flow', to_field='uuid', on_delete=models.PROTECT, null=True, blank=True, related_name='form_related_bpmn')
-    form_content = models.ForeignKey('FormContent', to_field='uuid', on_delete=models.PROTECT, null=True, blank=True, related_name='form_related_form_content')
+    flow = models.ForeignKey(
+        "Flow",
+        to_field="uuid",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="form_related_bpmn",
+    )
+    form_content = models.ForeignKey(
+        "FormContent",
+        to_field="uuid",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="form_related_form_content",
+    )
 
     # 定义model的元数据
     class Meta:
         db_table = "form"
         verbose_name = "form"
         # human readable
-        verbose_name_plural = 'forms'
-        ordering = ['-id']
+        verbose_name_plural = "forms"
+        ordering = ["-id"]
 
 
 class FormContent(Base):
     tag = models.CharField(max_length=32, default=genTagNum, editable=False)
     content = models.TextField()
-    status = models.CharField(max_length=16, default='draft', choices=FORMCONTENT_STATUS_CHOICES)
-    form = models.ForeignKey('Form', to_field='uuid', on_delete=models.PROTECT, null=True, blank=True, related_name='form_content_related_form')
+    status = models.CharField(
+        max_length=16, default="draft", choices=FORMCONTENT_STATUS_CHOICES
+    )
+    form = models.ForeignKey(
+        "Form",
+        to_field="uuid",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="form_content_related_form",
+    )
 
     # 定义model的元数据
     class Meta:
         db_table = "form_content"
         verbose_name = "form_content"
         # human readable
-        verbose_name_plural = 'form_contents'
-        ordering = ['-id']
-    
-    
-
-
-
+        verbose_name_plural = "form_contents"
+        ordering = ["-id"]

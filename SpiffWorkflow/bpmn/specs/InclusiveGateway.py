@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -79,30 +80,27 @@ class InclusiveGateway(UnstructuredJoin):
                 continue
             tasks.append(task)
 
-        inputs_with_tokens, waiting_tasks = self._get_inputs_with_tokens(
-            my_task)
-        inputs_without_tokens = [
-            i for i in self.inputs if i not in inputs_with_tokens]
+        inputs_with_tokens, waiting_tasks = self._get_inputs_with_tokens(my_task)
+        inputs_without_tokens = [i for i in self.inputs if i not in inputs_with_tokens]
 
         waiting_tasks = []
         for task in tasks:
-            if (self._has_directed_path_to(
-                    task, self,
-                    without_using_sequence_flow_from=inputs_with_tokens) and
-                not self._has_directed_path_to(
-                    task, self,
-                    without_using_sequence_flow_from=inputs_without_tokens)):
+            if self._has_directed_path_to(
+                task, self, without_using_sequence_flow_from=inputs_with_tokens
+            ) and not self._has_directed_path_to(
+                task, self, without_using_sequence_flow_from=inputs_without_tokens
+            ):
                 waiting_tasks.append(task)
 
         return force or len(waiting_tasks) == 0, waiting_tasks
 
-    def _has_directed_path_to(self, task, task_spec,
-                              without_using_sequence_flow_from=None):
+    def _has_directed_path_to(
+        self, task, task_spec, without_using_sequence_flow_from=None
+    ):
         q = deque()
         done = set()
 
-        without_using_sequence_flow_from = set(
-            without_using_sequence_flow_from or [])
+        without_using_sequence_flow_from = set(without_using_sequence_flow_from or [])
 
         q.append(task.task_spec)
         while q:
@@ -111,8 +109,8 @@ class InclusiveGateway(UnstructuredJoin):
                 return True
             for child in n.outputs:
                 if child not in done and not (
-                        n in without_using_sequence_flow_from and
-                        child == task_spec):
+                    n in without_using_sequence_flow_from and child == task_spec
+                ):
                     done.add(child)
                     q.append(child)
         return False

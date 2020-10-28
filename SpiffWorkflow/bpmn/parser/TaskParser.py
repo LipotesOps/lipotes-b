@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 from builtins import object
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -64,69 +65,77 @@ class TaskParser(object):
             self.task = self.create_task()
 
             self.task.documentation = self.parser._parse_documentation(
-                self.node, xpath=self.xpath, task_parser=self)
+                self.node, xpath=self.xpath, task_parser=self
+            )
 
             boundary_event_nodes = self.process_xpath(
-                './/bpmn:boundaryEvent[@attachedToRef="%s"]' % self.get_id())
+                './/bpmn:boundaryEvent[@attachedToRef="%s"]' % self.get_id()
+            )
             if boundary_event_nodes:
                 parent_task = _BoundaryEventParent(
-                    self.spec, '%s.BoundaryEventParent' % self.get_id(),
-                    self.task, lane=self.task.lane)
-                self.process_parser.parsed_nodes[
-                    self.node.get('id')] = parent_task
+                    self.spec,
+                    "%s.BoundaryEventParent" % self.get_id(),
+                    self.task,
+                    lane=self.task.lane,
+                )
+                self.process_parser.parsed_nodes[self.node.get("id")] = parent_task
 
                 parent_task.connect_outgoing(
-                    self.task, '%s.FromBoundaryEventParent' % self.get_id(),
-                    None, None)
+                    self.task, "%s.FromBoundaryEventParent" % self.get_id(), None, None
+                )
                 for boundary_event in boundary_event_nodes:
                     b = self.process_parser.parse_node(boundary_event)
                     parent_task.connect_outgoing(
                         b,
-                        '%s.FromBoundaryEventParent' % boundary_event.get(
-                            'id'),
-                        None, None)
+                        "%s.FromBoundaryEventParent" % boundary_event.get("id"),
+                        None,
+                        None,
+                    )
             else:
-                self.process_parser.parsed_nodes[
-                    self.node.get('id')] = self.task
+                self.process_parser.parsed_nodes[self.node.get("id")] = self.task
 
             children = []
             outgoing = self.process_xpath(
-                './/bpmn:sequenceFlow[@sourceRef="%s"]' % self.get_id())
+                './/bpmn:sequenceFlow[@sourceRef="%s"]' % self.get_id()
+            )
             if len(outgoing) > 1 and not self.handles_multiple_outgoing():
                 raise ValidationException(
-                    'Multiple outgoing flows are not supported for '
-                    'tasks of type',
+                    "Multiple outgoing flows are not supported for " "tasks of type",
                     node=self.node,
-                    filename=self.process_parser.filename)
+                    filename=self.process_parser.filename,
+                )
             for sequence_flow in outgoing:
-                target_ref = sequence_flow.get('targetRef')
-                target_node = one(
-                    self.process_xpath('.//*[@id="%s"]' % target_ref))
+                target_ref = sequence_flow.get("targetRef")
+                target_node = one(self.process_xpath('.//*[@id="%s"]' % target_ref))
                 c = self.process_parser.parse_node(target_node)
                 children.append((c, target_node, sequence_flow))
 
             if children:
-                default_outgoing = self.node.get('default')
+                default_outgoing = self.node.get("default")
                 if not default_outgoing:
                     (c, target_node, sequence_flow) = children[0]
-                    default_outgoing = sequence_flow.get('id')
+                    default_outgoing = sequence_flow.get("id")
 
                 for (c, target_node, sequence_flow) in children:
                     self.connect_outgoing(
-                        c, target_node, sequence_flow,
-                        sequence_flow.get('id') == default_outgoing)
+                        c,
+                        target_node,
+                        sequence_flow,
+                        sequence_flow.get("id") == default_outgoing,
+                    )
 
             return parent_task if boundary_event_nodes else self.task
         except ValidationException:
             raise
         except Exception as ex:
             exc_info = sys.exc_info()
-            tb = "".join(traceback.format_exception(
-                exc_info[0], exc_info[1], exc_info[2]))
+            tb = "".join(
+                traceback.format_exception(exc_info[0], exc_info[1], exc_info[2])
+            )
             LOG.error("%r\n%s", ex, tb)
             raise ValidationException(
-                "%r" % (ex), node=self.node,
-                filename=self.process_parser.filename)
+                "%r" % (ex), node=self.node, filename=self.process_parser.filename
+            )
 
     def get_lane(self):
         """
@@ -144,30 +153,34 @@ class TaskParser(object):
         """
         Return the node ID
         """
-        return self.node.get('id')
+        return self.node.get("id")
 
     def create_task(self):
         """
         Create an instance of the task appropriately. A subclass can override
         this method to get extra information from the node.
         """
-        return self.spec_class(self.spec, self.get_task_spec_name(),
-                               lane=self.get_lane(),
-                               description=self.node.get('name', None))
+        return self.spec_class(
+            self.spec,
+            self.get_task_spec_name(),
+            lane=self.get_lane(),
+            description=self.node.get("name", None),
+        )
 
-    def connect_outgoing(self, outgoing_task, outgoing_task_node,
-                         sequence_flow_node, is_default):
+    def connect_outgoing(
+        self, outgoing_task, outgoing_task_node, sequence_flow_node, is_default
+    ):
         """
         Connects this task to the indicating outgoing task, with the details in
         the sequence flow. A subclass can override this method to get extra
         information from the node.
         """
         self.task.connect_outgoing(
-            outgoing_task, sequence_flow_node.get('id'),
-            sequence_flow_node.get(
-                'name', None),
-            self.parser._parse_documentation(sequence_flow_node,
-                                             task_parser=self))
+            outgoing_task,
+            sequence_flow_node.get("id"),
+            sequence_flow_node.get("name", None),
+            self.parser._parse_documentation(sequence_flow_node, task_parser=self),
+        )
 
     def handles_multiple_outgoing(self):
         """

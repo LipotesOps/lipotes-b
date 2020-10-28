@@ -3,6 +3,7 @@ from __future__ import division, absolute_import
 from __future__ import print_function
 from builtins import next
 from builtins import object
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -52,17 +53,17 @@ class Workflow(object):
         LOG.debug("__init__ Workflow instance: %s" % self.__str__())
         self.spec = workflow_spec
         self.data = {}
-        self.outer_workflow = kwargs.get('parent', self)
+        self.outer_workflow = kwargs.get("parent", self)
         self.locks = {}
         self.last_task = None
         if deserializing:
-            assert 'Root' in workflow_spec.task_specs
-            root = workflow_spec.task_specs['Root']  # Probably deserialized
+            assert "Root" in workflow_spec.task_specs
+            root = workflow_spec.task_specs["Root"]  # Probably deserialized
         else:
-            if 'Root' in workflow_spec.task_specs:
-                root = workflow_spec.task_specs['Root']
+            if "Root" in workflow_spec.task_specs:
+                root = workflow_spec.task_specs["Root"]
             else:
-                root = specs.Simple(workflow_spec, 'Root')
+                root = specs.Simple(workflow_spec, "Root")
         self.task_tree = Task(self, root)
         self.success = True
         self.debug = False
@@ -75,7 +76,7 @@ class Workflow(object):
         start = self.task_tree._add_child(self.spec.start, state=Task.FUTURE)
 
         self.spec.start._predict(start)
-        if 'parent' not in kwargs:
+        if "parent" not in kwargs:
             start.task_spec._update(start)
         # start.dump()
 
@@ -100,7 +101,7 @@ class Workflow(object):
         return [w for w in waiting]
 
     def _task_completed_notify(self, task):
-        if task.get_name() == 'End':
+        if task.get_name() == "End":
             self.data.update(task.data)
         # Update the state of every WAITING task.
         for thetask in self._get_waiting_tasks():
@@ -181,8 +182,9 @@ class Workflow(object):
         :rtype: Task
         :return: The task that relates to the spec with the given name.
         """
-        return [task for task in self.get_tasks_iterator()
-                if task.task_spec.name == name]
+        return [
+            task for task in self.get_tasks_iterator() if task.task_spec.name == name
+        ]
 
     def get_tasks(self, state=Task.ANY_MASK):
         """
@@ -214,11 +216,11 @@ class Workflow(object):
         :param task_id: The id of the Task object.
         """
         if task_id is None:
-            raise WorkflowException(self.spec, 'task_id is None')
+            raise WorkflowException(self.spec, "task_id is None")
         for task in self.task_tree:
             if task.id == task_id:
                 return task.complete()
-        msg = 'A task with the given task_id (%s) was not found' % task_id
+        msg = "A task with the given task_id (%s) was not found" % task_id
         raise WorkflowException(self.spec, msg)
 
     def complete_next(self, pick_up=True, halt_on_manual=True):

@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('flows', '0007_auto_20200915_1625'),
+        ("flows", "0007_auto_20200915_1625"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='flowinstance',
-            name='completed',
+            model_name="flowinstance",
+            name="completed",
             field=models.BooleanField(default=False),
         ),
     ]

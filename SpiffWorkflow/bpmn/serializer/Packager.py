@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
 from builtins import object
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -31,13 +32,13 @@ from ..parser.BpmnParser import BpmnParser
 from ..parser.ValidationException import ValidationException
 from ..parser.util import xpath_eval, one
 
-SIGNAVIO_NS = 'http://www.signavio.com'
+SIGNAVIO_NS = "http://www.signavio.com"
 CONFIG_SECTION_NAME = "Packager Options"
 
 
 def md5hash(data):
     if not isinstance(data, bytes):
-        data = data.encode('UTF-8')
+        data = data.encode("UTF-8")
 
     return hashlib.md5(data).hexdigest().lower()
 
@@ -70,8 +71,7 @@ class Packager(object):
     MANIFEST_FILE = "manifest.ini"
     PARSER_CLASS = BpmnParser
 
-    def __init__(self, package_file, entry_point_process, meta_data=None,
-                 editor=None):
+    def __init__(self, package_file, entry_point_process, meta_data=None, editor=None):
         """
         Constructor.
 
@@ -125,16 +125,15 @@ class Packager(object):
         self.input_path_prefix = None
         for filename in self.input_files:
             if not os.path.isfile(filename):
-                raise ValueError(
-                    '%s does not exist or is not a file' % filename)
+                raise ValueError("%s does not exist or is not a file" % filename)
             if self.input_path_prefix:
                 full = os.path.abspath(os.path.dirname(filename))
-                while not (full.startswith(self.input_path_prefix) and
-                           self.input_path_prefix):
+                while not (
+                    full.startswith(self.input_path_prefix) and self.input_path_prefix
+                ):
                     self.input_path_prefix = self.input_path_prefix[:-1]
             else:
-                self.input_path_prefix = os.path.abspath(
-                    os.path.dirname(filename))
+                self.input_path_prefix = os.path.abspath(os.path.dirname(filename))
 
         # Parse all of the XML:
         self.bpmn = {}
@@ -155,7 +154,8 @@ class Packager(object):
 
         # Now package everything:
         self.package_zip = zipfile.ZipFile(
-            self.package_file, "w", compression=zipfile.ZIP_DEFLATED)
+            self.package_file, "w", compression=zipfile.ZIP_DEFLATED
+        )
 
         done_files = set()
         for spec in self.wf_spec.get_specs_depth_first():
@@ -165,12 +165,14 @@ class Packager(object):
 
                 bpmn = self.bpmn[os.path.abspath(filename)]
                 self.write_to_package_zip(
-                    "%s.bpmn" % spec.name, ET.tostring(bpmn.getroot()))
+                    "%s.bpmn" % spec.name, ET.tostring(bpmn.getroot())
+                )
 
                 self.write_file_to_package_zip(
-                    "src/" + self._get_zip_path(filename), filename)
+                    "src/" + self._get_zip_path(filename), filename
+                )
 
-                self._call_editor_hook('package_for_editor', spec, filename)
+                self._call_editor_hook("package_for_editor", spec, filename)
 
         self.write_meta_data()
         self.write_manifest()
@@ -210,11 +212,10 @@ class Packager(object):
         """
         config = configparser.ConfigParser()
 
-        config.add_section('Manifest')
+        config.add_section("Manifest")
 
         for f in sorted(self.manifest.keys()):
-            config.set('Manifest', f.replace(
-                '\\', '/').lower(), self.manifest[f])
+            config.set("Manifest", f.replace("\\", "/").lower(), self.manifest[f])
 
         ini = StringIO()
         config.write(ini)
@@ -232,8 +233,7 @@ class Packager(object):
 
         This must return the updated bpmn object (or a replacement)
         """
-        bpmn = self._call_editor_hook(
-            'pre_parse_and_validate', bpmn, filename) or bpmn
+        bpmn = self._call_editor_hook("pre_parse_and_validate", bpmn, filename) or bpmn
 
         return bpmn
 
@@ -260,16 +260,18 @@ class Packager(object):
         # They then show up as intermediateCatchEvents without any incoming
         # sequence flows
         xpath = xpath_eval(bpmn)
-        for catch_event in xpath('.//bpmn:intermediateCatchEvent'):
+        for catch_event in xpath(".//bpmn:intermediateCatchEvent"):
             incoming = xpath(
-                './/bpmn:sequenceFlow[@targetRef="%s"]' %
-                catch_event.get('id'))
+                './/bpmn:sequenceFlow[@targetRef="%s"]' % catch_event.get("id")
+            )
             if not incoming:
                 raise ValidationException(
-                    'Intermediate Catch Event has no incoming sequences. '
-                    'This might be a Boundary Event that has been '
-                    'disconnected.',
-                    node=catch_event, filename=filename)
+                    "Intermediate Catch Event has no incoming sequences. "
+                    "This might be a Boundary Event that has been "
+                    "disconnected.",
+                    node=catch_event,
+                    filename=filename,
+                )
 
     def _fix_call_activities_signavio(self, bpmn, filename):
         """
@@ -284,33 +286,39 @@ class Packager(object):
         the process.
         """
         for node in xpath_eval(bpmn)(".//bpmn:callActivity"):
-            calledElement = node.get('calledElement', None)
+            calledElement = node.get("calledElement", None)
             if not calledElement:
-                signavioMetaData = xpath_eval(node, extra_ns={
-                    'signavio': SIGNAVIO_NS})(
-                    './/signavio:signavioMetaData[@metaKey="entry"]')
+                signavioMetaData = xpath_eval(node, extra_ns={"signavio": SIGNAVIO_NS})(
+                    './/signavio:signavioMetaData[@metaKey="entry"]'
+                )
                 if not signavioMetaData:
                     raise ValidationException(
                         'No Signavio "Subprocess reference" specified.',
-                        node=node, filename=filename)
-                subprocess_reference = one(signavioMetaData).get('metaValue')
+                        node=node,
+                        filename=filename,
+                    )
+                subprocess_reference = one(signavioMetaData).get("metaValue")
                 matches = []
                 for b in list(self.bpmn.values()):
                     for p in xpath_eval(b)(".//bpmn:process"):
-                        if (p.get('name', p.get('id', None)) ==
-                                subprocess_reference):
+                        if p.get("name", p.get("id", None)) == subprocess_reference:
                             matches.append(p)
                 if not matches:
                     raise ValidationException(
-                        "No matching process definition found for '%s'." %
-                        subprocess_reference, node=node, filename=filename)
+                        "No matching process definition found for '%s'."
+                        % subprocess_reference,
+                        node=node,
+                        filename=filename,
+                    )
                 if len(matches) != 1:
                     raise ValidationException(
                         "More than one matching process definition "
-                        " found for '%s'." % subprocess_reference, node=node,
-                        filename=filename)
+                        " found for '%s'." % subprocess_reference,
+                        node=node,
+                        filename=filename,
+                    )
 
-                node.set('calledElement', matches[0].get('id'))
+                node.set("calledElement", matches[0].get("id"))
 
     def _call_editor_hook(self, hook, *args, **kwargs):
         if self.editor:
@@ -323,17 +331,18 @@ class Packager(object):
         """
         Adds the SVG files to the archive for this BPMN file.
         """
-        signavio_file = filename[:-len('.bpmn20.xml')] + '.signavio.xml'
+        signavio_file = filename[: -len(".bpmn20.xml")] + ".signavio.xml"
         if os.path.exists(signavio_file):
             self.write_file_to_package_zip(
-                "src/" + self._get_zip_path(signavio_file), signavio_file)
+                "src/" + self._get_zip_path(signavio_file), signavio_file
+            )
 
-            f = open(signavio_file, 'r')
+            f = open(signavio_file, "r")
             try:
                 signavio_tree = ET.parse(f)
             finally:
                 f.close()
-            svg_node = one(signavio_tree.findall('.//svg-representation'))
+            svg_node = one(signavio_tree.findall(".//svg-representation"))
             self.write_to_package_zip("%s.svg" % spec.name, svg_node.text)
 
     def write_meta_data(self):
@@ -342,27 +351,31 @@ class Packager(object):
         """
         config = configparser.ConfigParser()
 
-        config.add_section('MetaData')
-        config.set('MetaData', 'entry_point_process', self.wf_spec.name)
+        config.add_section("MetaData")
+        config.set("MetaData", "entry_point_process", self.wf_spec.name)
         if self.editor:
-            config.set('MetaData', 'editor', self.editor)
+            config.set("MetaData", "editor", self.editor)
 
         for k, v in self.meta_data:
-            config.set('MetaData', k, v)
+            config.set("MetaData", k, v)
 
         if not self.PARSER_CLASS == BpmnParser:
-            config.set('MetaData', 'parser_class_module',
-                       inspect.getmodule(self.PARSER_CLASS).__name__)
-            config.set('MetaData', 'parser_class', self.PARSER_CLASS.__name__)
+            config.set(
+                "MetaData",
+                "parser_class_module",
+                inspect.getmodule(self.PARSER_CLASS).__name__,
+            )
+            config.set("MetaData", "parser_class", self.PARSER_CLASS.__name__)
 
         ini = StringIO()
         config.write(ini)
         self.write_to_package_zip(self.METADATA_FILE, ini.getvalue())
 
     def _get_zip_path(self, filename):
-        p = os.path.abspath(filename)[
-            len(self.input_path_prefix):].replace(os.path.sep, '/')
-        while p.startswith('/'):
+        p = os.path.abspath(filename)[len(self.input_path_prefix) :].replace(
+            os.path.sep, "/"
+        )
+        while p.startswith("/"):
             p = p[1:]
         return p
 
@@ -370,9 +383,10 @@ class Packager(object):
     def get_version(cls):
         try:
             import pkg_resources  # part of setuptools
+
             version = pkg_resources.require("SpiffWorkflow")[0].version
         except Exception:
-            version = 'DEV'
+            version = "DEV"
         return version
 
     @classmethod
@@ -381,32 +395,55 @@ class Packager(object):
         Override in subclass if required.
         """
         return OptionParser(
-            usage=("%prog [options] -o <package file> -p "
-                   "<entry point process> <input BPMN files ...>"),
-            version="SpiffWorkflow BPMN Packager %s" % (cls.get_version()))
+            usage=(
+                "%prog [options] -o <package file> -p "
+                "<entry point process> <input BPMN files ...>"
+            ),
+            version="SpiffWorkflow BPMN Packager %s" % (cls.get_version()),
+        )
 
     @classmethod
     def add_main_options(cls, parser):
         """
         Override in subclass if required.
         """
-        parser.add_option("-o", "--output", dest="package_file",
-                          help="create the BPMN package in the specified file")
-        parser.add_option("-p", "--process", dest="entry_point_process",
-                          help="specify the entry point process")
-        parser.add_option("-c", "--config-file", dest="config_file",
-                          help="specify a config file to use")
         parser.add_option(
-            "-i", "--initialise-config-file", action="store_true",
-            dest="init_config_file", default=False,
-            help="create a new config file from the specified options")
+            "-o",
+            "--output",
+            dest="package_file",
+            help="create the BPMN package in the specified file",
+        )
+        parser.add_option(
+            "-p",
+            "--process",
+            dest="entry_point_process",
+            help="specify the entry point process",
+        )
+        parser.add_option(
+            "-c",
+            "--config-file",
+            dest="config_file",
+            help="specify a config file to use",
+        )
+        parser.add_option(
+            "-i",
+            "--initialise-config-file",
+            action="store_true",
+            dest="init_config_file",
+            default=False,
+            help="create a new config file from the specified options",
+        )
 
-        group = OptionGroup(parser, "BPMN Editor Options",
-                            "These options are not required, but may be "
-                            " provided to activate special features of "
-                            "supported BPMN editors.")
-        group.add_option("--editor", dest="editor",
-                         help="editors with special support: signavio")
+        group = OptionGroup(
+            parser,
+            "BPMN Editor Options",
+            "These options are not required, but may be "
+            " provided to activate special features of "
+            "supported BPMN editors.",
+        )
+        group.add_option(
+            "--editor", dest="editor", help="editors with special support: signavio"
+        )
         parser.add_option_group(group)
 
     @classmethod
@@ -414,15 +451,25 @@ class Packager(object):
         """
         Override in subclass if required.
         """
-        group = OptionGroup(parser, "Target Engine Options",
-                            "These options are not required, but may be "
-                            "provided if a specific "
-                            "BPMN application engine is targeted.")
-        group.add_option("-e", "--target-engine", dest="target_engine",
-                         help="target the specified BPMN application engine")
+        group = OptionGroup(
+            parser,
+            "Target Engine Options",
+            "These options are not required, but may be "
+            "provided if a specific "
+            "BPMN application engine is targeted.",
+        )
         group.add_option(
-            "-t", "--target-version", dest="target_engine_version",
-            help="target the specified version of the BPMN application engine")
+            "-e",
+            "--target-engine",
+            dest="target_engine",
+            help="target the specified BPMN application engine",
+        )
+        group.add_option(
+            "-t",
+            "--target-version",
+            dest="target_engine_version",
+            help="target the specified version of the BPMN application engine",
+        )
         parser.add_option_group(group)
 
     @classmethod
@@ -443,20 +490,20 @@ class Packager(object):
         Override in subclass if required.
         """
         if args:
-            config.set(CONFIG_SECTION_NAME, 'input_files', ','.join(args))
-        elif config.has_option(CONFIG_SECTION_NAME, 'input_files'):
-            for i in config.get(CONFIG_SECTION_NAME, 'input_files').split(','):
+            config.set(CONFIG_SECTION_NAME, "input_files", ",".join(args))
+        elif config.has_option(CONFIG_SECTION_NAME, "input_files"):
+            for i in config.get(CONFIG_SECTION_NAME, "input_files").split(","):
                 if not os.path.isabs(i):
                     i = os.path.abspath(
-                        os.path.join(os.path.dirname(options.config_file), i))
+                        os.path.join(os.path.dirname(options.config_file), i)
+                    )
                 args.append(i)
 
-        cls.merge_option_and_config_str('package_file', config, options)
-        cls.merge_option_and_config_str('entry_point_process', config, options)
-        cls.merge_option_and_config_str('target_engine', config, options)
-        cls.merge_option_and_config_str(
-            'target_engine_version', config, options)
-        cls.merge_option_and_config_str('editor', config, options)
+        cls.merge_option_and_config_str("package_file", config, options)
+        cls.merge_option_and_config_str("entry_point_process", config, options)
+        cls.merge_option_and_config_str("target_engine", config, options)
+        cls.merge_option_and_config_str("target_engine_version", config, options)
+        cls.merge_option_and_config_str("editor", config, options)
 
     @classmethod
     def merge_option_and_config_str(cls, option_name, config, options):
@@ -469,8 +516,7 @@ class Packager(object):
         if opt:
             config.set(CONFIG_SECTION_NAME, option_name, opt)
         elif config.has_option(CONFIG_SECTION_NAME, option_name):
-            setattr(options, option_name, config.get(
-                CONFIG_SECTION_NAME, option_name))
+            setattr(options, option_name, config.get(CONFIG_SECTION_NAME, option_name))
 
     @classmethod
     def create_meta_data(cls, options, args, parser):
@@ -478,12 +524,11 @@ class Packager(object):
         Override in subclass if required.
         """
         meta_data = []
-        meta_data.append(('spiff_version', cls.get_version()))
+        meta_data.append(("spiff_version", cls.get_version()))
         if options.target_engine:
-            meta_data.append(('target_engine', options.target_engine))
+            meta_data.append(("target_engine", options.target_engine))
         if options.target_engine:
-            meta_data.append(
-                ('target_engine_version', options.target_engine_version))
+            meta_data.append(("target_engine_version", options.target_engine_version))
         return meta_data
 
     @classmethod
@@ -505,8 +550,7 @@ class Packager(object):
         cls.merge_options_and_config(config, options, args)
         if options.init_config_file:
             if not options.config_file:
-                parser.error(
-                    "no config file specified - cannot initialise config file")
+                parser.error("no config file specified - cannot initialise config file")
             f = open(options.config_file, "w")
             with f:
                 config.write(f)
@@ -516,9 +560,12 @@ class Packager(object):
 
         meta_data = cls.create_meta_data(options, args, parser)
 
-        packager = cls(package_file=package_file or options.package_file,
-                       entry_point_process=options.entry_point_process,
-                       meta_data=meta_data, editor=options.editor)
+        packager = cls(
+            package_file=package_file or options.package_file,
+            entry_point_process=options.entry_point_process,
+            meta_data=meta_data,
+            editor=options.editor,
+        )
         for a in args:
             packager.add_bpmn_files_by_glob(a)
         packager.create_package()
@@ -537,5 +584,5 @@ def main(packager_class=None):
     packager_class.main()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

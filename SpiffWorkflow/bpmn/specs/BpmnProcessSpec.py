@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -28,7 +29,6 @@ LOG = logging.getLogger(__name__)
 
 
 class _EndJoin(UnstructuredJoin):
-
     def _check_threshold_unstructured(self, my_task, force=False):
         # Look at the tree to find all ready and waiting tasks (excluding
         # ourself). The EndJoin waits for everyone!
@@ -52,9 +52,10 @@ class _EndJoin(UnstructuredJoin):
 
         if len(waiting_tasks) == 0:
             LOG.debug(
-                'Endjoin Task ready: %s (ready/waiting tasks: %s)',
+                "Endjoin Task ready: %s (ready/waiting tasks: %s)",
                 my_task,
-                list(my_task.workflow.get_tasks(Task.READY | Task.WAITING)))
+                list(my_task.workflow.get_tasks(Task.READY | Task.WAITING)),
+            )
 
         return force or len(waiting_tasks) == 0, waiting_tasks
 
@@ -78,8 +79,8 @@ class BpmnProcessSpec(WorkflowSpec):
         LXML node. (optional)
         """
         super(BpmnProcessSpec, self).__init__(name=name, filename=filename)
-        self.end = _EndJoin(self, '%s.EndJoin' % (self.name))
-        end = Simple(self, 'End')
+        self.end = _EndJoin(self, "%s.EndJoin" % (self.name))
+        end = Simple(self, "End")
         end.follow(self.end)
         self.svg = svg
         self.description = description
@@ -99,10 +100,10 @@ class BpmnProcessSpec(WorkflowSpec):
 
             done.add(task_spec)
 
-            if hasattr(task_spec, 'lane') and task_spec.lane:
+            if hasattr(task_spec, "lane") and task_spec.lane:
                 lanes.add(task_spec.lane)
 
-            if hasattr(task_spec, 'spec'):
+            if hasattr(task_spec, "spec"):
                 recursive_find(task_spec.spec.start)
 
             for t in task_spec.outputs:
@@ -127,7 +128,7 @@ class BpmnProcessSpec(WorkflowSpec):
 
             done.add(task_spec)
 
-            if hasattr(task_spec, 'spec'):
+            if hasattr(task_spec, "spec"):
                 specs.append(task_spec.spec)
                 recursive_find(task_spec.spec.start)
 
@@ -143,22 +144,22 @@ class BpmnProcessSpec(WorkflowSpec):
         Returns an etree HTML node with a document describing the process. This
         is only supported if the editor provided an SVG representation.
         """
-        html = ET.Element('html')
-        head = ET.SubElement(html, 'head')
-        title = ET.SubElement(head, 'title')
+        html = ET.Element("html")
+        head = ET.SubElement(html, "head")
+        title = ET.SubElement(head, "title")
         title.text = self.description
-        body = ET.SubElement(html, 'body')
-        h1 = ET.SubElement(body, 'h1')
+        body = ET.SubElement(html, "body")
+        h1 = ET.SubElement(body, "h1")
         h1.text = self.description
-        span = ET.SubElement(body, 'span')
-        span.text = '___CONTENT___'
+        span = ET.SubElement(body, "span")
+        span.text = "___CONTENT___"
 
         html_text = ET.tostring(html)
 
-        svg_content = ''
+        svg_content = ""
         svg_done = set()
         for spec in self.get_specs_depth_first():
             if spec.svg and spec.svg not in svg_done:
-                svg_content += '<p>' + spec.svg + "</p>"
+                svg_content += "<p>" + spec.svg + "</p>"
                 svg_done.add(spec.svg)
-        return html_text.replace('___CONTENT___', svg_content)
+        return html_text.replace("___CONTENT___", svg_content)

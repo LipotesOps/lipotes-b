@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 from builtins import object
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -44,8 +45,8 @@ class ProcessParser(object):
         self.doc_xpath = doc_xpath
         self.xpath = xpath_eval(node)
         self.spec = BpmnProcessSpec(
-            name=self.get_id(), description=self.get_name(), svg=svg,
-            filename=filename)
+            name=self.get_id(), description=self.get_name(), svg=svg, filename=filename
+        )
         self.parsing_started = False
         self.is_parsed = False
         self.parsed_nodes = {}
@@ -58,13 +59,13 @@ class ProcessParser(object):
         """
         Returns the process ID
         """
-        return self.node.get('id')
+        return self.node.get("id")
 
     def get_name(self):
         """
         Returns the process name (or ID, if no name is included in the file)
         """
-        return self.node.get('name', default=self.get_id())
+        return self.node.get("name", default=self.get_id())
 
     def parse_node(self, node):
         """
@@ -73,14 +74,16 @@ class ProcessParser(object):
         ProcessParser.
         """
 
-        if node.get('id') in self.parsed_nodes:
-            return self.parsed_nodes[node.get('id')]
+        if node.get("id") in self.parsed_nodes:
+            return self.parsed_nodes[node.get("id")]
 
         (node_parser, spec_class) = self.parser._get_parser_class(node.tag)
         if not node_parser or not spec_class:
             raise ValidationException(
                 "There is no support implemented for this task type.",
-                node=node, filename=self.filename)
+                node=node,
+                filename=self.filename,
+            )
         np = node_parser(self, spec_class, node)
         task_spec = np.parse_node()
 
@@ -94,23 +97,26 @@ class ProcessParser(object):
 
     def _init_lane_lookup(self):
         self.id_to_lane_lookup = {}
-        for lane in self.xpath('.//bpmn:lane'):
-            name = lane.get('name')
+        for lane in self.xpath(".//bpmn:lane"):
+            name = lane.get("name")
             if name:
-                for ref in xpath_eval(lane)('bpmn:flowNodeRef'):
+                for ref in xpath_eval(lane)("bpmn:flowNodeRef"):
                     id = ref.text
                     if id:
                         self.id_to_lane_lookup[id] = name
 
     def _parse(self):
-        start_node_list = self.xpath('.//bpmn:startEvent')
+        start_node_list = self.xpath(".//bpmn:startEvent")
         if not start_node_list:
             raise ValidationException(
-                "No start event found", node=self.node, filename=self.filename)
+                "No start event found", node=self.node, filename=self.filename
+            )
         elif len(start_node_list) != 1:
             raise ValidationException(
                 "Only one Start Event is supported in each process",
-                node=self.node, filename=self.filename)
+                node=self.node,
+                filename=self.filename,
+            )
         self.parsing_started = True
         self.parse_node(start_node_list[0])
         self.is_parsed = True
@@ -123,7 +129,6 @@ class ProcessParser(object):
         if self.is_parsed:
             return self.spec
         if self.parsing_started:
-            raise NotImplementedError(
-                'Recursive call Activities are not supported.')
+            raise NotImplementedError("Recursive call Activities are not supported.")
         self._parse()
         return self.get_spec()

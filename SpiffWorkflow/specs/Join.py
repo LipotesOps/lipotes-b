@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -58,13 +59,9 @@ class Join(TaskSpec):
     Trigger pattern is used.
     """
 
-    def __init__(self,
-                 wf_spec,
-                 name,
-                 split_task=None,
-                 threshold=None,
-                 cancel=False,
-                 **kwargs):
+    def __init__(
+        self, wf_spec, name, split_task=None, threshold=None, cancel=False, **kwargs
+    ):
         """
         Constructor.
 
@@ -120,8 +117,9 @@ class Join(TaskSpec):
             # If the task is predicted with less outputs than he has
             # children, that means the prediction may be incomplete (for
             # example, because a prediction is not yet possible at this time).
-            if not child._is_definite() \
-                    and len(child.task_spec.outputs) > len(child.children):
+            if not child._is_definite() and len(child.task_spec.outputs) > len(
+                child.children
+            ):
                 return True
         return False
 
@@ -158,7 +156,7 @@ class Join(TaskSpec):
         # task that did the conditional parallel split.
         split_task = my_task._find_ancestor_from_name(self.split_task)
         if split_task is None:
-            msg = 'Join with %s, which was not reached' % self.split_task
+            msg = "Join with %s, which was not reached" % self.split_task
             raise WorkflowException(self, msg)
         tasks = split_task.task_spec._get_activated_tasks(split_task, my_task)
 
@@ -237,8 +235,7 @@ class Join(TaskSpec):
         # We are looking for all task instances that must be joined.
         # We limit our search by starting at the split point.
         if self.split_task:
-            split_task = my_task.workflow.get_task_spec_from_name(
-                self.split_task)
+            split_task = my_task.workflow.get_task_spec_from_name(self.split_task)
             split_task = my_task._find_ancestor(split_task)
         else:
             split_task = my_task.workflow.task_tree
@@ -264,8 +261,7 @@ class Join(TaskSpec):
             # Check whether the state of the instance was recently
             # changed.
             changed = task.parent.last_state_change
-            if last_changed is None \
-                    or changed > last_changed.parent.last_state_change:
+            if last_changed is None or changed > last_changed.parent.last_state_change:
                 last_changed = task
 
         # Mark the identified task instances as COMPLETED. The exception

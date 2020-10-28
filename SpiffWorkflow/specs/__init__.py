@@ -26,5 +26,9 @@ from .Trigger import Trigger
 from .WorkflowSpec import WorkflowSpec
 
 import inspect
-__all__ = [name for name, obj in list(locals().items())
-           if not (name.startswith('_') or inspect.ismodule(obj))]
+
+__all__ = [
+    name
+    for name, obj in list(locals().items())
+    if not (name.startswith("_") or inspect.ismodule(obj))
+]

@@ -7,13 +7,20 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('flows', '0011_auto_20200918_2231'),
+        ("flows", "0011_auto_20200918_2231"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='formcontent',
-            name='form_content',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='form_content_related_form', to='flows.Form', to_field='uuid'),
+            model_name="formcontent",
+            name="form_content",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="form_content_related_form",
+                to="flows.Form",
+                to_field="uuid",
+            ),
         ),
     ]

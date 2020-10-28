@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -28,8 +29,9 @@ class BpmnWorkflow(Workflow):
     Spiff Workflow class with a few extra methods and attributes.
     """
 
-    def __init__(self, workflow_spec, name=None, script_engine=None,
-                 read_only=False, **kwargs):
+    def __init__(
+        self, workflow_spec, name=None, script_engine=None, read_only=False, **kwargs
+    ):
         """
         Constructor.
 
@@ -69,14 +71,18 @@ class BpmnWorkflow(Workflow):
         """
         assert not self.read_only
         engine_steps = list(
-            [t for t in self.get_tasks(Task.READY)
-             if self._is_engine_task(t.task_spec)])
+            [t for t in self.get_tasks(Task.READY) if self._is_engine_task(t.task_spec)]
+        )
         while engine_steps:
             for task in engine_steps:
                 task.complete()
             engine_steps = list(
-                [t for t in self.get_tasks(Task.READY)
-                 if self._is_engine_task(t.task_spec)])
+                [
+                    t
+                    for t in self.get_tasks(Task.READY)
+                    if self._is_engine_task(t.task_spec)
+                ]
+            )
 
     def refresh_waiting_tasks(self):
         """
@@ -91,8 +97,11 @@ class BpmnWorkflow(Workflow):
         """
         Returns a list of User Tasks that are READY for user action
         """
-        return [t for t in self.get_tasks(Task.READY)
-                if not self._is_engine_task(t.task_spec)]
+        return [
+            t
+            for t in self.get_tasks(Task.READY)
+            if not self._is_engine_task(t.task_spec)
+        ]
 
     def get_waiting_tasks(self):
         """
@@ -106,8 +115,7 @@ class BpmnWorkflow(Workflow):
         return self.outer_workflow._is_busy_with_restore()
 
     def _is_engine_task(self, task_spec):
-        return (not hasattr(task_spec, 'is_engine_task') or
-                task_spec.is_engine_task())
+        return not hasattr(task_spec, "is_engine_task") or task_spec.is_engine_task()
 
     def _task_completed_notify(self, task):
         assert (not self.read_only) or self._is_busy_with_restore()

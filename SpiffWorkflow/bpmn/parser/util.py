@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -18,7 +19,7 @@ from __future__ import division
 # 02110-1301  USA
 
 
-BPMN_MODEL_NS = 'http://www.omg.org/spec/BPMN/20100524/MODEL'
+BPMN_MODEL_NS = "http://www.omg.org/spec/BPMN/20100524/MODEL"
 
 
 def one(nodes, or_none=False):
@@ -27,8 +28,7 @@ def one(nodes, or_none=False):
     """
     if not nodes and or_none:
         return None
-    assert len(
-        nodes) == 1, 'Expected 1 result. Received %d results.' % (len(nodes))
+    assert len(nodes) == 1, "Expected 1 result. Received %d results." % (len(nodes))
     return nodes[0]
 
 
@@ -47,7 +47,7 @@ def xpath_eval(node, extra_ns=None):
     Returns an XPathEvaluator, with namespace prefixes 'bpmn' for
     http://www.omg.org/spec/BPMN/20100524/MODEL, and additional specified ones
     """
-    namespaces = {'bpmn': BPMN_MODEL_NS}
+    namespaces = {"bpmn": BPMN_MODEL_NS}
     if extra_ns:
         namespaces.update(extra_ns)
     return lambda path: node.findall(path, namespaces)
@@ -59,4 +59,4 @@ def full_tag(tag):
     other words, the name with namespace
     http://www.omg.org/spec/BPMN/20100524/MODEL
     """
-    return '{%s}%s' % (BPMN_MODEL_NS, tag)
+    return "{%s}%s" % (BPMN_MODEL_NS, tag)

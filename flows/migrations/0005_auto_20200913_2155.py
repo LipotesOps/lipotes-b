@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('flows', '0004_taskinstance_flowable_process_instance_id'),
+        ("flows", "0004_taskinstance_flowable_process_instance_id"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='taskinstance',
-            name='flowable_process_instance_id',
+            model_name="taskinstance",
+            name="flowable_process_instance_id",
             field=models.CharField(max_length=64, null=True),
         ),
     ]

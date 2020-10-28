@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -48,12 +49,10 @@ class ScriptTask(Simple, BpmnSpecMixin):
         try:
             task.workflow.script_engine.execute(task, self.script, **task.data)
         except Exception:
-            LOG.error('Error executing ScriptTask; task=%r',
-                      task, exc_info=True)
+            LOG.error("Error executing ScriptTask; task=%r", task, exc_info=True)
             # set state to WAITING (because it is definitely not COMPLETED)
             # and raise WorkflowException pointing to this task because
             # maybe upstream someone will be able to handle this situation
             task._setstate(Task.WAITING, force=True)
-            raise WorkflowTaskExecException(
-                task, 'Error during script execution')
+            raise WorkflowTaskExecException(task, "Error during script execution")
         super(ScriptTask, self)._on_complete_hook(task)

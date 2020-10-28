@@ -1,13 +1,14 @@
 from django.apps import AppConfig
 from django.db.models.signals import post_save
+
 # from django.dispatch import receiver
 
 from flows.signals import post_flowable_task_action
 
 
 class FlowsConfig(AppConfig):
-    name = 'flows'
-    verbose_name = 'A Much Better Name'
+    name = "flows"
+    verbose_name = "A Much Better Name"
 
     def ready(self):
         # importing model classes
@@ -23,12 +24,15 @@ class FlowsConfig(AppConfig):
         from flows.signals.flowinstance import sync_flowable_task_list
 
         # 同步第一个flowable task
-        post_save.connect(post_start_flow_instance, sender='flows.FlowInstance', dispatch_uid='first_flowable_task')
+        post_save.connect(
+            post_start_flow_instance,
+            sender="flows.FlowInstance",
+            dispatch_uid="first_flowable_task",
+        )
         # 自动完成第一个flowable task
-        post_save.connect(post_start_event, sender='flows.TaskInstance')
+        post_save.connect(post_start_event, sender="flows.TaskInstance")
         # 同步flowable task list
-        post_save.connect(sync_flowable_task_list, sender='flows.FlowBpmn')
+        post_save.connect(sync_flowable_task_list, sender="flows.FlowBpmn")
 
         # post_flowable_task_action
         post_flowable_task_action.connect(sync_next_flowable_task_instance)
- 

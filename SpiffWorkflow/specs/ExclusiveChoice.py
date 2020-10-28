@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -64,7 +65,7 @@ class ExclusiveChoice(MultiChoice):
         """
         MultiChoice.test(self)
         if self.default_task_spec is None:
-            raise WorkflowException(self, 'A default output is required.')
+            raise WorkflowException(self, "A default output is required.")
 
     def _predict_hook(self, my_task):
         # If the task's status is not predicted, we default to MAYBE

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -38,10 +39,11 @@ class IntermediateCatchEvent(Simple, BpmnSpecMixin):
         self.event_definition = event_definition
 
     def _update_hook(self, my_task):
-        target_state = getattr(my_task, '_bpmn_load_target_state', None)
+        target_state = getattr(my_task, "_bpmn_load_target_state", None)
         if target_state == Task.READY or (
-                not my_task.workflow._is_busy_with_restore() and
-                self.event_definition.has_fired(my_task)):
+            not my_task.workflow._is_busy_with_restore()
+            and self.event_definition.has_fired(my_task)
+        ):
             super(IntermediateCatchEvent, self)._update_hook(my_task)
         else:
             if not my_task.parent._is_finished():
@@ -55,8 +57,9 @@ class IntermediateCatchEvent(Simple, BpmnSpecMixin):
         self._predict(my_task)
 
     def accept_message(self, my_task, message):
-        if (my_task.state == Task.WAITING and
-                self.event_definition._accept_message(my_task, message)):
+        if my_task.state == Task.WAITING and self.event_definition._accept_message(
+            my_task, message
+        ):
             self._update(my_task)
             return True
         return False

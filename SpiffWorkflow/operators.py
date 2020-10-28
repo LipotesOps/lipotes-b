@@ -2,6 +2,7 @@
 from __future__ import division
 from builtins import str
 from builtins import object
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -29,6 +30,7 @@ class Term(object):
     """
     Abstract base class for all operators and expressions.
     """
+
     pass
 
 
@@ -107,11 +109,7 @@ class Assign(Term):
     a static value, or another attribute.
     """
 
-    def __init__(self,
-                 left_attribute,
-                 right_attribute=None,
-                 right=None,
-                 **kwargs):
+    def __init__(self, left_attribute, right_attribute=None, right=None, **kwargs):
         """
         Constructor.
 
@@ -129,7 +127,7 @@ class Assign(Term):
         :param kwargs: See :class:`SpiffWorkflow.specs.TaskSpec`.
         """
         if not right_attribute and not right:
-            raise ValueError('require argument: right_attribute or right')
+            raise ValueError("require argument: right_attribute or right")
         assert left_attribute is not None
         self.left_attribute = left_attribute
         self.right_attribute = right_attribute
@@ -172,19 +170,23 @@ def valueof(scope, op, default=None):
         return default
     elif isinstance(op, Attrib):
         if op.name not in scope.data:
-            LOG.debug("Attrib('%s') not present in task '%s' data" %
-                      (op.name, scope.get_name()))
+            LOG.debug(
+                "Attrib('%s') not present in task '%s' data"
+                % (op.name, scope.get_name())
+            )
         return scope.get_data(op.name, default)
     elif isinstance(op, PathAttrib):
         if not op.path:
             return default
-        parts = op.path.split('/')
+        parts = op.path.split("/")
         data = scope.data
         for part in parts:
             if part not in data:
-                LOG.debug("PathAttrib('%s') not present in task '%s' "
-                          "data" % (op.path, scope.get_name()),
-                          extra=dict(data=scope.data))
+                LOG.debug(
+                    "PathAttrib('%s') not present in task '%s' "
+                    "data" % (op.path, scope.get_name()),
+                    extra=dict(data=scope.data),
+                )
                 return default
             data = data[part]  # move down the path
         return data

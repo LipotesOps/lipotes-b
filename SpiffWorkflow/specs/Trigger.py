@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
 from builtins import range
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -68,8 +69,7 @@ class Trigger(TaskSpec):
         for thetask in my_task.workflow.task_tree:
             if thetask.thread_id != my_task.thread_id:
                 continue
-            if (thetask.task_spec == self and
-                    thetask._has_state(Task.COMPLETED)):
+            if thetask.task_spec == self and thetask._has_state(Task.COMPLETED):
                 thetask._set_state(Task.FUTURE, True)
                 thetask._ready()
 
@@ -98,6 +98,4 @@ class Trigger(TaskSpec):
         """
         Deserializes the trigger using the provided serializer.
         """
-        return serializer.deserialize_trigger(wf_spec,
-                                              s_state,
-                                              **kwargs)
+        return serializer.deserialize_trigger(wf_spec, s_state, **kwargs)

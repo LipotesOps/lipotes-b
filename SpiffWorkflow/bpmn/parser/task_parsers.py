@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -20,8 +21,7 @@ from __future__ import division
 from .ValidationException import ValidationException
 from .TaskParser import TaskParser
 from .util import first, one
-from ..specs.event_definitions import (TimerEventDefinition,
-                                       MessageEventDefinition)
+from ..specs.event_definitions import TimerEventDefinition, MessageEventDefinition
 import xml.etree.ElementTree as ET
 
 
@@ -48,13 +48,16 @@ class EndEventParser(TaskParser):
 
     def create_task(self):
 
-        terminateEventDefinition = self.xpath(
-            './/bpmn:terminateEventDefinition')
-        task = self.spec_class(self.spec, self.get_task_spec_name(),
-                               is_terminate_event=terminateEventDefinition,
-                               description=self.node.get('name', None))
-        task.connect_outgoing(self.spec.end, '%s.ToEndJoin' %
-                              self.node.get('id'), None, None)
+        terminateEventDefinition = self.xpath(".//bpmn:terminateEventDefinition")
+        task = self.spec_class(
+            self.spec,
+            self.get_task_spec_name(),
+            is_terminate_event=terminateEventDefinition,
+            description=self.node.get("name", None),
+        )
+        task.connect_outgoing(
+            self.spec.end, "%s.ToEndJoin" % self.node.get("id"), None, None
+        )
         return task
 
 
@@ -63,6 +66,7 @@ class UserTaskParser(TaskParser):
     """
     Base class for parsing User Tasks
     """
+
     pass
 
 
@@ -72,6 +76,7 @@ class ManualTaskParser(UserTaskParser):
     Base class for parsing Manual Tasks. Currently assumes that Manual Tasks
     should be treated the same way as User Tasks.
     """
+
     pass
 
 
@@ -81,6 +86,7 @@ class NoneTaskParser(UserTaskParser):
     Base class for parsing unspecified Tasks. Currently assumes that such Tasks
     should be treated the same way as User Tasks.
     """
+
     pass
 
 
@@ -90,28 +96,31 @@ class ExclusiveGatewayParser(TaskParser):
     appropriately.
     """
 
-    def connect_outgoing(self, outgoing_task, outgoing_task_node,
-                         sequence_flow_node, is_default):
+    def connect_outgoing(
+        self, outgoing_task, outgoing_task_node, sequence_flow_node, is_default
+    ):
         if is_default:
             super(ExclusiveGatewayParser, self).connect_outgoing(
-                outgoing_task, outgoing_task_node, sequence_flow_node,
-                is_default)
+                outgoing_task, outgoing_task_node, sequence_flow_node, is_default
+            )
         else:
             cond = self.parser._parse_condition(
-                outgoing_task, outgoing_task_node, sequence_flow_node,
-                task_parser=self)
+                outgoing_task, outgoing_task_node, sequence_flow_node, task_parser=self
+            )
             if cond is None:
                 raise ValidationException(
-                    'Non-default exclusive outgoing sequence flow '
-                    ' without condition',
+                    "Non-default exclusive outgoing sequence flow "
+                    " without condition",
                     sequence_flow_node,
-                    self.process_parser.filename)
+                    self.process_parser.filename,
+                )
             self.task.connect_outgoing_if(
-                cond, outgoing_task,
-                sequence_flow_node.get('id'),
-                sequence_flow_node.get('name', None),
-                self.parser._parse_documentation(
-                    sequence_flow_node, task_parser=self))
+                cond,
+                outgoing_task,
+                sequence_flow_node.get("id"),
+                sequence_flow_node.get("name", None),
+                self.parser._parse_documentation(sequence_flow_node, task_parser=self),
+            )
 
     def handles_multiple_outgoing(self):
         return True
@@ -150,17 +159,21 @@ class CallActivityParser(TaskParser):
     def create_task(self):
         wf_spec = self.get_subprocess_parser().get_spec()
         return self.spec_class(
-            self.spec, self.get_task_spec_name(), bpmn_wf_spec=wf_spec,
+            self.spec,
+            self.get_task_spec_name(),
+            bpmn_wf_spec=wf_spec,
             bpmn_wf_class=self.parser.WORKFLOW_CLASS,
-            description=self.node.get('name', None))
+            description=self.node.get("name", None),
+        )
 
     def get_subprocess_parser(self):
-        calledElement = self.node.get('calledElement', None)
+        calledElement = self.node.get("calledElement", None)
         if not calledElement:
             raise ValidationException(
                 'No "calledElement" attribute for Call Activity.',
                 node=self.node,
-                filename=self.process_parser.filename)
+                filename=self.process_parser.filename,
+            )
         return self.parser.get_process_parser(calledElement)
 
 
@@ -171,8 +184,12 @@ class ScriptTaskParser(TaskParser):
 
     def create_task(self):
         script = self.get_script()
-        return self.spec_class(self.spec, self.get_task_spec_name(), script,
-                               description=self.node.get('name', None))
+        return self.spec_class(
+            self.spec,
+            self.get_task_spec_name(),
+            script,
+            description=self.node.get("name", None),
+        )
 
     def get_script(self):
         """
@@ -180,7 +197,7 @@ class ScriptTaskParser(TaskParser):
         method, if the script needs to be pre-parsed. The result of this call
         will be passed to the Script Engine for execution.
         """
-        return one(self.xpath('.//bpmn:script')).text
+        return one(self.xpath(".//bpmn:script")).text
 
 
 class IntermediateCatchEventParser(TaskParser):
@@ -192,34 +209,37 @@ class IntermediateCatchEventParser(TaskParser):
     def create_task(self):
         event_definition = self.get_event_definition()
         return self.spec_class(
-            self.spec, self.get_task_spec_name(), event_definition,
-            description=self.node.get('name', None))
+            self.spec,
+            self.get_task_spec_name(),
+            event_definition,
+            description=self.node.get("name", None),
+        )
 
     def get_event_definition(self):
         """
         Parse the event definition node, and return an instance of Event
         """
-        messageEventDefinition = first(
-            self.xpath('.//bpmn:messageEventDefinition'))
+        messageEventDefinition = first(self.xpath(".//bpmn:messageEventDefinition"))
         if messageEventDefinition is not None:
             return self.get_message_event_definition(messageEventDefinition)
 
-        timerEventDefinition = first(
-            self.xpath('.//bpmn:timerEventDefinition'))
+        timerEventDefinition = first(self.xpath(".//bpmn:timerEventDefinition"))
         if timerEventDefinition is not None:
             return self.get_timer_event_definition(timerEventDefinition)
 
         raise NotImplementedError(
-            'Unsupported Intermediate Catch Event: %r', ET.tostring(self.node))
+            "Unsupported Intermediate Catch Event: %r", ET.tostring(self.node)
+        )
 
     def get_message_event_definition(self, messageEventDefinition):
         """
         Parse the messageEventDefinition node and return an instance of
         MessageEventDefinition
         """
-        messageRef = first(self.xpath('.//bpmn:messageRef'))
-        message = messageRef.get(
-            'name') if messageRef is not None else self.node.get('name')
+        messageRef = first(self.xpath(".//bpmn:messageRef"))
+        message = (
+            messageRef.get("name") if messageRef is not None else self.node.get("name")
+        )
         return MessageEventDefinition(message)
 
     def get_timer_event_definition(self, timerEventDefinition):
@@ -230,11 +250,11 @@ class IntermediateCatchEventParser(TaskParser):
         This currently only supports the timeDate node for specifying an expiry
         time for the timer.
         """
-        timeDate = first(self.xpath('.//bpmn:timeDate'))
+        timeDate = first(self.xpath(".//bpmn:timeDate"))
         return TimerEventDefinition(
-            self.node.get('name', timeDate.text),
-            self.parser.parse_condition(
-                timeDate.text, None, None, None, None, self))
+            self.node.get("name", timeDate.text),
+            self.parser.parse_condition(timeDate.text, None, None, None, None, self),
+        )
 
 
 class BoundaryEventParser(IntermediateCatchEventParser):
@@ -246,9 +266,13 @@ class BoundaryEventParser(IntermediateCatchEventParser):
     def create_task(self):
         event_definition = self.get_event_definition()
         # BPMN spec states that cancelActivity is True by default
-        cancel_activity = self.node.get(
-            'cancelActivity', default='true').lower() == 'true'
-        return self.spec_class(self.spec, self.get_task_spec_name(),
-                               cancel_activity=cancel_activity,
-                               event_definition=event_definition,
-                               description=self.node.get('name', None))
+        cancel_activity = (
+            self.node.get("cancelActivity", default="true").lower() == "true"
+        )
+        return self.spec_class(
+            self.spec,
+            self.get_task_spec_name(),
+            cancel_activity=cancel_activity,
+            event_definition=event_definition,
+            description=self.node.get("name", None),
+        )

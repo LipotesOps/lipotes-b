@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -54,8 +55,7 @@ class EndEvent(Simple, BpmnSpecMixin):
     def _on_complete_hook(self, my_task):
         if self.is_terminate_event:
             # Cancel other branches in this workflow:
-            for active_task in my_task.workflow.get_tasks(
-                    Task.READY | Task.WAITING):
+            for active_task in my_task.workflow.get_tasks(Task.READY | Task.WAITING):
                 if active_task.task_spec == my_task.workflow.spec.end:
                     continue
                 elif active_task.workflow == my_task.workflow:

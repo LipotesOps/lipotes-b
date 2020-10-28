@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -59,12 +60,12 @@ class Transform(TaskSpec):
 
     def serialize(self, serializer):
         s_state = serializer.serialize_simple(self)
-        s_state['transforms'] = self.transforms
+        s_state["transforms"] = self.transforms
         return s_state
 
     @classmethod
     def deserialize(cls, serializer, wf_spec, s_state):
-        spec = Transform(wf_spec, s_state['name'])
+        spec = Transform(wf_spec, s_state["name"])
         serializer.deserialize_task_spec(wf_spec, s_state, spec=spec)
-        spec.transforms = s_state['transforms']
+        spec.transforms = s_state["transforms"]
         return spec

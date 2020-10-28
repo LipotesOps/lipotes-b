@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -30,11 +31,7 @@ class ThreadMerge(Join):
     It has two or more incoming branches and one or more outputs.
     """
 
-    def __init__(self,
-                 wf_spec,
-                 name,
-                 split_task,
-                 **kwargs):
+    def __init__(self, wf_spec, name, split_task, **kwargs):
         """
         Constructor.
 
@@ -62,7 +59,7 @@ class ThreadMerge(Join):
         # task that did the conditional parallel split.
         split_task = my_task._find_ancestor_from_name(self.split_task)
         if split_task is None:
-            msg = 'Join with %s, which was not reached' % self.split_task
+            msg = "Join with %s, which was not reached" % self.split_task
             raise WorkflowException(self, msg)
         tasks = split_task.task_spec._get_activated_threads(split_task)
 
@@ -103,8 +100,7 @@ class ThreadMerge(Join):
             my_task._set_state(Task.WAITING)
             return
 
-        split_task_spec = my_task.workflow.get_task_spec_from_name(
-            self.split_task)
+        split_task_spec = my_task.workflow.get_task_spec_from_name(self.split_task)
         split_task = my_task._find_ancestor(split_task_spec)
 
         # Find the inbound task that was completed last.
@@ -114,8 +110,7 @@ class ThreadMerge(Join):
             if self.split_task and task._is_descendant_of(my_task):
                 continue
             changed = task.parent.last_state_change
-            if last_changed is None \
-                    or changed > last_changed.parent.last_state_change:
+            if last_changed is None or changed > last_changed.parent.last_state_change:
                 last_changed = task
             tasks.append(task)
 

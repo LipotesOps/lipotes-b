@@ -4,6 +4,7 @@ from __future__ import print_function
 from builtins import str
 from builtins import hex
 from builtins import object
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -79,6 +80,7 @@ class Task(object):
     created to allow for visualizing the workflow at a time where
     the required decisions have not yet been made.
     """
+
     # Note: The states in this list are ordered in the sequence in which
     # they may appear. Do not change.
     MAYBE = 1
@@ -95,13 +97,15 @@ class Task(object):
     NOT_FINISHED_MASK = PREDICTED_MASK | WAITING | READY
     ANY_MASK = FINISHED_MASK | NOT_FINISHED_MASK
 
-    state_names = {FUTURE:    'FUTURE',
-                   WAITING:   'WAITING',
-                   READY:     'READY',
-                   CANCELLED: 'CANCELLED',
-                   COMPLETED: 'COMPLETED',
-                   LIKELY:    'LIKELY',
-                   MAYBE:     'MAYBE'}
+    state_names = {
+        FUTURE: "FUTURE",
+        WAITING: "WAITING",
+        READY: "READY",
+        CANCELLED: "CANCELLED",
+        COMPLETED: "COMPLETED",
+        LIKELY: "LIKELY",
+        MAYBE: "MAYBE",
+    }
 
     class Iterator(object):
 
@@ -137,8 +141,7 @@ class Task(object):
                 ignore_task = is_predicted and not search_predicted
             if current.children and not ignore_task:
                 self.path.append(current.children[0])
-                if (self.filter is not None and
-                        current.state & self.filter == 0):
+                if self.filter is not None and current.state & self.filter == 0:
                     return None
                 return current
 
@@ -196,10 +199,11 @@ class Task(object):
             self.parent._child_added_notify(self)
 
     def __repr__(self):
-        return '<Task object (%s) in state %s at %s>' % (
+        return "<Task object (%s) in state %s at %s>" % (
             self.task_spec.name,
             self.get_state_name(),
-            hex(id(self)))
+            hex(id(self)),
+        )
 
     def _getstate(self):
         return self._state
@@ -212,21 +216,24 @@ class Task(object):
         if self._state == value:
             return
         if value < self._state and not force:
-            raise WorkflowException(self.task_spec,
-                                    'state went from %s to %s!' % (
-                                        self.get_state_name(),
-                                        self.state_names[value]))
+            raise WorkflowException(
+                self.task_spec,
+                "state went from %s to %s!"
+                % (self.get_state_name(), self.state_names[value]),
+            )
         if __debug__:
             old = self.get_state_name()
         self._state = value
         if __debug__:
-            self.log.append("Moving '%s' from %s to %s" % (
-                self.get_name(),
-                old, self.get_state_name()))
+            self.log.append(
+                "Moving '%s' from %s to %s"
+                % (self.get_name(), old, self.get_state_name())
+            )
         self.state_history.append(value)
-        LOG.debug("Moving '%s' (spec=%s) from %s to %s" % (
-            self.get_name(),
-            self.task_spec.name, old, self.get_state_name()))
+        LOG.debug(
+            "Moving '%s' (spec=%s) from %s to %s"
+            % (self.get_name(), self.task_spec.name, old, self.get_state_name())
+        )
 
     def _delstate(self):
         del self._state
@@ -241,8 +248,8 @@ class Task(object):
         # If unpickled in the same Python process in which a workflow
         # (Task) is built through the API, we need to make sure
         # that there will not be any ID collisions.
-        if dict['thread_id'] >= self.__class__.thread_id_pool:
-            self.__class__.thread_id_pool = dict['thread_id']
+        if dict["thread_id"] >= self.__class__.thread_id_pool:
+            self.__class__.thread_id_pool = dict["thread_id"]
 
     def _get_root(self):
         """
@@ -312,9 +319,9 @@ class Task(object):
         :returns: The new child task.
         """
         if task_spec is None:
-            raise ValueError(self, '_add_child() requires a TaskSpec')
+            raise ValueError(self, "_add_child() requires a TaskSpec")
         if self._is_predicted() and state & self.PREDICTED_MASK == 0:
-            msg = 'Attempt to add non-predicted child to predicted task'
+            msg = "Attempt to add non-predicted child to predicted task"
             raise WorkflowException(self.task_spec, msg)
         task = Task(self.workflow, task_spec, self, state=state)
         task.thread_id = self.thread_id
@@ -379,9 +386,9 @@ class Task(object):
             # Non-predicted tasks must not be removed, so they HAVE to be in
             # the given task spec list.
             if child._is_definite():
-                raise WorkflowException(self.task_spec,
-                                        'removal of non-predicted child %s' %
-                                        repr(child))
+                raise WorkflowException(
+                    self.task_spec, "removal of non-predicted child %s" % repr(child)
+                )
             remove.append(child)
 
         # Remove and add the children accordingly.
@@ -514,7 +521,7 @@ class Task(object):
         for state, name in list(self.state_names.items()):
             if self._has_state(state):
                 state_name.append(name)
-        return '|'.join(state_name)
+        return "|".join(state_name)
 
     def get_spec_data(self, name=None, default=None):
         """
@@ -549,9 +556,11 @@ class Task(object):
         """
         Inherits the data from the parent.
         """
-        LOG.debug("'%s' inheriting data from '%s'" % (self.get_name(),
-                                                      self.parent.get_name()),
-                  extra=dict(data=self.parent.data))
+        LOG.debug(
+            "'%s' inheriting data from '%s'"
+            % (self.get_name(), self.parent.get_name()),
+            extra=dict(data=self.parent.data),
+        )
         self.set_data(**self.parent.data)
 
     def get_data(self, name, default=None):
@@ -602,17 +611,17 @@ class Task(object):
         :rtype:  str
         :returns: The debug information.
         """
-        dbg = (' ' * indent * 2)
-        dbg += '%s/' % self.id
-        dbg += '%s:' % self.thread_id
-        dbg += ' Task of %s' % self.get_name()
+        dbg = " " * indent * 2
+        dbg += "%s/" % self.id
+        dbg += "%s:" % self.thread_id
+        dbg += " Task of %s" % self.get_name()
         if self.task_spec.description:
-            dbg += ' (%s)' % self.get_description()
-        dbg += ' State: %s' % self.get_state_name()
-        dbg += ' Children: %s' % len(self.children)
+            dbg += " (%s)" % self.get_description()
+        dbg += " State: %s" % self.get_state_name()
+        dbg += " Children: %s" % len(self.children)
         if recursive:
             for child in self.children:
-                dbg += '\n' + child.get_dump(indent + 1)
+                dbg += "\n" + child.get_dump(indent + 1)
         return dbg
 
     def dump(self, indent=0):

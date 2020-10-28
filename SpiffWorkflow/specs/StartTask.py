@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -29,7 +30,7 @@ class StartTask(TaskSpec):
     parallel split.
     """
 
-    def __init__(self, wf_spec, name='Start', **kwargs):
+    def __init__(self, wf_spec, name="Start", **kwargs):
         """
         Constructor. The name of this task is *always* 'Start'.
 
@@ -44,7 +45,7 @@ class StartTask(TaskSpec):
         """
         Called by the previous task to let us know that it exists.
         """
-        raise WorkflowException(self, 'StartTask can not have any inputs.')
+        raise WorkflowException(self, "StartTask can not have any inputs.")
 
     def test(self):
         """
@@ -52,9 +53,9 @@ class StartTask(TaskSpec):
         if an error was detected.
         """
         if len(self.inputs) != 0:
-            raise WorkflowException(self, 'StartTask with an input.')
+            raise WorkflowException(self, "StartTask with an input.")
         elif len(self.outputs) < 1:
-            raise WorkflowException(self, 'No output task connected.')
+            raise WorkflowException(self, "No output task connected.")
 
     def serialize(self, serializer):
         return serializer.serialize_start_task(self)

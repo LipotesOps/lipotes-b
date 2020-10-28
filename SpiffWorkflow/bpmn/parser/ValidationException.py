@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -32,24 +33,29 @@ class ValidationException(Exception):
     def __init__(self, msg, node=None, filename=None, *args, **kwargs):
         if node is not None:
             self.tag = self._shorten_tag(node.tag)
-            self.id = node.get('id', '<Unknown>')
-            self.name = node.get('name', '<Unknown>')
-            self.sourceline = getattr(node, 'sourceline', '<Unknown>')
+            self.id = node.get("id", "<Unknown>")
+            self.name = node.get("name", "<Unknown>")
+            self.sourceline = getattr(node, "sourceline", "<Unknown>")
         else:
-            self.tag = '<Unknown>'
-            self.id = '<Unknown>'
-            self.name = '<Unknown>'
-            self.sourceline = '<Unknown>'
-        self.filename = filename or '<Unknown File>'
-        message = ('%s\nSource Details: '
-                   '%s (id:%s), name \'%s\', line %s in %s') % (
-            msg, self.tag, self.id, self.name, self.sourceline, self.filename)
+            self.tag = "<Unknown>"
+            self.id = "<Unknown>"
+            self.name = "<Unknown>"
+            self.sourceline = "<Unknown>"
+        self.filename = filename or "<Unknown File>"
+        message = ("%s\nSource Details: " "%s (id:%s), name '%s', line %s in %s") % (
+            msg,
+            self.tag,
+            self.id,
+            self.name,
+            self.sourceline,
+            self.filename,
+        )
 
         super(ValidationException, self).__init__(message, *args, **kwargs)
 
     @classmethod
     def _shorten_tag(cls, tag):
-        prefix = '{%s}' % BPMN_MODEL_NS
+        prefix = "{%s}" % BPMN_MODEL_NS
         if tag.startswith(prefix):
-            return 'bpmn:' + tag[len(prefix):]
+            return "bpmn:" + tag[len(prefix) :]
         return tag

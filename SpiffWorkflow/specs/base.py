@@ -3,6 +3,7 @@ from __future__ import division, absolute_import
 from __future__ import print_function
 from builtins import str
 from builtins import object
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -101,16 +102,16 @@ class TaskSpec(object):
         self._wf_spec = wf_spec
         self.id = None
         self.name = str(name)
-        self.description = kwargs.get('description', '')
+        self.description = kwargs.get("description", "")
         self.inputs = []
         self.outputs = []
-        self.manual = kwargs.get('manual', False)
+        self.manual = kwargs.get("manual", False)
         self.internal = False  # Only for easing debugging.
-        self.data = kwargs.get('data',        {})
-        self.defines = kwargs.get('defines',     {})
-        self.pre_assign = kwargs.get('pre_assign',  [])
-        self.post_assign = kwargs.get('post_assign', [])
-        self.locks = kwargs.get('lock',        [])
+        self.data = kwargs.get("data", {})
+        self.defines = kwargs.get("defines", {})
+        self.pre_assign = kwargs.get("pre_assign", [])
+        self.post_assign = kwargs.get("post_assign", [])
+        self.locks = kwargs.get("lock", [])
         self.lookahead = 2  # Maximum number of MAYBE predictions.
 
         # Events.
@@ -143,6 +144,7 @@ class TaskSpec(object):
                 if input not in stack:
                     stack.append(input)
                     recursive_find_ancestors(input, stack)
+
         recursive_find_ancestors(self, results)
 
         return results
@@ -226,7 +228,7 @@ class TaskSpec(object):
         # if self.id is None:
         #    raise WorkflowException(self, 'TaskSpec is not yet instanciated.')
         if len(self.inputs) < 1:
-            raise WorkflowException(self, 'No input task connected.')
+            raise WorkflowException(self, "No input task connected.")
 
     def _predict(self, my_task, seen=None, looked_ahead=0):
         """
@@ -291,10 +293,16 @@ class TaskSpec(object):
         """
         if my_task._is_predicted():
             self._predict(my_task)
-        LOG.debug("'%s'._update_hook says parent (%s, state=%s) "
-                  "is_finished=%s" % (self.name, my_task.parent.get_name(),
-                                      my_task.parent.get_state_name(),
-                                      my_task.parent._is_finished()))
+        LOG.debug(
+            "'%s'._update_hook says parent (%s, state=%s) "
+            "is_finished=%s"
+            % (
+                self.name,
+                my_task.parent.get_name(),
+                my_task.parent.get_state_name(),
+                my_task.parent._is_finished(),
+            )
+        )
         if not my_task.parent._is_finished():
             return
         self.entered_event.emit(my_task.workflow, my_task)
@@ -391,9 +399,14 @@ class TaskSpec(object):
         assert my_task is not None
 
         if my_task.workflow.debug:
-            print("Executing %s: %s (%s)" % (
-                my_task.task_spec.__class__.__name__,
-                my_task.get_name(), my_task.get_description()))
+            print(
+                "Executing %s: %s (%s)"
+                % (
+                    my_task.task_spec.__class__.__name__,
+                    my_task.get_name(),
+                    my_task.get_description(),
+                )
+            )
 
         self._on_complete_hook(my_task)
 

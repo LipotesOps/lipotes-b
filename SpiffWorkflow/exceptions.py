@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2007 Samuel Abels
 #
 # This library is free software; you can redistribute it and/or
@@ -33,7 +34,7 @@ class WorkflowException(Exception):
         :param error: a human readable error message
         :type error: string
         """
-        Exception.__init__(self, '%s: %s' % (sender.name, error))
+        Exception.__init__(self, "%s: %s" % (sender.name, error))
         # Points to the TaskSpec that generated the exception.
         self.sender = sender
 

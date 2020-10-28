@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -37,16 +38,16 @@ class ExclusiveGateway(ExclusiveChoice, BpmnSpecMixin):
         # This has been overidden to allow a single default flow out (without a
         # condition) - useful for the converging type
         TaskSpec.test(self)
-#        if len(self.cond_task_specs) < 1:
-#            raise WorkflowException(self, 'At least one output required.')
+        #        if len(self.cond_task_specs) < 1:
+        #            raise WorkflowException(self, 'At least one output required.')
         for condition, name in self.cond_task_specs:
             if name is None:
-                raise WorkflowException(self, 'Condition with no task spec.')
+                raise WorkflowException(self, "Condition with no task spec.")
             task_spec = self._wf_spec.get_task_spec_from_name(name)
             if task_spec is None:
-                msg = 'Condition leads to non-existent task ' + repr(name)
+                msg = "Condition leads to non-existent task " + repr(name)
                 raise WorkflowException(self, msg)
             if condition is None:
                 continue
         if self.default_task_spec is None:
-            raise WorkflowException(self, 'A default output is required.')
+            raise WorkflowException(self, "A default output is required.")

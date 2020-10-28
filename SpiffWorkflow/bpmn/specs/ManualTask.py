@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -25,4 +26,5 @@ class ManualTask(UserTask):
     """
     Task Spec for a bpmn:manualTask node.
     """
+
     pass

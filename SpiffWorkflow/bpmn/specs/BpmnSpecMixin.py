@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import
 from builtins import object
+
 # Copyright (C) 2012 Matthew Hampton
 #
 # This library is free software; you can redistribute it and/or
@@ -24,7 +25,6 @@ from ...specs import TaskSpec
 
 
 class _BpmnCondition(Operator):
-
     def __init__(self, *args):
         if len(args) > 1:
             raise TypeError("Too many arguments")
@@ -69,8 +69,9 @@ class BpmnSpecMixin(TaskSpec):
         self.lane = lane
         self.documentation = None
 
-    def connect_outgoing(self, taskspec, sequence_flow_id, sequence_flow_name,
-                         documentation):
+    def connect_outgoing(
+        self, taskspec, sequence_flow_id, sequence_flow_name, documentation
+    ):
         """
         Connect this task spec to the indicated child.
 
@@ -80,13 +81,13 @@ class BpmnSpecMixin(TaskSpec):
         node.
         """
         self.connect(taskspec)
-        s = SequenceFlow(
-            sequence_flow_id, sequence_flow_name, documentation, taskspec)
+        s = SequenceFlow(sequence_flow_id, sequence_flow_name, documentation, taskspec)
         self.outgoing_sequence_flows[taskspec.name] = s
         self.outgoing_sequence_flows_by_id[sequence_flow_id] = s
 
-    def connect_outgoing_if(self, condition, taskspec, sequence_flow_id,
-                            sequence_flow_name, documentation):
+    def connect_outgoing_if(
+        self, condition, taskspec, sequence_flow_id, sequence_flow_name, documentation
+    ):
         """
         Connect this task spec to the indicated child, if the condition
         evaluates to true. This should only be called if the task has a
@@ -98,8 +99,7 @@ class BpmnSpecMixin(TaskSpec):
         node.
         """
         self.connect_if(_BpmnCondition(condition), taskspec)
-        s = SequenceFlow(
-            sequence_flow_id, sequence_flow_name, documentation, taskspec)
+        s = SequenceFlow(sequence_flow_id, sequence_flow_name, documentation, taskspec)
         self.outgoing_sequence_flows[taskspec.name] = s
         self.outgoing_sequence_flows_by_id[sequence_flow_id] = s
 
@@ -126,8 +126,9 @@ class BpmnSpecMixin(TaskSpec):
         """
         Returns a list of the names of outgoing sequences. Some may be None.
         """
-        return sorted([s.name for s in
-                       list(self.outgoing_sequence_flows_by_id.values())])
+        return sorted(
+            [s.name for s in list(self.outgoing_sequence_flows_by_id.values())]
+        )
 
     def get_outgoing_sequences(self):
         """
@@ -199,8 +200,11 @@ class BpmnSpecMixin(TaskSpec):
     def _update_hook(self, my_task):
         prev_state = my_task.state
         super(BpmnSpecMixin, self)._update_hook(my_task)
-        if (prev_state != Task.WAITING and my_task.state == Task.WAITING and
-                not my_task.workflow._is_busy_with_restore()):
+        if (
+            prev_state != Task.WAITING
+            and my_task.state == Task.WAITING
+            and not my_task.workflow._is_busy_with_restore()
+        ):
             self.entering_waiting_state(my_task)
 
     def _on_ready_before_hook(self, my_task):
