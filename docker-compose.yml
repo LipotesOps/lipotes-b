@@ -12,3 +12,8 @@ services:
       - ${BASE_DIR}:/home/lipotes-b
     ports:
       - 8000:8000
+
+networks:
+  default:
+    external:
+      name: lipotes-network
