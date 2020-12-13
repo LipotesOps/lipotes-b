@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  lipotes-b:
+    container_name: lipotes-b
+    image: lipotes-b
+    build: .
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ${BASE_DIR}:/home/lipotes-b
+    ports:
+      - 8000:8000
