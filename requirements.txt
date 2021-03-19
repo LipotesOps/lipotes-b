@@ -9,7 +9,7 @@ Click==7.0
 configparser==5.0.0
 coreapi==2.3.3
 coreschema==0.0.4
-Django==2.2
+Django==2.2.18
 django-admin==2.0.1
 django-cors-headers==3.4.0
 django-excel-base==1.0.4
